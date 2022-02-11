@@ -62,7 +62,7 @@ public class GameApplet extends Applet implements Runnable {
     public String uq = "";
     public int vq;
 
-    public void ij() {
+    public void startGame() {
     }
 
     public synchronized void nj() {
@@ -77,7 +77,7 @@ public class GameApplet extends Applet implements Runnable {
     public void drawHbar() {
     }
 
-    public final void ej(int var1, int var2, String var3, boolean var4) {
+    public final void startApplication(int var1, int var2, String var3, boolean var4) {
         this.mp = false;
         System.out.println("Started application");
         this.fp = var1;
@@ -380,7 +380,7 @@ public class GameApplet extends Applet implements Runnable {
             this.aq = this.getGraphics();
             this.mj();
             this.rj(0, "Loading...");
-            this.ij();
+            this.startGame();
             this.rp = 0;
         }
 

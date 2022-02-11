@@ -17,7 +17,7 @@ public class mudclient extends GameConnection {
     int zs;
     boolean at = false;
     boolean bt = false;
-    public boolean ct = true;
+    public boolean appletMode = true;
     int dt;
     int et = 12345678;
     int ft;
@@ -31,8 +31,8 @@ public class mudclient extends GameConnection {
     int nt;
     int ot;
     int loggedIn;
-    int qt;
-    int rt;
+    int gameWidth;
+    int gameHeight;
     int st;
     int tt;
     int spriteMedia;
@@ -338,14 +338,14 @@ public class mudclient extends GameConnection {
     String[] ifb;
 
     public static void main(String[] var0) {
-        mudclient var1 = new mudclient();
-        var1.ct = false;
-        var1.ej(var1.qt, var1.rt + 22, "Runescape by Andrew Gower", false);
-        var1.jq = 10;
+        mudclient mc = new mudclient();
+        mc.appletMode = false;
+        mc.startApplication(mc.gameWidth, mc.gameHeight + 22, "Runescape by Andrew Gower", false);
+        mc.jq = 10;
     }
 
-    public void ij() {
-        if (this.ct) {
+    public void startGame() {
+        if (this.appletMode) {
             String var1 = this.getDocumentBase().getHost().toLowerCase();
             if (!var1.endsWith("jagex.com") && !var1.endsWith("jagex.co.uk") && !var1.endsWith("runescape.com") && !var1.endsWith("runescape.co.uk") && !var1.endsWith("runescape.net") && !var1.endsWith("runescape.org") && !var1.endsWith("64.23.81.81") && !var1.endsWith("64.23.81.89") && !var1.endsWith("penguin.local") && !var1.endsWith("puffin.local") && !var1.endsWith("jagex.dnsalias.com")) {
                 this.at = true;
@@ -365,9 +365,9 @@ public class mudclient extends GameConnection {
         this.wt = this.yv + 300;
         this.jt = this.getGraphics();
         this.vj(50);
-        this.surface = new SurfaceSprite(this.qt, this.rt + 12, 2600, this);
+        this.surface = new SurfaceSprite(this.gameWidth, this.gameHeight + 12, 2600, this);
         this.surface.gs = this;
-        this.surface.vf(0, 0, this.qt, this.rt + 12);
+        this.surface.vf(0, 0, this.gameWidth, this.gameHeight + 12);
         Panel.bg = false;
         Panel.cg = this.tt;
         this.ix = new Panel(this.surface, 5);
@@ -381,7 +381,7 @@ public class mudclient extends GameConnection {
         this.nm();
         this.fm(true);
         this.scene = new Scene(this.surface, 15000, 15000, 1000);
-        this.scene.ii(this.qt / 2, this.rt / 2, this.qt / 2, this.rt / 2, this.qt, this.st);
+        this.scene.ii(this.gameWidth / 2, this.gameHeight / 2, this.gameWidth / 2, this.gameHeight / 2, this.gameWidth, this.st);
         this.scene.clipFar3d = 2400;
         this.scene.clipFar2d = 2400;
         this.scene.fogZFalloff = 1;
@@ -1057,7 +1057,7 @@ public class mudclient extends GameConnection {
             this.surface.xg(super.tq + "*", 256, var2, 4, 16777215);
         }
 
-        this.surface.drawSprite(0, this.rt, this.spriteMedia + 22);
+        this.surface.drawSprite(0, this.gameHeight, this.spriteMedia + 22);
         this.surface.nf(this.jt, 0, 11);
     }
 
@@ -1318,7 +1318,7 @@ public class mudclient extends GameConnection {
             this.yoptinPrivacyStatementPanel.hc();
         }
 
-        this.surface.drawSprite(0, this.rt, this.spriteMedia + 22);
+        this.surface.drawSprite(0, this.gameHeight, this.spriteMedia + 22);
         this.surface.nf(this.jt, 0, 11);
     }
 
@@ -1547,7 +1547,7 @@ public class mudclient extends GameConnection {
         this.surface.pg(var1 - 32 + 55, var2, 64, 102, GameData.zjb[this.web] + 12, this.cfb[this.zeb]);
         this.surface.zf(var1 - 32 + 55, var2, 64, 102, GameData.zjb[this.veb] + 12, this.cfb[this.yeb], this.efb[this.afb], 0, false);
         this.surface.zf(var1 - 32 + 55, var2, 64, 102, GameData.zjb[this.ueb] + 12, this.dfb[this.xeb], this.efb[this.afb], 0, false);
-        this.surface.drawSprite(0, this.rt, this.spriteMedia + 22);
+        this.surface.drawSprite(0, this.gameHeight, this.spriteMedia + 22);
         this.surface.nf(this.jt, 0, 11);
     }
 
@@ -1726,7 +1726,7 @@ public class mudclient extends GameConnection {
             this.panelLoginExistingUser.hc();
         }
 
-        this.surface.drawSprite(0, this.rt, this.spriteMedia + 22);
+        this.surface.drawSprite(0, this.gameHeight, this.spriteMedia + 22);
         this.surface.nf(this.jt, 0, 11);
     }
 
@@ -2365,7 +2365,7 @@ public class mudclient extends GameConnection {
                     }
                 }
 
-                if (super.lq > this.rt - 4) {
+                if (super.lq > this.gameHeight - 4) {
                     if (super.kq > 15 && super.kq < 96 && super.nq == 1) {
                         this.az = 0;
                     }
@@ -2390,16 +2390,16 @@ public class mudclient extends GameConnection {
                 }
 
                 this.vy.ud(super.kq, super.lq, super.nq, super.mq);
-                if (this.az > 0 && super.kq >= 494 && super.lq >= this.rt - 66) {
+                if (this.az > 0 && super.kq >= 494 && super.lq >= this.gameHeight - 66) {
                     super.nq = 0;
                 }
 
                 if (this.vy.isClicked(this.xy)) {
                     String var15 = this.vy.getString(this.xy);
                     this.vy.updateText(this.xy, "");
-                    if (var15.equalsIgnoreCase("lostcon99") && !this.ct) {
+                    if (var15.equalsIgnoreCase("lostcon99") && !this.appletMode) {
                         super.ed.zb();
-                    } else if (var15.equalsIgnoreCase("closecon99") && !this.ct) {
+                    } else if (var15.equalsIgnoreCase("closecon99") && !this.appletMode) {
                         this.ob();
                     } else if (!this.y(var15)) {
                         this.kv.mr = 150;
@@ -3792,7 +3792,7 @@ public class mudclient extends GameConnection {
     public void el() {
         if (this.lab != 0) {
             this.surface.fade2black();
-            this.surface.xg("Oh dear! You are dead...", this.qt / 2, this.rt / 2, 7, 16711680);
+            this.surface.xg("Oh dear! You are dead...", this.gameWidth / 2, this.gameHeight / 2, 7, 16711680);
             this.gl();
             this.surface.nf(this.jt, 0, 11);
         } else if (this.yoptinOnboardingStage != 0) {
@@ -4038,12 +4038,12 @@ public class mudclient extends GameConnection {
                 this.surface.drawSprite(this.du - 8, this.eu - 8, this.spriteMedia + 18 + (24 + this.cu) / 6);
             }
 
-            this.surface.qf("Fps: " + super.vq, 450, this.rt - 10, 1, 16776960);
+            this.surface.qf("Fps: " + super.vq, 450, this.gameHeight - 10, 1, 16776960);
             if (this.az == 0) {
                 for(var6 = 0; var6 < this.bz; ++var6) {
                     if (this.dz[var6] > 0) {
                         String var20 = this.cz[var6];
-                        this.surface.qf(var20, 7, this.rt - 18 - var6 * 12, 1, 16776960);
+                        this.surface.qf(var20, 7, this.gameHeight - 18 - var6 * 12, 1, 16776960);
                     }
                 }
             }
@@ -4071,7 +4071,7 @@ public class mudclient extends GameConnection {
     }
 
     public void gl() {
-        this.surface.drawSprite(0, this.rt - 4, this.spriteMedia + 23);
+        this.surface.drawSprite(0, this.gameHeight - 4, this.spriteMedia + 23);
         int var1 = Surface.ng(200, 200, 255);
         if (this.az == 0) {
             var1 = Surface.ng(255, 200, 50);
@@ -4081,7 +4081,7 @@ public class mudclient extends GameConnection {
             var1 = Surface.ng(255, 50, 50);
         }
 
-        this.surface.xg("All messages", 54, this.rt + 6, 0, var1);
+        this.surface.xg("All messages", 54, this.gameHeight + 6, 0, var1);
         var1 = Surface.ng(200, 200, 255);
         if (this.az == 1) {
             var1 = Surface.ng(255, 200, 50);
@@ -4091,7 +4091,7 @@ public class mudclient extends GameConnection {
             var1 = Surface.ng(255, 50, 50);
         }
 
-        this.surface.xg("Chat history", 155, this.rt + 6, 0, var1);
+        this.surface.xg("Chat history", 155, this.gameHeight + 6, 0, var1);
         var1 = Surface.ng(200, 200, 255);
         if (this.az == 2) {
             var1 = Surface.ng(255, 200, 50);
@@ -4101,7 +4101,7 @@ public class mudclient extends GameConnection {
             var1 = Surface.ng(255, 50, 50);
         }
 
-        this.surface.xg("Quest history", 255, this.rt + 6, 0, var1);
+        this.surface.xg("Quest history", 255, this.gameHeight + 6, 0, var1);
         var1 = Surface.ng(200, 200, 255);
         if (this.az == 3) {
             var1 = Surface.ng(255, 200, 50);
@@ -4111,7 +4111,7 @@ public class mudclient extends GameConnection {
             var1 = Surface.ng(255, 50, 50);
         }
 
-        this.surface.xg("Private history", 355, this.rt + 6, 0, var1);
+        this.surface.xg("Private history", 355, this.gameHeight + 6, 0, var1);
     }
 
     public void xm(int var1, int var2, int var3, int var4, int var5, int var6, int var7) {
@@ -5769,7 +5769,7 @@ public class mudclient extends GameConnection {
 
         this.surface.cg(var2 + var3 / 2, 36 + var4 / 2, 2, 16777215, 255);
         this.surface.sf(var2 + 19, 55, this.spriteMedia + 24, this.av + 128 & 255, 128);
-        this.surface.vf(0, 0, this.qt, this.rt + 12);
+        this.surface.vf(0, 0, this.gameWidth, this.gameHeight + 12);
         if (var1) {
             var2 = super.kq - (this.surface.qj - 199);
             int var17 = super.lq - 36;
@@ -7206,8 +7206,8 @@ public class mudclient extends GameConnection {
         this.ht = new int[this.gt];
         this.it = new int[this.gt];
         this.ot = 128;
-        this.qt = 512;
-        this.rt = 334;
+        this.gameWidth = 512;
+        this.gameHeight = 334;
         this.st = 9;
         this.vt = 40;
         this.au = -1;
