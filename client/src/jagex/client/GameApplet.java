@@ -74,7 +74,7 @@ public class GameApplet extends Applet implements Runnable {
     public synchronized void tj() {
     }
 
-    public void ck() {
+    public void drawHbar() {
     }
 
     public final void ej(int var1, int var2, String var3, boolean var4) {
@@ -155,7 +155,7 @@ public class GameApplet extends Applet implements Runnable {
     }
 
     public synchronized boolean keyDown(Event var1, int var2) {
-        this.bk(var2);
+        this.handleKeyPress(var2);
         this.oq = var2;
         this.pq = var2;
         this.qp = 0;
@@ -223,7 +223,7 @@ public class GameApplet extends Applet implements Runnable {
         return true;
     }
 
-    public void bk(int var1) {
+    public void handleKeyPress(int var1) {
     }
 
     public synchronized boolean keyUp(Event var1, int var2) {
@@ -497,7 +497,7 @@ public class GameApplet extends Applet implements Runnable {
             this.rj(this.up, this.vp);
         } else {
             if (this.rp == 0) {
-                this.ck();
+                this.drawHbar();
             }
 
         }

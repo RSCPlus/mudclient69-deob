@@ -112,13 +112,13 @@ public class Utility {
         return var2;
     }
 
-    public static String mn(String var0, int var1) {
-        while(var0.length() < var1) {
+    public static String makeLength(String var0, int desiredLength) {
+        while(var0.length() < desiredLength) {
             var0 = var0 + " ";
         }
 
-        if (var0.length() > var1) {
-            var0 = var0.substring(0, var1);
+        if (var0.length() > desiredLength) {
+            var0 = var0.substring(0, desiredLength);
         }
 
         return var0;

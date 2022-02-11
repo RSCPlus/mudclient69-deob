@@ -35,8 +35,8 @@ public class World {
     int[][] vgb;
     boolean wgb;
     GameModel[] xgb;
-    GameModel[][] ygb;
-    GameModel[][] zgb;
+    GameModel[][] wallModels;
+    GameModel[][] roofModels;
     GameModel ahb;
 
     public World(Scene var1, Surface var2) {
@@ -47,8 +47,8 @@ public class World {
         this.vgb = new int[this.pgb][this.qgb];
         this.wgb = false;
         this.xgb = new GameModel[64];
-        this.ygb = new GameModel[4][64];
-        this.zgb = new GameModel[4][64];
+        this.wallModels = new GameModel[4][64];
+        this.roofModels = new GameModel[4][64];
         this.xfb = var1;
         this.wfb = var2;
 
@@ -415,7 +415,7 @@ public class World {
         return var1 >= 0 && var2 >= 0 && var1 < this.pgb && var2 < this.qgb ? this.ugb[var1][var2] : 0;
     }
 
-    public int ho(int var1, int var2) {
+    public int getElevation(int var1, int var2) {
         int var3 = var1 >> 7;
         int var4 = var2 >> 7;
         int var5 = var1 & 127;
@@ -738,18 +738,18 @@ public class World {
             this.xgb[var1] = null;
 
             for(int var2 = 0; var2 < 4; ++var2) {
-                this.ygb[var2][var1] = null;
+                this.wallModels[var2][var1] = null;
             }
 
             for(int var3 = 0; var3 < 4; ++var3) {
-                this.zgb[var3][var1] = null;
+                this.roofModels[var3][var1] = null;
             }
         }
 
         System.gc();
     }
 
-    public void qo(int var1, int var2, int var3) {
+    public void loadSections(int var1, int var2, int var3) {
         this.dp();
         int var4 = (var1 + 24) / 48;
         int var5 = (var2 + 24) / 48;
@@ -1151,10 +1151,10 @@ public class World {
         }
 
         this.ahb.we(false, 60, 24, -50, -10, -50);
-        this.ygb[var3] = this.ahb.zd(0, 0, 1536, 1536, 8, 64, 338, true);
+        this.wallModels[var3] = this.ahb.zd(0, 0, 1536, 1536, 8, 64, 338, true);
 
         for(var9 = 0; var9 < 64; ++var9) {
-            this.xfb.yh(this.ygb[var3][var9]);
+            this.xfb.yh(this.wallModels[var3][var9]);
         }
 
         for(var10 = 0; var10 < 95; ++var10) {
@@ -1438,10 +1438,10 @@ public class World {
         }
 
         this.ahb.we(true, 50, 50, -50, -10, -50);
-        this.zgb[var3] = this.ahb.zd(0, 0, 1536, 1536, 8, 64, 169, true);
+        this.roofModels[var3] = this.ahb.zd(0, 0, 1536, 1536, 8, 64, 169, true);
 
         for(var13 = 0; var13 < 64; ++var13) {
-            this.xfb.yh(this.zgb[var3][var13]);
+            this.xfb.yh(this.roofModels[var3][var13]);
         }
 
         for(var14 = 0; var14 < 96; ++var14) {
@@ -1454,7 +1454,7 @@ public class World {
 
     }
 
-    public void jo(GameModel[] var1) {
+    public void addModels(GameModel[] var1) {
         for(int var2 = 0; var2 < this.pgb - 2; ++var2) {
             for(int var3 = 0; var3 < this.qgb - 2; ++var3) {
                 if (this.eo(var2, var3) > 48000 && this.eo(var2, var3) < 60000) {
@@ -1474,7 +1474,7 @@ public class World {
                     GameModel var8 = var1[GameData.fkb[var4]].ye(false, true, false, false);
                     int var9 = (var2 + var2 + var6) * 128 / 2;
                     int var10 = (var3 + var3 + var7) * 128 / 2;
-                    var8.ee(var9, -this.ho(var9, var10), var10);
+                    var8.ee(var9, -this.getElevation(var9, var10), var10);
                     var8.oe(0, this.bo(var2, var3) * 32, 0);
                     this.xfb.yh(var8);
                     var8.we(true, 48, 48, -50, -10, -50);

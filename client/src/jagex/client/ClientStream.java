@@ -211,7 +211,7 @@ public class ClientStream extends Buffer implements Runnable {
 
     }
 
-    public void a(int var1) {
+    public void createOutgoingPacket(int var1) {
         if (this.i == null) {
             this.i = new byte[4000];
         }
@@ -220,11 +220,11 @@ public class ClientStream extends Buffer implements Runnable {
         this.h = 3;
     }
 
-    public void m(int var1) {
+    public void putByte(int var1) {
         this.i[this.h++] = (byte)var1;
     }
 
-    public void l(int var1) {
+    public void putShort(int var1) {
         this.i[this.h++] = (byte)(var1 >> 8);
         this.i[this.h++] = (byte)var1;
     }
@@ -241,7 +241,7 @@ public class ClientStream extends Buffer implements Runnable {
         this.k((int)(var1 & -1L));
     }
 
-    public void i(String var1) {
+    public void putString(String var1) {
         var1.getBytes(0, var1.length(), this.i, this.h);
         this.h += var1.length();
     }
@@ -257,7 +257,7 @@ public class ClientStream extends Buffer implements Runnable {
         this.b(this.i, 0, this.h, true);
     }
 
-    public void d() {
+    public void sendPacket() {
         this.i[0] = (byte)((this.h - 2) / 256);
         this.i[1] = (byte)(this.h - 2 & 255);
 

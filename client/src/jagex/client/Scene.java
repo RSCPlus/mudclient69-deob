@@ -10,10 +10,10 @@ public class Scene {
     int[] yl;
     public int zl;
     public int am;
-    public int bm;
-    public int cm;
-    public int dm;
-    public int em;
+    public int clipFar3d;
+    public int clipFar2d;
+    public int fogZFalloff;
+    public int fogZDistance;
     public static int[] fm = new int[2048];
     private static int[] gm = new int[512];
     public boolean hm;
@@ -97,10 +97,10 @@ public class Scene {
         this.wl = new int[this.vl];
         this.xl = new int[this.vl][256];
         this.am = 5;
-        this.bm = 1000;
-        this.cm = 1000;
-        this.dm = 20;
-        this.em = 10;
+        this.clipFar3d = 1000;
+        this.clipFar2d = 1000;
+        this.fogZFalloff = 20;
+        this.fogZDistance = 10;
         this.hm = false;
         this.im = 1.1D;
         this.jm = 1;
@@ -177,7 +177,7 @@ public class Scene {
 
     }
 
-    public void ci(GameModel var1) {
+    public void freeModel(GameModel var1) {
         for(int var2 = 0; var2 < this.en; ++var2) {
             if (this.gn[var2] == var1) {
                 --this.en;
@@ -474,20 +474,20 @@ public class Scene {
 
     }
 
-    public void aj() {
+    public void render() {
         this.wo = this.lo.pk;
-        int var7 = this.sm * this.bm >> this.wm;
-        int var8 = this.tm * this.bm >> this.wm;
+        int var7 = this.sm * this.clipFar3d >> this.wm;
+        int var8 = this.tm * this.clipFar3d >> this.wm;
         xo = 0;
         yo = 0;
         zo = 0;
         ap = 0;
         bp = 0;
         cp = 0;
-        this.vi(-var7, -var8, this.bm);
-        this.vi(-var7, var8, this.bm);
-        this.vi(var7, -var8, this.bm);
-        this.vi(var7, var8, this.bm);
+        this.vi(-var7, -var8, this.clipFar3d);
+        this.vi(-var7, var8, this.clipFar3d);
+        this.vi(var7, -var8, this.clipFar3d);
+        this.vi(var7, var8, this.clipFar3d);
         this.vi(-this.sm, -this.tm, 0);
         this.vi(-this.sm, this.tm, 0);
         this.vi(this.sm, -this.tm, 0);
@@ -528,7 +528,7 @@ public class Scene {
                     int var3;
                     for(var12 = 0; var12 < var10; ++var12) {
                         var3 = var1.kg[var11[var12]];
-                        if (var3 > this.am && var3 < this.bm) {
+                        if (var3 > this.am && var3 < this.clipFar3d) {
                             var4 = true;
                             break;
                         }
@@ -608,7 +608,7 @@ public class Scene {
                 var12 = var1.lg[var25];
                 var13 = var1.mg[var25];
                 var14 = var1.kg[var25];
-                if (var14 > this.am && var14 < this.cm) {
+                if (var14 > this.am && var14 < this.clipFar2d) {
                     var28 = (this.qn[var2] << this.wm) / var14;
                     var16 = (this.rn[var2] << this.wm) / var14;
                     if (var12 - var28 / 2 <= this.sm && var12 + var28 / 2 >= -this.sm && var13 - var16 <= this.tm && var13 >= -this.tm) {
@@ -687,8 +687,8 @@ public class Scene {
                             this.qo[var28] = var1.lg[var5];
                             this.ro[var28] = var1.mg[var5];
                             this.so[var28] = var17;
-                            if (var1.kg[var5] > this.em) {
-                                this.so[var28] += (var1.kg[var5] - this.em) / this.dm;
+                            if (var1.kg[var5] > this.fogZDistance) {
+                                this.so[var28] += (var1.kg[var5] - this.fogZDistance) / this.fogZFalloff;
                             }
 
                             ++var28;
@@ -2780,7 +2780,7 @@ public class Scene {
         }
     }
 
-    public void ei(int var1, int var2, int var3, int var4, int var5, int var6, int var7) {
+    public void setCamera(int var1, int var2, int var3, int var4, int var5, int var6, int var7) {
         this.bn = 1024 - var4 & 1023;
         this.cn = 1024 - var5 & 1023;
         this.dn = 1024 - var6 & 1023;

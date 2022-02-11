@@ -130,7 +130,7 @@ public class Panel {
 
     }
 
-    public boolean wd(int var1) {
+    public boolean isClicked(int var1) {
         if (this.qe[var1] && this.te[var1]) {
             this.te[var1] = false;
             return true;
@@ -139,7 +139,7 @@ public class Panel {
         }
     }
 
-    public void td(int var1) {
+    public void show(int var1) {
         if (var1 != 0) {
             if (this.mf != -1 && this.gf[this.mf] != null && this.qe[this.mf]) {
                 int var2 = this.gf[this.mf].length();
@@ -217,7 +217,7 @@ public class Panel {
     }
 
     protected void fd(int var1, int var2, int var3, int var4, int var5) {
-        this.ne.bg(var2, var3, var4, var5, 16777215);
+        this.ne.drawBox(var2, var3, var4, var5, 16777215);
         this.ne.ug(var2, var3, var4, this.wf);
         this.ne.zg(var2, var3, var5, this.wf);
         this.ne.ug(var2, var3 + var5 - 1, var4, this.zf);
@@ -305,18 +305,18 @@ public class Panel {
     }
 
     public void jd(int var1, int var2, int var3, int var4) {
-        this.ne.bg(var1, var2, var3, var4, 0);
+        this.ne.drawBox(var1, var2, var3, var4, 0);
         this.ne.uf(var1, var2, var3, var4, this.tf);
         this.ne.uf(var1 + 1, var2 + 1, var3 - 2, var4 - 2, this.uf);
         this.ne.uf(var1 + 2, var2 + 2, var3 - 4, var4 - 4, this.vf);
-        this.ne.bh(var1, var2, 2 + cg);
-        this.ne.bh(var1 + var3 - 7, var2, 3 + cg);
-        this.ne.bh(var1, var2 + var4 - 7, 4 + cg);
-        this.ne.bh(var1 + var3 - 7, var2 + var4 - 7, 5 + cg);
+        this.ne.drawSprite(var1, var2, 2 + cg);
+        this.ne.drawSprite(var1 + var3 - 7, var2, 3 + cg);
+        this.ne.drawSprite(var1, var2 + var4 - 7, 4 + cg);
+        this.ne.drawSprite(var1 + var3 - 7, var2 + var4 - 7, 5 + cg);
     }
 
     protected void bd(int var1, int var2, int var3) {
-        this.ne.bh(var1, var2, var3);
+        this.ne.drawSprite(var1, var2, var3);
     }
 
     protected void yc(int var1, int var2, int var3) {
@@ -396,12 +396,12 @@ public class Panel {
     protected void rd(int var1, int var2, int var3, int var4, int var5, int var6) {
         int var7 = var1 + var3 - 12;
         this.ne.uf(var7, var2, 12, var4, 0);
-        this.ne.bh(var7 + 1, var2 + 1, cg);
-        this.ne.bh(var7 + 1, var2 + var4 - 12, 1 + cg);
+        this.ne.drawSprite(var7 + 1, var2 + 1, cg);
+        this.ne.drawSprite(var7 + 1, var2 + var4 - 12, 1 + cg);
         this.ne.ug(var7, var2 + 13, 12, 0);
         this.ne.ug(var7, var2 + var4 - 13, 12, 0);
         this.ne.jg(var7 + 1, var2 + 14, 11, var4 - 27, this.of, this.pf);
-        this.ne.bg(var7 + 3, var5 + var2 + 14, 7, var6, this.rf);
+        this.ne.drawBox(var7 + 3, var5 + var2 + 14, 7, var6, this.rf);
         this.ne.zg(var7 + 2, var5 + var2 + 14, var6, this.qf);
         this.ne.zg(var7 + 2 + 8, var5 + var2 + 14, var6, this.sf);
     }
@@ -595,7 +595,7 @@ public class Panel {
         return this.oe++;
     }
 
-    public int nd(int var1, int var2, String var3, int var4, boolean var5) {
+    public int addText(int var1, int var2, String var3, int var4, boolean var5) {
         this.bf[this.oe] = 1;
         this.qe[this.oe] = true;
         this.te[this.oe] = false;
@@ -607,7 +607,7 @@ public class Panel {
         return this.oe++;
     }
 
-    public int ed(int var1, int var2, int var3, int var4) {
+    public int addButtonBackground(int var1, int var2, int var3, int var4) {
         this.bf[this.oe] = 2;
         this.qe[this.oe] = true;
         this.te[this.oe] = false;
@@ -629,7 +629,7 @@ public class Panel {
         return this.oe++;
     }
 
-    public int kc(int var1, int var2, int var3, int var4) {
+    public int addBoxRounded(int var1, int var2, int var3, int var4) {
         this.bf[this.oe] = 11;
         this.qe[this.oe] = true;
         this.te[this.oe] = false;
@@ -640,7 +640,7 @@ public class Panel {
         return this.oe++;
     }
 
-    public int mc(int var1, int var2, int var3) {
+    public int addSprite(int var1, int var2, int var3) {
         int var4 = this.ne.dk[var3];
         int var5 = this.ne.ek[var3];
         this.bf[this.oe] = 12;
@@ -766,7 +766,7 @@ public class Panel {
         return this.oe++;
     }
 
-    public int qd(int var1, int var2, int var3, int var4) {
+    public int addButton(int var1, int var2, int var3, int var4) {
         this.bf[this.oe] = 10;
         this.qe[this.oe] = true;
         this.te[this.oe] = false;
@@ -827,7 +827,7 @@ public class Panel {
 
     }
 
-    public void gc(int var1, String var2, boolean var3) {
+    public void addText(int var1, String var2, boolean var3) {
         int var4 = this.ve[var1]++;
         if (var4 >= this.ef[var1]) {
             --var4;
@@ -845,11 +845,11 @@ public class Panel {
 
     }
 
-    public void od(int var1, String var2) {
+    public void updateText(int var1, String var2) {
         this.gf[var1] = var2;
     }
 
-    public String sc(int var1) {
+    public String getString(int var1) {
         return this.gf[var1] == null ? "null" : this.gf[var1];
     }
 
@@ -861,11 +861,11 @@ public class Panel {
         this.qe[var1] = false;
     }
 
-    public void qc(int var1) {
+    public void setFocus(int var1) {
         this.mf = var1;
     }
 
-    public int xc(int var1) {
+    public int getSelection(int var1) {
         return this.we[var1];
     }
 

@@ -355,7 +355,7 @@ public class Surface implements ImageProducer, ImageObserver {
 
     }
 
-    public void bg(int var1, int var2, int var3, int var4, int var5) {
+    public void drawBox(int var1, int var2, int var3, int var4, int var5) {
         if (var1 < this.nk) {
             var3 -= this.nk - var1;
             var1 = this.nk;
@@ -450,7 +450,7 @@ public class Surface implements ImageProducer, ImageObserver {
         }
     }
 
-    public void jf() {
+    public void fade2black() {
         int var3 = this.qj * this.rj;
 
         for(int var2 = 0; var2 < var3; ++var2) {
@@ -460,7 +460,7 @@ public class Surface implements ImageProducer, ImageObserver {
 
     }
 
-    public void vg(int var1, int var2, int var3, int var4, int var5, int var6) {
+    public void drawLineAlpha(int var1, int var2, int var3, int var4, int var5, int var6) {
         for(int var7 = var3; var7 < var3 + var5; ++var7) {
             for(int var8 = var4; var8 < var4 + var6; ++var8) {
                 int var9 = 0;
@@ -667,7 +667,7 @@ public class Surface implements ImageProducer, ImageObserver {
         }
     }
 
-    public void yg(int var1, int var2, int var3, int var4, int var5) {
+    public void drawSprite(int var1, int var2, int var3, int var4, int var5) {
         int[] var6 = new int['耀'];
         int var7 = var2 + var3 * this.qj;
 
@@ -771,7 +771,7 @@ public class Surface implements ImageProducer, ImageObserver {
 
     }
 
-    public void bh(int var1, int var2, int var3) {
+    public void drawSprite(int var1, int var2, int var3) {
         if (this.jk[var3]) {
             var1 += this.fk[var3];
             var2 += this.gk[var3];

@@ -83,14 +83,14 @@ public class GameConnection extends GameApplet {
                     ;
                 }
 
-                this.ed.a(0);
+                this.ed.createOutgoingPacket(0);
                 this.ed.c(Utility.on(var1));
-                this.ed.i(var2);
-                this.ed.l(yc);
-                this.ed.m(var3[0]);
-                this.ed.m(var3[1]);
-                this.ed.m(var3[2]);
-                this.ed.m(var3[3]);
+                this.ed.putString(var2);
+                this.ed.putShort(yc);
+                this.ed.putByte(var3[0]);
+                this.ed.putByte(var3[1]);
+                this.ed.putByte(var3[2]);
+                this.ed.putByte(var3[3]);
                 this.ed.f();
                 this.ed.vb();
                 int var10 = this.ed.ac();
@@ -131,21 +131,21 @@ public class GameConnection extends GameApplet {
                 this.ed = ClientStream.n(this.zc, (Applet)null, this.bd);
             }
 
-            this.ed.a(2);
+            this.ed.createOutgoingPacket(2);
             var1 = Utility.vn(var1, 20);
             var2 = Utility.vn(var2, 20);
             this.ed.c(Utility.on(var1));
-            this.ed.i(var2);
+            this.ed.putString(var2);
 
             while(var3.length() < 40) {
                 var3 = var3 + " ";
             }
 
-            this.ed.i(var3);
+            this.ed.putString(var3);
             this.ed.k(var4);
             this.ed.k(var5);
             this.ed.k(var6);
-            this.ed.d();
+            this.ed.sendPacket();
             this.ed.vb();
             int var7 = this.ed.ac();
             this.ed.zb();
@@ -176,8 +176,8 @@ public class GameConnection extends GameApplet {
 
     public void ob() {
         if (this.ed != null) {
-            this.ed.a(1);
-            this.ed.d();
+            this.ed.createOutgoingPacket(1);
+            this.ed.sendPacket();
             this.cd = "";
             this.dd = "";
             this.w();
@@ -222,14 +222,14 @@ public class GameConnection extends GameApplet {
                         }
                     }
 
-                    this.ed.a(19);
+                    this.ed.createOutgoingPacket(19);
                     this.ed.c(Utility.on(var1));
-                    this.ed.i(var2);
-                    this.ed.l(yc);
-                    this.ed.m(var5[0]);
-                    this.ed.m(var5[1]);
-                    this.ed.m(var5[2]);
-                    this.ed.m(var5[3]);
+                    this.ed.putString(var2);
+                    this.ed.putShort(yc);
+                    this.ed.putByte(var5[0]);
+                    this.ed.putByte(var5[1]);
+                    this.ed.putByte(var5[2]);
+                    this.ed.putByte(var5[3]);
                     this.ed.f();
                     this.ed.vb();
                     int var11 = this.ed.ac();
@@ -301,7 +301,7 @@ public class GameConnection extends GameApplet {
             long var1 = System.currentTimeMillis();
             if (var1 - this.jd > 5000L) {
                 this.jd = var1;
-                this.ed.a(5);
+                this.ed.createOutgoingPacket(5);
                 this.ed.f();
             }
 
@@ -368,7 +368,7 @@ public class GameConnection extends GameApplet {
 
                                 this.x("@pri@" + Utility.rn(var8) + ": tells you " + var10);
                             } else {
-                                this.db(this.gd, this.fd, this.hd);
+                                this.handleIncomingPacket(this.gd, this.fd, this.hd);
                             }
                         } else {
                             var8 = Utility.nn(this.hd, 1);
@@ -409,26 +409,26 @@ public class GameConnection extends GameApplet {
 
     public void cb(String var1) {
         var1 = Utility.vn(var1, 20);
-        this.ed.a(25);
-        this.ed.i(var1);
-        this.ed.d();
+        this.ed.createOutgoingPacket(25);
+        this.ed.putString(var1);
+        this.ed.sendPacket();
     }
 
     public void pb(int var1, int var2, int var3, int var4, int var5) {
-        this.ed.a(31);
-        this.ed.m(var1);
-        this.ed.m(var2);
-        this.ed.m(var3);
-        this.ed.m(var4);
-        this.ed.m(var5);
-        this.ed.d();
+        this.ed.createOutgoingPacket(31);
+        this.ed.putByte(var1);
+        this.ed.putByte(var2);
+        this.ed.putByte(var3);
+        this.ed.putByte(var4);
+        this.ed.putByte(var5);
+        this.ed.sendPacket();
     }
 
     public void nb(String var1) {
         long var2 = Utility.on(var1);
-        this.ed.a(29);
+        this.ed.createOutgoingPacket(29);
         this.ed.c(var2);
-        this.ed.d();
+        this.ed.sendPacket();
 
         for(int var4 = 0; var4 < this.nd; ++var4) {
             if (this.od[var4] == var2) {
@@ -442,9 +442,9 @@ public class GameConnection extends GameApplet {
     }
 
     public void eb(long var1) {
-        this.ed.a(30);
+        this.ed.createOutgoingPacket(30);
         this.ed.c(var1);
-        this.ed.d();
+        this.ed.sendPacket();
 
         for(int var3 = 0; var3 < this.nd; ++var3) {
             if (this.od[var3] == var1) {
@@ -461,15 +461,15 @@ public class GameConnection extends GameApplet {
     }
 
     public void ib(String var1) {
-        this.ed.a(26);
+        this.ed.createOutgoingPacket(26);
         this.ed.c(Utility.on(var1));
-        this.ed.d();
+        this.ed.sendPacket();
     }
 
     public void z(long var1) {
-        this.ed.a(27);
+        this.ed.createOutgoingPacket(27);
         this.ed.c(var1);
-        this.ed.d();
+        this.ed.sendPacket();
 
         label23:
         for(int var3 = 0; var3 < this.kd; ++var3) {
@@ -497,11 +497,11 @@ public class GameConnection extends GameApplet {
             var3 = var3.substring(0, 80);
         }
 
-        this.ed.a(28);
+        this.ed.createOutgoingPacket(28);
         this.ed.c(var1);
-        this.ed.m(var3.length());
-        this.ed.i(var3);
-        this.ed.d();
+        this.ed.putByte(var3.length());
+        this.ed.putString(var3);
+        this.ed.sendPacket();
         this.x("@pri@You tell " + Utility.rn(var1) + ": " + var3);
     }
 
@@ -519,9 +519,9 @@ public class GameConnection extends GameApplet {
                 return true;
             }
         } else {
-            this.ed.a(3);
-            this.ed.i(var1);
-            this.ed.d();
+            this.ed.createOutgoingPacket(3);
+            this.ed.putString(var1);
+            this.ed.sendPacket();
             this.jd = this.id = System.currentTimeMillis();
             if (vc) {
                 this.x("@yel@" + this.cd.trim() + ": @whi@" + var1);
@@ -549,7 +549,7 @@ public class GameConnection extends GameApplet {
     public void jb() {
     }
 
-    public void db(int var1, int var2, byte[] var3) {
+    public void handleIncomingPacket(int var1, int var2, byte[] var3) {
     }
 
     public void x(String var1) {
