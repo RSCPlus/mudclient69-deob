@@ -73,15 +73,15 @@ public class mudclient extends GameConnection {
     int bv;
     int cv;
     int dv;
-    int ev;
+    int playerCount;
     int fv;
     int gv;
     Character[] hv;
-    Character[] iv;
+    Character[] players;
     Character[] jv;
-    Character kv;
-    int lv;
-    int mv;
+    Character localPlayer;
+    int localRegionX;
+    int localRegionY;
     int serverIndex;
     int ov;
     int pv;
@@ -794,10 +794,10 @@ public class mudclient extends GameConnection {
             this.fw = null;
             this.ow = null;
             this.hv = null;
-            this.iv = null;
+            this.players = null;
             this.sv = null;
             this.tv = null;
-            this.kv = null;
+            this.localPlayer = null;
             if (this.world != null) {
                 this.world.xgb = null;
                 this.world.wallModels = null;
@@ -889,7 +889,7 @@ public class mudclient extends GameConnection {
         this.lbb = "";
         this.ibb = "Please enter a username:";
         this.jbb = "*" + this.kbb + "*";
-        this.ev = 0;
+        this.playerCount = 0;
         this.qv = 0;
     }
 
@@ -1986,14 +1986,14 @@ public class mudclient extends GameConnection {
         this.ew = 0;
         this.nw = 0;
         this.xv = 0;
-        this.ev = 0;
+        this.playerCount = 0;
 
         for(int var3 = 0; var3 < this.cv; ++var3) {
             this.hv[var3] = null;
         }
 
         for(int var4 = 0; var4 < this.dv; ++var4) {
-            this.iv[var4] = null;
+            this.players[var4] = null;
         }
 
         this.qv = 0;
@@ -2117,7 +2117,7 @@ public class mudclient extends GameConnection {
             super.qp -= 500;
             this.trylogout();
         } else {
-            if (this.kv.er == 8 || this.kv.er == 9) {
+            if (this.localPlayer.er == 8 || this.localPlayer.er == 9) {
                 this.iab = 500;
             }
 
@@ -2136,12 +2136,12 @@ public class mudclient extends GameConnection {
                 int var5;
                 int var6;
                 int var7;
-                for(int var1 = 0; var1 < this.ev; ++var1) {
-                    Character var2 = this.iv[var1];
-                    var3 = (var2.hr + 1) % 10;
-                    if (var2.gr != var3) {
+                for(int var1 = 0; var1 < this.playerCount; ++var1) {
+                    Character var2 = this.players[var1];
+                    var3 = (var2.waypointCurrent + 1) % 10;
+                    if (var2.movingStep != var3) {
                         byte var4 = -1;
-                        var5 = var2.gr;
+                        var5 = var2.movingStep;
                         if (var5 < var3) {
                             var6 = var3 - var5;
                         } else {
@@ -2153,23 +2153,23 @@ public class mudclient extends GameConnection {
                             var7 = (var6 - 1) * 4;
                         }
 
-                        if (var2.ir[var5] - var2.ar <= this.ot * 3 && var2.jr[var5] - var2.br <= this.ot * 3 && var2.ir[var5] - var2.ar >= -this.ot * 3 && var2.jr[var5] - var2.br >= -this.ot * 3 && var6 <= 8) {
-                            if (var2.ar < var2.ir[var5]) {
-                                var2.ar += var7;
+                        if (var2.waypointsX[var5] - var2.currentX <= this.ot * 3 && var2.waypointsY[var5] - var2.currentY <= this.ot * 3 && var2.waypointsX[var5] - var2.currentX >= -this.ot * 3 && var2.waypointsY[var5] - var2.currentY >= -this.ot * 3 && var6 <= 8) {
+                            if (var2.currentX < var2.waypointsX[var5]) {
+                                var2.currentX += var7;
                                 ++var2.dr;
                                 var4 = 2;
-                            } else if (var2.ar > var2.ir[var5]) {
-                                var2.ar -= var7;
+                            } else if (var2.currentX > var2.waypointsX[var5]) {
+                                var2.currentX -= var7;
                                 ++var2.dr;
                                 var4 = 6;
                             }
 
-                            if (var2.ar - var2.ir[var5] < var7 && var2.ar - var2.ir[var5] > -var7) {
-                                var2.ar = var2.ir[var5];
+                            if (var2.currentX - var2.waypointsX[var5] < var7 && var2.currentX - var2.waypointsX[var5] > -var7) {
+                                var2.currentX = var2.waypointsX[var5];
                             }
 
-                            if (var2.br < var2.jr[var5]) {
-                                var2.br += var7;
+                            if (var2.currentY < var2.waypointsY[var5]) {
+                                var2.currentY += var7;
                                 ++var2.dr;
                                 if (var4 == -1) {
                                     var4 = 4;
@@ -2178,8 +2178,8 @@ public class mudclient extends GameConnection {
                                 } else {
                                     var4 = 5;
                                 }
-                            } else if (var2.br > var2.jr[var5]) {
-                                var2.br -= var7;
+                            } else if (var2.currentY > var2.waypointsY[var5]) {
+                                var2.currentY -= var7;
                                 ++var2.dr;
                                 if (var4 == -1) {
                                     var4 = 0;
@@ -2190,20 +2190,20 @@ public class mudclient extends GameConnection {
                                 }
                             }
 
-                            if (var2.br - var2.jr[var5] < var7 && var2.br - var2.jr[var5] > -var7) {
-                                var2.br = var2.jr[var5];
+                            if (var2.currentY - var2.waypointsY[var5] < var7 && var2.currentY - var2.waypointsY[var5] > -var7) {
+                                var2.currentY = var2.waypointsY[var5];
                             }
                         } else {
-                            var2.ar = var2.ir[var5];
-                            var2.br = var2.jr[var5];
+                            var2.currentX = var2.waypointsX[var5];
+                            var2.currentY = var2.waypointsY[var5];
                         }
 
                         if (var4 != -1) {
                             var2.er = var4;
                         }
 
-                        if (var2.ar == var2.ir[var5] && var2.br == var2.jr[var5]) {
-                            var2.gr = (var5 + 1) % 10;
+                        if (var2.currentX == var2.waypointsX[var5] && var2.currentY == var2.waypointsY[var5]) {
+                            var2.movingStep = (var5 + 1) % 10;
                         }
                     } else {
                         var2.er = var2.fr;
@@ -2240,10 +2240,10 @@ public class mudclient extends GameConnection {
                 int var13;
                 for(int var9 = 0; var9 < this.qv; ++var9) {
                     Character var10 = this.tv[var9];
-                    var13 = (var10.hr + 1) % 10;
-                    if (var10.gr != var13) {
+                    var13 = (var10.waypointCurrent + 1) % 10;
+                    if (var10.movingStep != var13) {
                         byte var11 = -1;
-                        var6 = var10.gr;
+                        var6 = var10.movingStep;
                         if (var6 < var13) {
                             var7 = var13 - var6;
                         } else {
@@ -2255,23 +2255,23 @@ public class mudclient extends GameConnection {
                             var8 = (var7 - 1) * 4;
                         }
 
-                        if (var10.ir[var6] - var10.ar <= this.ot * 3 && var10.jr[var6] - var10.br <= this.ot * 3 && var10.ir[var6] - var10.ar >= -this.ot * 3 && var10.jr[var6] - var10.br >= -this.ot * 3 && var7 <= 8) {
-                            if (var10.ar < var10.ir[var6]) {
-                                var10.ar += var8;
+                        if (var10.waypointsX[var6] - var10.currentX <= this.ot * 3 && var10.waypointsY[var6] - var10.currentY <= this.ot * 3 && var10.waypointsX[var6] - var10.currentX >= -this.ot * 3 && var10.waypointsY[var6] - var10.currentY >= -this.ot * 3 && var7 <= 8) {
+                            if (var10.currentX < var10.waypointsX[var6]) {
+                                var10.currentX += var8;
                                 ++var10.dr;
                                 var11 = 2;
-                            } else if (var10.ar > var10.ir[var6]) {
-                                var10.ar -= var8;
+                            } else if (var10.currentX > var10.waypointsX[var6]) {
+                                var10.currentX -= var8;
                                 ++var10.dr;
                                 var11 = 6;
                             }
 
-                            if (var10.ar - var10.ir[var6] < var8 && var10.ar - var10.ir[var6] > -var8) {
-                                var10.ar = var10.ir[var6];
+                            if (var10.currentX - var10.waypointsX[var6] < var8 && var10.currentX - var10.waypointsX[var6] > -var8) {
+                                var10.currentX = var10.waypointsX[var6];
                             }
 
-                            if (var10.br < var10.jr[var6]) {
-                                var10.br += var8;
+                            if (var10.currentY < var10.waypointsY[var6]) {
+                                var10.currentY += var8;
                                 ++var10.dr;
                                 if (var11 == -1) {
                                     var11 = 4;
@@ -2280,8 +2280,8 @@ public class mudclient extends GameConnection {
                                 } else {
                                     var11 = 5;
                                 }
-                            } else if (var10.br > var10.jr[var6]) {
-                                var10.br -= var8;
+                            } else if (var10.currentY > var10.waypointsY[var6]) {
+                                var10.currentY -= var8;
                                 ++var10.dr;
                                 if (var11 == -1) {
                                     var11 = 0;
@@ -2292,20 +2292,20 @@ public class mudclient extends GameConnection {
                                 }
                             }
 
-                            if (var10.br - var10.jr[var6] < var8 && var10.br - var10.jr[var6] > -var8) {
-                                var10.br = var10.jr[var6];
+                            if (var10.currentY - var10.waypointsY[var6] < var8 && var10.currentY - var10.waypointsY[var6] > -var8) {
+                                var10.currentY = var10.waypointsY[var6];
                             }
                         } else {
-                            var10.ar = var10.ir[var6];
-                            var10.br = var10.jr[var6];
+                            var10.currentX = var10.waypointsX[var6];
+                            var10.currentY = var10.waypointsY[var6];
                         }
 
                         if (var11 != -1) {
                             var10.er = var11;
                         }
 
-                        if (var10.ar == var10.ir[var6] && var10.br == var10.jr[var6]) {
-                            var10.gr = (var6 + 1) % 10;
+                        if (var10.currentX == var10.waypointsX[var6] && var10.currentY == var10.waypointsY[var6]) {
+                            var10.movingStep = (var6 + 1) % 10;
                         }
                     } else {
                         var10.er = var10.fr;
@@ -2324,30 +2324,30 @@ public class mudclient extends GameConnection {
                     }
                 }
 
-                for(var3 = 0; var3 < this.ev; ++var3) {
-                    Character var14 = this.iv[var3];
+                for(var3 = 0; var3 < this.playerCount; ++var3) {
+                    Character var14 = this.players[var3];
                     if (var14.cs > 0) {
                         --var14.cs;
                     }
                 }
 
                 if (this.xx) {
-                    if (this.wu - this.kv.ar < -500 || this.wu - this.kv.ar > 500 || this.xu - this.kv.br < -500 || this.xu - this.kv.br > 500) {
-                        this.wu = this.kv.ar;
-                        this.xu = this.kv.br;
+                    if (this.wu - this.localPlayer.currentX < -500 || this.wu - this.localPlayer.currentX > 500 || this.xu - this.localPlayer.currentY < -500 || this.xu - this.localPlayer.currentY > 500) {
+                        this.wu = this.localPlayer.currentX;
+                        this.xu = this.localPlayer.currentY;
                     }
                 } else {
-                    if (this.wu - this.kv.ar < -500 || this.wu - this.kv.ar > 500 || this.xu - this.kv.br < -500 || this.xu - this.kv.br > 500) {
-                        this.wu = this.kv.ar;
-                        this.xu = this.kv.br;
+                    if (this.wu - this.localPlayer.currentX < -500 || this.wu - this.localPlayer.currentX > 500 || this.xu - this.localPlayer.currentY < -500 || this.xu - this.localPlayer.currentY > 500) {
+                        this.wu = this.localPlayer.currentX;
+                        this.xu = this.localPlayer.currentY;
                     }
 
-                    if (this.wu != this.kv.ar) {
-                        this.wu += (this.kv.ar - this.wu) / (16 + (this.uu - 500) / 15);
+                    if (this.wu != this.localPlayer.currentX) {
+                        this.wu += (this.localPlayer.currentX - this.wu) / (16 + (this.uu - 500) / 15);
                     }
 
-                    if (this.xu != this.kv.br) {
-                        this.xu += (this.kv.br - this.xu) / (16 + (this.uu - 500) / 15);
+                    if (this.xu != this.localPlayer.currentY) {
+                        this.xu += (this.localPlayer.currentY - this.xu) / (16 + (this.uu - 500) / 15);
                     }
 
                     if (this.cameraModeAuto) {
@@ -2414,9 +2414,9 @@ public class mudclient extends GameConnection {
                     } else if (var15.equalsIgnoreCase("closecon99") && !this.appletMode) {
                         this.ob();
                     } else if (!this.y(var15)) {
-                        this.kv.mr = 150;
-                        this.kv.lr = var15;
-                        this.pk(this.kv.xq + ": " + var15, 2);
+                        this.localPlayer.mr = 150;
+                        this.localPlayer.lr = var15;
+                        this.pk(this.localPlayer.xq + ": " + var15, 2);
                     }
                 }
 
@@ -2641,15 +2641,15 @@ public class mudclient extends GameConnection {
     public Character vk(int var1, int var2, int var3, int var4) {
         if (this.hv[var1] == null) {
             this.hv[var1] = new Character();
-            this.hv[var1].yq = var1;
-            this.hv[var1].zq = 0;
+            this.hv[var1].pid = var1;
+            this.hv[var1].appearanceId = 0;
         }
 
         Character var5 = this.hv[var1];
         boolean var6 = false;
 
         for(int var7 = 0; var7 < this.fv; ++var7) {
-            if (this.jv[var7].yq == var1) {
+            if (this.jv[var7].pid == var1) {
                 var6 = true;
                 break;
             }
@@ -2657,37 +2657,37 @@ public class mudclient extends GameConnection {
 
         if (var6) {
             var5.fr = var4;
-            int var8 = var5.hr;
-            if (var2 != var5.ir[var8] || var3 != var5.jr[var8]) {
-                var5.hr = var8 = (var8 + 1) % 10;
-                var5.ir[var8] = var2;
-                var5.jr[var8] = var3;
+            int var8 = var5.waypointCurrent;
+            if (var2 != var5.waypointsX[var8] || var3 != var5.waypointsY[var8]) {
+                var5.waypointCurrent = var8 = (var8 + 1) % 10;
+                var5.waypointsX[var8] = var2;
+                var5.waypointsY[var8] = var3;
             }
         } else {
-            var5.yq = var1;
-            var5.gr = 0;
-            var5.hr = 0;
-            var5.ir[0] = var5.ar = var2;
-            var5.jr[0] = var5.br = var3;
+            var5.pid = var1;
+            var5.movingStep = 0;
+            var5.waypointCurrent = 0;
+            var5.waypointsX[0] = var5.currentX = var2;
+            var5.waypointsY[0] = var5.currentY = var3;
             var5.fr = var5.er = var4;
             var5.dr = 0;
         }
 
-        this.iv[this.ev++] = var5;
+        this.players[this.playerCount++] = var5;
         return var5;
     }
 
     public Character sm(int var1, int var2, int var3, int var4, int var5) {
         if (this.sv[var1] == null) {
             this.sv[var1] = new Character();
-            this.sv[var1].yq = var1;
+            this.sv[var1].pid = var1;
         }
 
         Character var6 = this.sv[var1];
         boolean var7 = false;
 
         for(int var8 = 0; var8 < this.rv; ++var8) {
-            if (this.uv[var8].yq == var1) {
+            if (this.uv[var8].pid == var1) {
                 var7 = true;
                 break;
             }
@@ -2696,18 +2696,18 @@ public class mudclient extends GameConnection {
         if (var7) {
             var6.cr = var5;
             var6.fr = var4;
-            int var9 = var6.hr;
-            if (var2 != var6.ir[var9] || var3 != var6.jr[var9]) {
-                var6.hr = var9 = (var9 + 1) % 10;
-                var6.ir[var9] = var2;
-                var6.jr[var9] = var3;
+            int var9 = var6.waypointCurrent;
+            if (var2 != var6.waypointsX[var9] || var3 != var6.waypointsY[var9]) {
+                var6.waypointCurrent = var9 = (var9 + 1) % 10;
+                var6.waypointsX[var9] = var2;
+                var6.waypointsY[var9] = var3;
             }
         } else {
-            var6.yq = var1;
-            var6.gr = 0;
-            var6.hr = 0;
-            var6.ir[0] = var6.ar = var2;
-            var6.jr[0] = var6.br = var3;
+            var6.pid = var1;
+            var6.movingStep = 0;
+            var6.waypointCurrent = 0;
+            var6.waypointsX[0] = var6.currentX = var2;
+            var6.waypointsY[0] = var6.currentY = var3;
             var6.cr = var5;
             var6.fr = var6.er = var4;
             var6.dr = 0;
@@ -2728,40 +2728,40 @@ public class mudclient extends GameConnection {
             int var13;
             int var14;
             int var15;
-            int bitIdx;
+            int pdataIdx;
             int reusableInt0;
             byte var26;
             int var27;
             boolean var33;
             if (opcode == 255) {
-                this.fv = this.ev;
+                this.fv = this.playerCount;
 
-                for(bitIdx = 0; bitIdx < this.fv; ++bitIdx) {
-                    this.jv[bitIdx] = this.iv[bitIdx];
+                for(pdataIdx = 0; pdataIdx < this.fv; ++pdataIdx) {
+                    this.jv[pdataIdx] = this.players[pdataIdx];
                 }
 
                 var26 = 8;
-                this.lv = Utility.readBits(pdata, var26, 10);
+                this.localRegionX = Utility.readBits(pdata, var26, 10);
                 reusableInt0 = var26 + 10;
-                this.mv = Utility.readBits(pdata, reusableInt0, 12);
+                this.localRegionY = Utility.readBits(pdata, reusableInt0, 12);
                 reusableInt0 += 12;
-                reusableInt1 = Utility.readBits(pdata, reusableInt0, 4);
+                reusableInt1 = Utility.readBits(pdata, reusableInt0, 4); // animation
                 reusableInt0 += 4;
-                boolean var28 = this.wm(this.lv, this.mv);
-                this.lv -= this.ku;
-                this.mv -= this.lu;
-                var8 = this.lv * this.ot + 64;
-                var9 = this.mv * this.ot + 64;
+                boolean var28 = this.wm(this.localRegionX, this.localRegionY);
+                this.localRegionX -= this.ku;
+                this.localRegionY -= this.lu;
+                var8 = this.localRegionX * this.ot + 64;
+                var9 = this.localRegionY * this.ot + 64;
                 if (var28) {
-                    this.kv.hr = 0;
-                    this.kv.gr = 0;
-                    this.kv.ar = this.kv.ir[0] = var8;
-                    this.kv.br = this.kv.jr[0] = var9;
+                    this.localPlayer.waypointCurrent = 0;
+                    this.localPlayer.movingStep = 0;
+                    this.localPlayer.currentX = this.localPlayer.waypointsX[0] = var8;
+                    this.localPlayer.currentY = this.localPlayer.waypointsY[0] = var9;
                 }
 
-                this.ev = 0;
-                this.kv = this.vk(this.serverIndex, var8, var9, reusableInt1);
-                var10 = Utility.readBits(pdata, reusableInt0, 8);
+                this.playerCount = 0;
+                this.localPlayer = this.vk(this.serverIndex, var8, var9, reusableInt1);
+                var10 = Utility.readBits(pdata, reusableInt0, 8); // server's understood known players count
                 reusableInt0 += 8;
                 var27 = 0;
 
@@ -2771,26 +2771,26 @@ public class mudclient extends GameConnection {
                         var12 = 0;
 
                         while(reusableInt0 + 24 < psize * 8) {
-                            var13 = Utility.readBits(pdata, reusableInt0, 11);
+                            var13 = Utility.readBits(pdata, reusableInt0, 11); // pid
                             reusableInt0 += 11;
-                            var14 = Utility.readBits(pdata, reusableInt0, 5);
+                            var14 = Utility.readBits(pdata, reusableInt0, 5); // x coord
                             reusableInt0 += 5;
                             if (var14 > 15) {
                                 var14 -= 32;
                             }
 
-                            var15 = Utility.readBits(pdata, reusableInt0, 5);
+                            var15 = Utility.readBits(pdata, reusableInt0, 5); // y coord
                             reusableInt0 += 5;
                             if (var15 > 15) {
                                 var15 -= 32;
                             }
 
-                            reusableInt1 = Utility.readBits(pdata, reusableInt0, 4);
+                            reusableInt1 = Utility.readBits(pdata, reusableInt0, 4); // animation
                             reusableInt0 += 4;
-                            var34 = Utility.readBits(pdata, reusableInt0, 1);
+                            var34 = Utility.readBits(pdata, reusableInt0, 1); // new player (need to add to known players)
                             ++reusableInt0;
-                            var8 = (this.lv + var14) * this.ot + 64;
-                            var9 = (this.mv + var15) * this.ot + 64;
+                            var8 = (this.localRegionX + var14) * this.ot + 64;
+                            var9 = (this.localRegionY + var15) * this.ot + 64;
                             this.vk(var13, var8, var9, reusableInt1);
                             if (var34 == 0) {
                                 this.vv[var12++] = var13;
@@ -2799,12 +2799,12 @@ public class mudclient extends GameConnection {
 
                         if (var12 > 0) {
                             super.clientStream.createOutgoingPacket(254);
-                            super.clientStream.putShort(var12);
+                            super.clientStream.putShort(var12); // number of known players
 
                             for(var13 = 0; var13 < var12; ++var13) {
-                                Character var38 = this.hv[this.vv[var13]];
-                                super.clientStream.putShort(var38.yq);
-                                super.clientStream.putShort(var38.zq);
+                                Character player = this.hv[this.vv[var13]];
+                                super.clientStream.putShort(player.pid);
+                                super.clientStream.putShort(player.appearanceId);
                             }
 
                             super.clientStream.sendPacket();
@@ -2824,9 +2824,9 @@ public class mudclient extends GameConnection {
                             if (var14 == 0) {
                                 var15 = Utility.readBits(pdata, reusableInt0, 3);
                                 reusableInt0 += 3;
-                                var34 = var37.hr;
-                                int var17 = var37.ir[var34];
-                                int var18 = var37.jr[var34];
+                                var34 = var37.waypointCurrent;
+                                int var17 = var37.waypointsX[var34];
+                                int var18 = var37.waypointsY[var34];
                                 if (var15 == 2 || var15 == 1 || var15 == 3) {
                                     var17 += this.ot;
                                 }
@@ -2844,9 +2844,9 @@ public class mudclient extends GameConnection {
                                 }
 
                                 var37.fr = var15;
-                                var37.hr = var34 = (var34 + 1) % 10;
-                                var37.ir[var34] = var17;
-                                var37.jr[var34] = var18;
+                                var37.waypointCurrent = var34 = (var34 + 1) % 10;
+                                var37.waypointsX[var34] = var17;
+                                var37.waypointsY[var34] = var18;
                             } else {
                                 var15 = Utility.readBits(pdata, reusableInt0, 4);
                                 if ((var15 & 12) == 12) {
@@ -2859,7 +2859,7 @@ public class mudclient extends GameConnection {
                             }
                         }
 
-                        this.iv[this.ev++] = var37;
+                        this.players[this.playerCount++] = var37;
                     }
 
                     ++var27;
@@ -2867,15 +2867,15 @@ public class mudclient extends GameConnection {
             } else {
                 int reusableInt2;
                 if (opcode == 254) {
-                    bitIdx = 1;
+                    pdataIdx = 1;
 
                     while(true) {
-                        while(bitIdx < psize) {
-                            if (Utility.readByte(pdata[bitIdx]) == 255) {
+                        while(pdataIdx < psize) {
+                            if (Utility.readByte(pdata[pdataIdx]) == 255) {
                                 reusableInt0 = 0;
-                                reusableInt1 = this.lv + pdata[bitIdx + 1] >> 3;
-                                reusableInt2 = this.mv + pdata[bitIdx + 2] >> 3;
-                                bitIdx += 3;
+                                reusableInt1 = this.localRegionX + pdata[pdataIdx + 1] >> 3;
+                                reusableInt2 = this.localRegionY + pdata[pdataIdx + 2] >> 3;
+                                pdataIdx += 3;
 
                                 for(var8 = 0; var8 < this.xv; ++var8) {
                                     var9 = (this.zv[var8] >> 3) - reusableInt1;
@@ -2894,10 +2894,10 @@ public class mudclient extends GameConnection {
 
                                 this.xv = reusableInt0;
                             } else {
-                                reusableInt0 = Utility.readShort(pdata, bitIdx);
-                                bitIdx += 2;
-                                reusableInt1 = this.lv + pdata[bitIdx++];
-                                reusableInt2 = this.mv + pdata[bitIdx++];
+                                reusableInt0 = Utility.readShort(pdata, pdataIdx);
+                                pdataIdx += 2;
+                                reusableInt1 = this.localRegionX + pdata[pdataIdx++];
+                                reusableInt2 = this.localRegionY + pdata[pdataIdx++];
                                 if ((reusableInt0 & '耀') == 0) {
                                     this.zv[this.xv] = reusableInt1;
                                     this.aw[this.xv] = reusableInt2;
@@ -2941,15 +2941,15 @@ public class mudclient extends GameConnection {
                 }
 
                 if (opcode == 253) {
-                    bitIdx = 1;
+                    pdataIdx = 1;
 
                     while(true) {
-                        while(bitIdx < psize) {
-                            if (Utility.readByte(pdata[bitIdx]) == 255) {
+                        while(pdataIdx < psize) {
+                            if (Utility.readByte(pdata[pdataIdx]) == 255) {
                                 reusableInt0 = 0;
-                                reusableInt1 = this.lv + pdata[bitIdx + 1] >> 3;
-                                reusableInt2 = this.mv + pdata[bitIdx + 2] >> 3;
-                                bitIdx += 3;
+                                reusableInt1 = this.localRegionX + pdata[pdataIdx + 1] >> 3;
+                                reusableInt2 = this.localRegionY + pdata[pdataIdx + 2] >> 3;
+                                pdataIdx += 3;
 
                                 for(var8 = 0; var8 < this.ew; ++var8) {
                                     var9 = (this.gw[var8] >> 3) - reusableInt1;
@@ -2973,10 +2973,10 @@ public class mudclient extends GameConnection {
 
                                 this.ew = reusableInt0;
                             } else {
-                                reusableInt0 = Utility.readShort(pdata, bitIdx);
-                                bitIdx += 2;
-                                reusableInt1 = this.lv + pdata[bitIdx++];
-                                reusableInt2 = this.mv + pdata[bitIdx++];
+                                reusableInt0 = Utility.readShort(pdata, pdataIdx);
+                                pdataIdx += 2;
+                                reusableInt1 = this.localRegionX + pdata[pdataIdx++];
+                                reusableInt2 = this.localRegionY + pdata[pdataIdx++];
                                 var8 = 0;
 
                                 for(var9 = 0; var9 < this.ew; ++var9) {
@@ -3038,19 +3038,19 @@ public class mudclient extends GameConnection {
                 if (opcode == 252) { // inventory items
                     this.inventoryItemsCount = 0;
 
-                    for(bitIdx = 8; bitIdx + 9 < psize * 8; ++this.inventoryItemsCount) {
-                        reusableInt0 = Utility.readBits(pdata, bitIdx, 10); // itemId
-                        bitIdx += 10;
+                    for(pdataIdx = 8; pdataIdx + 9 < psize * 8; ++this.inventoryItemsCount) {
+                        reusableInt0 = Utility.readBits(pdata, pdataIdx, 10); // itemId
+                        pdataIdx += 10;
                         reusableInt1 = 0; // wielded
                         if (GameData.itemWieldable[reusableInt0] != 0) {
-                            reusableInt1 = Utility.readBits(pdata, bitIdx, 1);
-                            ++bitIdx;
+                            reusableInt1 = Utility.readBits(pdata, pdataIdx, 1);
+                            ++pdataIdx;
                         }
 
                         reusableInt2 = 1; // number in stack
                         if (GameData.itemStackable[reusableInt0] == 0) {
-                            reusableInt2 = Utility.readBits(pdata, bitIdx, 16);
-                            bitIdx += 16;
+                            reusableInt2 = Utility.readBits(pdata, pdataIdx, 16);
+                            pdataIdx += 16;
                         }
 
                         this.inventoryItemIds[this.inventoryItemsCount] = reusableInt0;
@@ -3063,10 +3063,10 @@ public class mudclient extends GameConnection {
 
                 Character var24;
                 if (opcode == 250) {
-                    bitIdx = Utility.readShort(pdata, 1);
+                    pdataIdx = Utility.readShort(pdata, 1);
                     reusableInt0 = 3;
 
-                    for(reusableInt1 = 0; reusableInt1 < bitIdx; ++reusableInt1) {
+                    for(reusableInt1 = 0; reusableInt1 < pdataIdx; ++reusableInt1) {
                         reusableInt2 = Utility.readShort(pdata, reusableInt0);
                         reusableInt0 += 2;
                         var24 = this.hv[reusableInt2];
@@ -3087,10 +3087,10 @@ public class mudclient extends GameConnection {
                                 if (var36.startsWith("@que@")) {
                                     var24.mr = 150;
                                     var24.lr = var36;
-                                    if (var24 == this.kv) {
+                                    if (var24 == this.localPlayer) {
                                         this.pk("@yel@" + var24.xq + ": " + var24.lr, 5);
                                     }
-                                } else if (var24 != this.kv) {
+                                } else if (var24 != this.localPlayer) {
                                     var33 = false;
 
                                     for(var13 = 0; var13 < super.nd; ++var13) {
@@ -3121,7 +3121,7 @@ public class mudclient extends GameConnection {
                                 var24.qr = var27;
                                 var24.rr = var12;
                                 var24.sr = 200;
-                                if (var24 == this.kv) {
+                                if (var24 == this.localPlayer) {
                                     this.playerStatCur[3] = var27;
                                     this.playerStatMax[3] = var12;
                                 }
@@ -3154,7 +3154,7 @@ public class mudclient extends GameConnection {
                                 var10 = Utility.readByte(pdata[reusableInt0]);
                                 reusableInt0 += var10 + 1;
                             } else {
-                                var24.zq = Utility.readShort(pdata, reusableInt0);
+                                var24.appearanceId = Utility.readShort(pdata, reusableInt0);
                                 reusableInt0 += 2;
                                 var24.wq = Utility.readLong(pdata, reusableInt0);
                                 reusableInt0 += 8;
@@ -3186,15 +3186,15 @@ public class mudclient extends GameConnection {
                 }
 
                 if (opcode == 249) {
-                    bitIdx = 1;
+                    pdataIdx = 1;
 
                     while(true) {
-                        while(bitIdx < psize) {
-                            if (Utility.readByte(pdata[bitIdx]) == 255) {
+                        while(pdataIdx < psize) {
+                            if (Utility.readByte(pdata[pdataIdx]) == 255) {
                                 reusableInt0 = 0;
-                                reusableInt1 = this.lv + pdata[bitIdx + 1] >> 3;
-                                reusableInt2 = this.mv + pdata[bitIdx + 2] >> 3;
-                                bitIdx += 3;
+                                reusableInt1 = this.localRegionX + pdata[pdataIdx + 1] >> 3;
+                                reusableInt2 = this.localRegionY + pdata[pdataIdx + 2] >> 3;
+                                pdataIdx += 3;
 
                                 for(var8 = 0; var8 < this.nw; ++var8) {
                                     var9 = (this.pw[var8] >> 3) - reusableInt1;
@@ -3218,11 +3218,11 @@ public class mudclient extends GameConnection {
 
                                 this.nw = reusableInt0;
                             } else {
-                                reusableInt0 = Utility.readShort(pdata, bitIdx);
-                                bitIdx += 2;
-                                reusableInt1 = this.lv + pdata[bitIdx++];
-                                reusableInt2 = this.mv + pdata[bitIdx++];
-                                byte var25 = pdata[bitIdx++];
+                                reusableInt0 = Utility.readShort(pdata, pdataIdx);
+                                pdataIdx += 2;
+                                reusableInt1 = this.localRegionX + pdata[pdataIdx++];
+                                reusableInt2 = this.localRegionY + pdata[pdataIdx++];
+                                byte var25 = pdata[pdataIdx++];
                                 var9 = 0;
 
                                 for(var10 = 0; var10 < this.nw; ++var10) {
@@ -3264,8 +3264,8 @@ public class mudclient extends GameConnection {
                     this.rv = this.qv;
                     this.qv = 0;
 
-                    for(bitIdx = 0; bitIdx < this.rv; ++bitIdx) {
-                        this.uv[bitIdx] = this.tv[bitIdx];
+                    for(pdataIdx = 0; pdataIdx < this.rv; ++pdataIdx) {
+                        this.uv[pdataIdx] = this.tv[pdataIdx];
                     }
 
                     var26 = 8;
@@ -3282,9 +3282,9 @@ public class mudclient extends GameConnection {
                             if (var10 == 0) {
                                 var27 = Utility.readBits(pdata, reusableInt0, 3);
                                 reusableInt0 += 3;
-                                var12 = var24.hr;
-                                var13 = var24.ir[var12];
-                                var14 = var24.jr[var12];
+                                var12 = var24.waypointCurrent;
+                                var13 = var24.waypointsX[var12];
+                                var14 = var24.waypointsY[var12];
                                 if (var27 == 2 || var27 == 1 || var27 == 3) {
                                     var13 += this.ot;
                                 }
@@ -3302,9 +3302,9 @@ public class mudclient extends GameConnection {
                                 }
 
                                 var24.fr = var27;
-                                var24.hr = var12 = (var12 + 1) % 10;
-                                var24.ir[var12] = var13;
-                                var24.jr[var12] = var14;
+                                var24.waypointCurrent = var12 = (var12 + 1) % 10;
+                                var24.waypointsX[var12] = var13;
+                                var24.waypointsY[var12] = var14;
                             } else {
                                 var27 = Utility.readBits(pdata, reusableInt0, 4);
                                 if ((var27 & 12) == 12) {
@@ -3337,8 +3337,8 @@ public class mudclient extends GameConnection {
 
                         var27 = Utility.readBits(pdata, reusableInt0, 4);
                         reusableInt0 += 4;
-                        var12 = (this.lv + var9) * this.ot + 64;
-                        var13 = (this.mv + var10) * this.ot + 64;
+                        var12 = (this.localRegionX + var9) * this.ot + 64;
+                        var13 = (this.localRegionY + var10) * this.ot + 64;
                         var14 = Utility.readBits(pdata, reusableInt0, 8);
                         reusableInt0 += 8;
                         if (var14 >= GameData.oib) {
@@ -3350,10 +3350,10 @@ public class mudclient extends GameConnection {
                 }
 
                 if (opcode == 247) {
-                    bitIdx = Utility.readShort(pdata, 1);
+                    pdataIdx = Utility.readShort(pdata, 1);
                     reusableInt0 = 3;
 
-                    for(reusableInt1 = 0; reusableInt1 < bitIdx; ++reusableInt1) {
+                    for(reusableInt1 = 0; reusableInt1 < pdataIdx; ++reusableInt1) {
                         reusableInt2 = Utility.readShort(pdata, reusableInt0);
                         reusableInt0 += 2;
                         var24 = this.sv[reusableInt2];
@@ -3368,7 +3368,7 @@ public class mudclient extends GameConnection {
                                 String var30 = new String(pdata, reusableInt0, var31);
                                 var24.mr = 150;
                                 var24.lr = var30;
-                                if (var10 == this.kv.yq) {
+                                if (var10 == this.localPlayer.pid) {
                                     this.pk("@yel@" + GameData.pib[var24.cr][0] + ": " + var24.lr, 5);
                                 }
                             }
@@ -3395,11 +3395,11 @@ public class mudclient extends GameConnection {
 
                 if (opcode == 246) {
                     this.yz = true;
-                    bitIdx = Utility.readByte(pdata[1]);
-                    this.zz = bitIdx;
+                    pdataIdx = Utility.readByte(pdata[1]);
+                    this.zz = pdataIdx;
                     reusableInt0 = 2;
 
-                    for(reusableInt1 = 0; reusableInt1 < bitIdx; ++reusableInt1) {
+                    for(reusableInt1 = 0; reusableInt1 < pdataIdx; ++reusableInt1) {
                         reusableInt2 = Utility.readByte(pdata[reusableInt0]);
                         ++reusableInt0;
                         this.aab[reusableInt1] = new String(pdata, reusableInt0, reusableInt2);
@@ -3425,25 +3425,24 @@ public class mudclient extends GameConnection {
                 }
 
                 if (opcode == 243) {
-                    bitIdx = 1;
+                    pdataIdx = 1;
 
                     for(reusableInt0 = 0; reusableInt0 < 16; ++reusableInt0) {
-                        this.playerStatCur[reusableInt0] = Utility.readByte(pdata[bitIdx++]);
+                        this.playerStatCur[reusableInt0] = Utility.readByte(pdata[pdataIdx++]);
                     }
 
                     for(reusableInt1 = 0; reusableInt1 < 16; ++reusableInt1) {
-                        this.playerStatMax[reusableInt1] = Utility.readByte(pdata[bitIdx++]);
+                        this.playerStatMax[reusableInt1] = Utility.readByte(pdata[pdataIdx++]);
                     }
 
-                    this.questPoints = Utility.readByte(pdata[bitIdx++]);
+                    this.questPoints = Utility.readByte(pdata[pdataIdx++]);
                     return;
                 }
 
                 if (opcode == 242) {
-                    for(bitIdx = 0; bitIdx < 5; ++bitIdx) {
-                        this.ex[bitIdx] = Utility.readByte(pdata[1 + bitIdx]);
+                    for(pdataIdx = 0; pdataIdx < 5; ++pdataIdx) {
+                        this.ex[pdataIdx] = Utility.readByte(pdata[1 + pdataIdx]);
                     }
-
                     return;
                 }
 
@@ -3453,11 +3452,11 @@ public class mudclient extends GameConnection {
                 }
 
                 if (opcode == 240) {
-                    bitIdx = (psize - 1) / 4;
+                    pdataIdx = (psize - 1) / 4;
 
-                    for(reusableInt0 = 0; reusableInt0 < bitIdx; ++reusableInt0) {
-                        reusableInt1 = this.lv + Utility.readUnsignedShort(pdata, 1 + reusableInt0 * 4) >> 3;
-                        reusableInt2 = this.mv + Utility.readUnsignedShort(pdata, 3 + reusableInt0 * 4) >> 3;
+                    for(reusableInt0 = 0; reusableInt0 < pdataIdx; ++reusableInt0) {
+                        reusableInt1 = this.localRegionX + Utility.readUnsignedShort(pdata, 1 + reusableInt0 * 4) >> 3;
+                        reusableInt2 = this.localRegionY + Utility.readUnsignedShort(pdata, 3 + reusableInt0 * 4) >> 3;
                         var8 = 0;
 
                         for(var9 = 0; var9 < this.xv; ++var9) {
@@ -3533,9 +3532,9 @@ public class mudclient extends GameConnection {
                 }
 
                 if (opcode == 238) {
-                    bitIdx = Utility.readShort(pdata, 1);
-                    if (this.hv[bitIdx] != null) {
-                        this.fz = this.hv[bitIdx].xq;
+                    pdataIdx = Utility.readShort(pdata, 1);
+                    if (this.hv[pdataIdx] != null) {
+                        this.fz = this.hv[pdataIdx].xq;
                     }
 
                     this.ez = true;
@@ -3553,13 +3552,13 @@ public class mudclient extends GameConnection {
 
                 if (opcode == 236) {
                     this.jz = pdata[1] & 255;
-                    bitIdx = 2;
+                    pdataIdx = 2;
 
                     for(reusableInt0 = 0; reusableInt0 < this.jz; ++reusableInt0) {
-                        this.kz[reusableInt0] = Utility.readShort(pdata, bitIdx);
-                        bitIdx += 2;
-                        this.lz[reusableInt0] = Utility.readShort(pdata, bitIdx);
-                        bitIdx += 2;
+                        this.kz[reusableInt0] = Utility.readShort(pdata, pdataIdx);
+                        pdataIdx += 2;
+                        this.lz[reusableInt0] = Utility.readShort(pdata, pdataIdx);
+                        pdataIdx += 2;
                     }
 
                     this.mz = false;
@@ -3606,16 +3605,16 @@ public class mudclient extends GameConnection {
                     }
 
                     if (opcode == 227) {
-                        for(bitIdx = 0; bitIdx < psize - 1; ++bitIdx) {
-                            this.wx[bitIdx] = pdata[bitIdx + 1] == 1;
+                        for(pdataIdx = 0; pdataIdx < psize - 1; ++pdataIdx) {
+                            this.wx[pdataIdx] = pdata[pdataIdx + 1] == 1;
                         }
 
                         return;
                     }
 
                     if (opcode == 226) {
-                        for(bitIdx = 0; bitIdx < this.tx; ++bitIdx) {
-                            this.vx[bitIdx] = pdata[bitIdx + 1] == 1;
+                        for(pdataIdx = 0; pdataIdx < this.tx; ++pdataIdx) {
+                            this.vx[pdataIdx] = pdata[pdataIdx + 1] == 1;
                         }
 
                         return;
@@ -3629,11 +3628,11 @@ public class mudclient extends GameConnection {
                     if (opcode == 224) {
                         this.qdb = true;
 
-                        for(bitIdx = 0; bitIdx < 5; ++bitIdx) {
-                            this.zdb[bitIdx] = bitIdx;
-                            this.aeb[bitIdx] = "~:" + this.zdb[bitIdx];
-                            this.securityQuestionsPanel.updateText(this.wdb[bitIdx], "");
-                            this.securityQuestionsPanel.updateText(this.vdb[bitIdx], bitIdx + 1 + ": " + this.ifb[this.zdb[bitIdx]]);
+                        for(pdataIdx = 0; pdataIdx < 5; ++pdataIdx) {
+                            this.zdb[pdataIdx] = pdataIdx;
+                            this.aeb[pdataIdx] = "~:" + this.zdb[pdataIdx];
+                            this.securityQuestionsPanel.updateText(this.wdb[pdataIdx], "");
+                            this.securityQuestionsPanel.updateText(this.vdb[pdataIdx], pdataIdx + 1 + ": " + this.ifb[this.zdb[pdataIdx]]);
                         }
 
                         return;
@@ -3647,22 +3646,22 @@ public class mudclient extends GameConnection {
                 } else {
                     this.qz = true;
                     byte var4 = 1;
-                    bitIdx = var4 + 1;
+                    pdataIdx = var4 + 1;
                     reusableInt0 = pdata[var4] & 255;
-                    byte var22 = pdata[bitIdx++];
-                    this.rz = pdata[bitIdx++] & 255;
-                    this.sz = pdata[bitIdx++] & 255;
+                    byte var22 = pdata[pdataIdx++];
+                    this.rz = pdata[pdataIdx++] & 255;
+                    this.sz = pdata[pdataIdx++] & 255;
 
                     for(reusableInt2 = 0; reusableInt2 < 40; ++reusableInt2) {
                         this.tz[reusableInt2] = -1;
                     }
 
                     for(var8 = 0; var8 < reusableInt0; ++var8) {
-                        this.tz[var8] = Utility.readShort(pdata, bitIdx);
-                        bitIdx += 2;
-                        this.uz[var8] = Utility.readShort(pdata, bitIdx);
-                        bitIdx += 2;
-                        this.vz[var8] = pdata[bitIdx++];
+                        this.tz[var8] = Utility.readShort(pdata, pdataIdx);
+                        pdataIdx += 2;
+                        this.uz[var8] = Utility.readShort(pdata, pdataIdx);
+                        pdataIdx += 2;
+                        this.vz[var8] = pdata[pdataIdx++];
                     }
 
                     if (var22 == 1) {
@@ -3709,7 +3708,7 @@ public class mudclient extends GameConnection {
                 super.clientStream.putString("p-type:" + opcode + " p-size:" + psize);
                 this.sk();
                 super.clientStream.createOutgoingPacket(17);
-                super.clientStream.putString("rx:" + this.lv + " ry:" + this.mv + " num3l:" + this.ew);
+                super.clientStream.putString("rx:" + this.localRegionX + " ry:" + this.localRegionY + " num3l:" + this.ew);
                 this.sk();
                 String var5 = "";
 
@@ -3727,8 +3726,8 @@ public class mudclient extends GameConnection {
     }
 
     public boolean lm(int var1) {
-        int var2 = this.kv.ar / 128;
-        int var3 = this.kv.br / 128;
+        int var2 = this.localPlayer.currentX / 128;
+        int var3 = this.localPlayer.currentY / 128;
 
         for(int var4 = 2; var4 >= 1; --var4) {
             if (var1 == 1 && ((this.world.ugb[var2][var3 - var4] & 128) == 128 || (this.world.ugb[var2 - var4][var3] & 128) == 128 || (this.world.ugb[var2 - var4][var3 - var4] & 128) == 128)) {
@@ -3825,7 +3824,7 @@ public class mudclient extends GameConnection {
                 }
 
                 this.vu = true;
-                if (this.ju == 0 && (this.world.ugb[this.kv.ar / 128][this.kv.br / 128] & 128) == 0) {
+                if (this.ju == 0 && (this.world.ugb[this.localPlayer.currentX / 128][this.localPlayer.currentY / 128] & 128) == 0) {
                     this.scene.yh(this.world.roofModels[this.ju][var1]);
                     if (this.ju == 0) {
                         this.scene.yh(this.world.wallModels[1][var1]);
@@ -3854,8 +3853,8 @@ public class mudclient extends GameConnection {
                     if (this.iw[var2] == 51) {
                         var3 = this.gw[var2];
                         var4 = this.hw[var2];
-                        var5 = var3 - this.kv.ar / 128;
-                        var6 = var4 - this.kv.br / 128;
+                        var5 = var3 - this.localPlayer.currentX / 128;
+                        var6 = var4 - this.localPlayer.currentY / 128;
                         var7 = 7;
                         if (var3 >= 0 && var4 >= 0 && var3 < 96 && var4 < 96 && var5 > -var7 && var5 < var7 && var6 > -var7 && var6 < var7) {
                             this.scene.freeModel(this.fw[var2]);
@@ -3873,8 +3872,8 @@ public class mudclient extends GameConnection {
                     if (this.iw[var2] == 143) {
                         var3 = this.gw[var2];
                         var4 = this.hw[var2];
-                        var5 = var3 - this.kv.ar / 128;
-                        var6 = var4 - this.kv.br / 128;
+                        var5 = var3 - this.localPlayer.currentX / 128;
+                        var6 = var4 - this.localPlayer.currentY / 128;
                         var7 = 7;
                         if (var3 >= 0 && var4 >= 0 && var3 < 96 && var4 < 96 && var5 > -var7 && var5 < var7 && var6 > -var7 && var6 < var7) {
                             this.scene.freeModel(this.fw[var2]);
@@ -3898,8 +3897,8 @@ public class mudclient extends GameConnection {
                     if (this.iw[var2] == 97) {
                         var3 = this.gw[var2];
                         var4 = this.hw[var2];
-                        var5 = var3 - this.kv.ar / 128;
-                        var6 = var4 - this.kv.br / 128;
+                        var5 = var3 - this.localPlayer.currentX / 128;
+                        var6 = var4 - this.localPlayer.currentY / 128;
                         var7 = 9;
                         if (var3 >= 0 && var4 >= 0 && var3 < 96 && var4 < 96 && var5 > -var7 && var5 < var7 && var6 > -var7 && var6 < var7) {
                             this.scene.freeModel(this.fw[var2]);
@@ -3920,15 +3919,15 @@ public class mudclient extends GameConnection {
             this.gv = 0;
 
             int var18;
-            for(var2 = 0; var2 < this.ev; ++var2) {
-                Character var15 = this.iv[var2];
+            for(var2 = 0; var2 < this.playerCount; ++var2) {
+                Character var15 = this.players[var2];
                 if (var15.xr != 255) {
-                    var4 = var15.ar;
-                    var5 = var15.br;
+                    var4 = var15.currentX;
+                    var5 = var15.currentY;
                     var6 = -this.world.getElevation(var4, var5);
                     var18 = this.scene.ph(5000 + var2, var4, var6, var5, 145, 220, var2 + 10000);
                     ++this.gv;
-                    if (var15 == this.kv) {
+                    if (var15 == this.localPlayer) {
                         this.scene.qh(var18);
                     }
 
@@ -3944,8 +3943,8 @@ public class mudclient extends GameConnection {
 
             Character var17;
             int var19;
-            for(var3 = 0; var3 < this.ev; ++var3) {
-                Character var16 = this.iv[var3];
+            for(var3 = 0; var3 < this.playerCount; ++var3) {
+                Character var16 = this.players[var3];
                 if (var16.cs > 0) {
                     var17 = null;
                     if (var16.bs != -1) {
@@ -3955,11 +3954,11 @@ public class mudclient extends GameConnection {
                     }
 
                     if (var17 != null) {
-                        var6 = var16.ar;
-                        var18 = var16.br;
+                        var6 = var16.currentX;
+                        var18 = var16.currentY;
                         var19 = -this.world.getElevation(var6, var18) - 110;
-                        var9 = var17.ar;
-                        int var21 = var17.br;
+                        var9 = var17.currentX;
+                        int var21 = var17.currentY;
                         int var11 = -this.world.getElevation(var9, var21) - GameData.mjb[var17.cr] / 2;
                         int var12 = (var6 * var16.cs + var9 * (this.vt - var16.cs)) / this.vt;
                         int var13 = (var19 * var16.cs + var11 * (this.vt - var16.cs)) / this.vt;
@@ -3972,8 +3971,8 @@ public class mudclient extends GameConnection {
 
             for(var4 = 0; var4 < this.qv; ++var4) {
                 var17 = this.tv[var4];
-                var6 = var17.ar;
-                var18 = var17.br;
+                var6 = var17.currentX;
+                var18 = var17.currentY;
                 var19 = -this.world.getElevation(var6, var18);
                 var9 = this.scene.ph(20000 + var4, var6, var19, var18, GameData.ljb[var17.cr], GameData.mjb[var17.cr], var4 + 30000);
                 ++this.gv;
@@ -4010,8 +4009,8 @@ public class mudclient extends GameConnection {
                     var6 = this.yu;
                     this.sl();
                     if (this.yu != var6) {
-                        this.wu = this.kv.ar;
-                        this.xu = this.kv.br;
+                        this.wu = this.localPlayer.currentX;
+                        this.xu = this.localPlayer.currentY;
                     }
                 }
 
@@ -4246,7 +4245,7 @@ public class mudclient extends GameConnection {
     }
 
     public void tl(int var1, int var2, int var3, int var4, int var5, int var6, int var7) {
-        Character var8 = this.iv[var5];
+        Character var8 = this.players[var5];
         if (var8.xr != 255) {
             int var9 = var8.er + (this.av + 16) / 32 & 7;
             boolean var10 = false;
@@ -4525,7 +4524,7 @@ public class mudclient extends GameConnection {
         }
 
         if (GameData.ikb[var4] != 2 && GameData.ikb[var4] != 3) {
-            this.em(this.lv, this.mv, var1, var2, var1 + var5 - 1, var2 + var6 - 1, true, true);
+            this.em(this.localRegionX, this.localRegionY, var1, var2, var1 + var5 - 1, var2 + var6 - 1, true, true);
         } else {
             if (var3 == 0) {
                 --var1;
@@ -4545,17 +4544,17 @@ public class mudclient extends GameConnection {
                 ++var6;
             }
 
-            this.em(this.lv, this.mv, var1, var2, var1 + var5 - 1, var2 + var6 - 1, false, true);
+            this.em(this.localRegionX, this.localRegionY, var1, var2, var1 + var5 - 1, var2 + var6 - 1, false, true);
         }
     }
 
     public void fl(int var1, int var2, int var3) {
         if (var3 == 0) {
-            this.em(this.lv, this.mv, var1, var2 - 1, var1, var2, false, true);
+            this.em(this.localRegionX, this.localRegionY, var1, var2 - 1, var1, var2, false, true);
         } else if (var3 == 1) {
-            this.em(this.lv, this.mv, var1 - 1, var2, var1, var2, false, true);
+            this.em(this.localRegionX, this.localRegionY, var1 - 1, var2, var1, var2, false, true);
         } else {
-            this.em(this.lv, this.mv, var1, var2, var1, var2, true, true);
+            this.em(this.localRegionX, this.localRegionY, var1, var2, var1, var2, true, true);
         }
     }
 
@@ -4686,25 +4685,25 @@ public class mudclient extends GameConnection {
                     this.aw[var11] -= var8;
                 }
 
-                for(var12 = 0; var12 < this.ev; ++var12) {
-                    Character var22 = this.iv[var12];
-                    var22.ar -= var7 * this.ot;
-                    var22.br -= var8 * this.ot;
+                for(var12 = 0; var12 < this.playerCount; ++var12) {
+                    Character var22 = this.players[var12];
+                    var22.currentX -= var7 * this.ot;
+                    var22.currentY -= var8 * this.ot;
 
-                    for(var14 = 0; var14 <= var22.hr; ++var14) {
-                        var22.ir[var14] -= var7 * this.ot;
-                        var22.jr[var14] -= var8 * this.ot;
+                    for(var14 = 0; var14 <= var22.waypointCurrent; ++var14) {
+                        var22.waypointsX[var14] -= var7 * this.ot;
+                        var22.waypointsY[var14] -= var8 * this.ot;
                     }
                 }
 
                 for(var21 = 0; var21 < this.qv; ++var21) {
                     Character var23 = this.tv[var21];
-                    var23.ar -= var7 * this.ot;
-                    var23.br -= var8 * this.ot;
+                    var23.currentX -= var7 * this.ot;
+                    var23.currentY -= var8 * this.ot;
 
-                    for(var15 = 0; var15 <= var23.hr; ++var15) {
-                        var23.ir[var15] -= var7 * this.ot;
-                        var23.jr[var15] -= var8 * this.ot;
+                    for(var15 = 0; var15 <= var23.waypointCurrent; ++var15) {
+                        var23.waypointsX[var15] -= var7 * this.ot;
+                        var23.waypointsY[var15] -= var8 * this.ot;
                     }
                 }
 
@@ -4779,7 +4778,7 @@ public class mudclient extends GameConnection {
                 this.nl();
             }
 
-            if (this.kv.sr > 0) {
+            if (this.localPlayer.sr > 0) {
                 this.dl();
             }
 
@@ -5132,7 +5131,7 @@ public class mudclient extends GameConnection {
                 super.rq = "";
                 super.sq = "";
                 this.eab = 0;
-                if (var2.length() > 0 && Utility.username2hash(var2) != this.kv.wq) {
+                if (var2.length() > 0 && Utility.username2hash(var2) != this.localPlayer.wq) {
                     this.ib(var2);
                 }
             }
@@ -5166,7 +5165,7 @@ public class mudclient extends GameConnection {
                 super.rq = "";
                 super.sq = "";
                 this.eab = 0;
-                if (var2.length() > 0 && Utility.username2hash(var2) != this.kv.wq) {
+                if (var2.length() > 0 && Utility.username2hash(var2) != this.localPlayer.wq) {
                     this.nb(var2);
                 }
             }
@@ -5738,8 +5737,8 @@ public class mudclient extends GameConnection {
         this.surface.drawBox(var2, 36, var3, var4, 0);
         this.surface.vf(var2, 36, var2 + var3, 36 + var4);
         short var5 = 192;
-        int var6 = (this.kv.ar - 6040) * 3 * var5 / 2048;
-        int var7 = (this.kv.br - 6040) * 3 * var5 / 2048;
+        int var6 = (this.localPlayer.currentX - 6040) * 3 * var5 / 2048;
+        int var7 = (this.localPlayer.currentY - 6040) * 3 * var5 / 2048;
         int var8 = Scene.fm[1024 - this.av * 4 & 1023];
         int var9 = Scene.fm[(1024 - this.av * 4 & 1023) + 1024];
         int var10 = var7 * var8 + var6 * var9 >> 18;
@@ -5747,16 +5746,16 @@ public class mudclient extends GameConnection {
         this.surface.sf(var2 + var3 / 2 - var10, 36 + var4 / 2 + var7, this.spriteMedia - 1, this.av + 64 & 255, var5);
 
         for(int var11 = 0; var11 < this.ew; ++var11) {
-            var6 = (this.gw[var11] * this.ot + 64 - this.kv.ar) * 3 * var5 / 2048;
-            var7 = (this.hw[var11] * this.ot + 64 - this.kv.br) * 3 * var5 / 2048;
+            var6 = (this.gw[var11] * this.ot + 64 - this.localPlayer.currentX) * 3 * var5 / 2048;
+            var7 = (this.hw[var11] * this.ot + 64 - this.localPlayer.currentY) * 3 * var5 / 2048;
             var10 = var7 * var8 + var6 * var9 >> 18;
             var7 = var7 * var9 - var6 * var8 >> 18;
             this.bn(var2 + var3 / 2 + var10, 36 + var4 / 2 - var7, 65535);
         }
 
         for(int var12 = 0; var12 < this.xv; ++var12) {
-            var6 = (this.zv[var12] * this.ot + 64 - this.kv.ar) * 3 * var5 / 2048;
-            var7 = (this.aw[var12] * this.ot + 64 - this.kv.br) * 3 * var5 / 2048;
+            var6 = (this.zv[var12] * this.ot + 64 - this.localPlayer.currentX) * 3 * var5 / 2048;
+            var7 = (this.aw[var12] * this.ot + 64 - this.localPlayer.currentY) * 3 * var5 / 2048;
             var10 = var7 * var8 + var6 * var9 >> 18;
             var7 = var7 * var9 - var6 * var8 >> 18;
             this.bn(var2 + var3 / 2 + var10, 36 + var4 / 2 - var7, 16711680);
@@ -5764,17 +5763,17 @@ public class mudclient extends GameConnection {
 
         for(int var13 = 0; var13 < this.qv; ++var13) {
             Character var14 = this.tv[var13];
-            var6 = (var14.ar - this.kv.ar) * 3 * var5 / 2048;
-            var7 = (var14.br - this.kv.br) * 3 * var5 / 2048;
+            var6 = (var14.currentX - this.localPlayer.currentX) * 3 * var5 / 2048;
+            var7 = (var14.currentY - this.localPlayer.currentY) * 3 * var5 / 2048;
             var10 = var7 * var8 + var6 * var9 >> 18;
             var7 = var7 * var9 - var6 * var8 >> 18;
             this.bn(var2 + var3 / 2 + var10, 36 + var4 / 2 - var7, 16776960);
         }
 
-        for(int var16 = 0; var16 < this.ev; ++var16) {
-            Character var15 = this.iv[var16];
-            var6 = (var15.ar - this.kv.ar) * 3 * var5 / 2048;
-            var7 = (var15.br - this.kv.br) * 3 * var5 / 2048;
+        for(int var16 = 0; var16 < this.playerCount; ++var16) {
+            Character var15 = this.players[var16];
+            var6 = (var15.currentX - this.localPlayer.currentX) * 3 * var5 / 2048;
+            var7 = (var15.currentY - this.localPlayer.currentY) * 3 * var5 / 2048;
             var10 = var7 * var8 + var6 * var9 >> 18;
             var7 = var7 * var9 - var6 * var8 >> 18;
             this.bn(var2 + var3 / 2 + var10, 36 + var4 / 2 - var7, 16777215);
@@ -5798,10 +5797,10 @@ public class mudclient extends GameConnection {
                 var9 = Scene.fm[(1024 - this.av * 4 & 1023) + 1024];
                 var10 = var7 * var8 + var6 * var9 >> 15;
                 var7 = var7 * var9 - var6 * var8 >> 15;
-                var6 = var10 + this.kv.ar;
-                var7 = this.kv.br - var7;
+                var6 = var10 + this.localPlayer.currentX;
+                var7 = this.localPlayer.currentY - var7;
                 if (this.ft == 1) {
-                    this.jl(this.lv, this.mv, var6 / 128, var7 / 128, false);
+                    this.jl(this.localRegionX, this.localRegionY, var6 / 128, var7 / 128, false);
                 }
 
                 this.ft = 0;
@@ -6517,11 +6516,11 @@ public class mudclient extends GameConnection {
                     if (var11 == 1) {
                         var12 = "";
                         var13 = -1;
-                        var14 = this.iv[var10].tr;
+                        var14 = this.players[var10].tr;
                         if (var14 == 1) {
                             var13 = 0;
-                            if (this.kv.ur > 0 && this.iv[var10].ur > 0) {
-                                var13 = this.kv.ur - this.iv[var10].ur;
+                            if (this.localPlayer.ur > 0 && this.players[var10].ur > 0) {
+                                var13 = this.localPlayer.ur - this.players[var10].ur;
                             }
 
                             if (var13 < 0) {
@@ -6556,54 +6555,54 @@ public class mudclient extends GameConnection {
                                 var12 = "@gre@";
                             }
 
-                            var12 = " " + var12 + "(level-" + this.iv[var10].ur + ")";
+                            var12 = " " + var12 + "(level-" + this.players[var10].ur + ")";
                         }
 
                         if (this.lx >= 0) {
-                            if (GameData.vlb[this.lx] == 1 || GameData.vlb[this.lx] == 2 && var14 == 1 && this.kv.tr == 1) {
+                            if (GameData.vlb[this.lx] == 1 || GameData.vlb[this.lx] == 2 && var14 == 1 && this.localPlayer.tr == 1) {
                                 this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on";
-                                this.iy[this.fy] = "@whi@" + this.iv[var10].xq;
+                                this.iy[this.fy] = "@whi@" + this.players[var10].xq;
                                 this.ky[this.fy] = 800;
-                                this.ly[this.fy] = this.iv[var10].ar;
-                                this.my[this.fy] = this.iv[var10].br;
-                                this.ny[this.fy] = this.iv[var10].yq;
+                                this.ly[this.fy] = this.players[var10].currentX;
+                                this.my[this.fy] = this.players[var10].currentY;
+                                this.ny[this.fy] = this.players[var10].pid;
                                 this.oy[this.fy] = this.lx;
                                 ++this.fy;
                             }
                         } else if (this.ax >= 0) {
                             this.jy[this.fy] = "Use " + this.bx + " with";
-                            this.iy[this.fy] = "@whi@" + this.iv[var10].xq;
+                            this.iy[this.fy] = "@whi@" + this.players[var10].xq;
                             this.ky[this.fy] = 810;
-                            this.ly[this.fy] = this.iv[var10].ar;
-                            this.my[this.fy] = this.iv[var10].br;
-                            this.ny[this.fy] = this.iv[var10].yq;
+                            this.ly[this.fy] = this.players[var10].currentX;
+                            this.my[this.fy] = this.players[var10].currentY;
+                            this.ny[this.fy] = this.players[var10].pid;
                             this.oy[this.fy] = this.ax;
                             ++this.fy;
                         } else {
-                            if (var14 == 1 && this.kv.tr == 1) {
+                            if (var14 == 1 && this.localPlayer.tr == 1) {
                                 this.jy[this.fy] = "Attack";
-                                this.iy[this.fy] = "@whi@" + this.iv[var10].xq + var12;
+                                this.iy[this.fy] = "@whi@" + this.players[var10].xq + var12;
                                 if (var13 >= 0 && var13 < 5) {
                                     this.ky[this.fy] = 805;
                                 } else {
                                     this.ky[this.fy] = 2805;
                                 }
 
-                                this.ly[this.fy] = this.iv[var10].ar;
-                                this.my[this.fy] = this.iv[var10].br;
-                                this.ny[this.fy] = this.iv[var10].yq;
+                                this.ly[this.fy] = this.players[var10].currentX;
+                                this.my[this.fy] = this.players[var10].currentY;
+                                this.ny[this.fy] = this.players[var10].pid;
                                 ++this.fy;
                             }
 
                             this.jy[this.fy] = "Trade with";
-                            this.iy[this.fy] = "@whi@" + this.iv[var10].xq;
+                            this.iy[this.fy] = "@whi@" + this.players[var10].xq;
                             this.ky[this.fy] = 2810;
-                            this.ny[this.fy] = this.iv[var10].yq;
+                            this.ny[this.fy] = this.players[var10].pid;
                             ++this.fy;
                             this.jy[this.fy] = "Follow";
-                            this.iy[this.fy] = "@whi@" + this.iv[var10].xq;
+                            this.iy[this.fy] = "@whi@" + this.players[var10].xq;
                             this.ky[this.fy] = 2820;
-                            this.ny[this.fy] = this.iv[var10].yq;
+                            this.ny[this.fy] = this.players[var10].pid;
                             ++this.fy;
                         }
                     } else if (var11 == 2) {
@@ -6690,9 +6689,9 @@ public class mudclient extends GameConnection {
                                 this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on";
                                 this.iy[this.fy] = "@yel@" + GameData.pib[this.tv[var10].cr][0];
                                 this.ky[this.fy] = 700;
-                                this.ly[this.fy] = this.tv[var10].ar;
-                                this.my[this.fy] = this.tv[var10].br;
-                                this.ny[this.fy] = this.tv[var10].yq;
+                                this.ly[this.fy] = this.tv[var10].currentX;
+                                this.my[this.fy] = this.tv[var10].currentY;
+                                this.ny[this.fy] = this.tv[var10].pid;
                                 this.oy[this.fy] = this.lx;
                                 ++this.fy;
                             }
@@ -6700,9 +6699,9 @@ public class mudclient extends GameConnection {
                             this.jy[this.fy] = "Use " + this.bx + " with";
                             this.iy[this.fy] = "@yel@" + GameData.pib[this.tv[var10].cr][0];
                             this.ky[this.fy] = 710;
-                            this.ly[this.fy] = this.tv[var10].ar;
-                            this.my[this.fy] = this.tv[var10].br;
-                            this.ny[this.fy] = this.tv[var10].yq;
+                            this.ly[this.fy] = this.tv[var10].currentX;
+                            this.my[this.fy] = this.tv[var10].currentY;
+                            this.ny[this.fy] = this.tv[var10].pid;
                             this.oy[this.fy] = this.ax;
                             ++this.fy;
                         } else {
@@ -6715,18 +6714,18 @@ public class mudclient extends GameConnection {
                                     this.ky[this.fy] = 2715;
                                 }
 
-                                this.ly[this.fy] = this.tv[var10].ar;
-                                this.my[this.fy] = this.tv[var10].br;
-                                this.ny[this.fy] = this.tv[var10].yq;
+                                this.ly[this.fy] = this.tv[var10].currentX;
+                                this.my[this.fy] = this.tv[var10].currentY;
+                                this.ny[this.fy] = this.tv[var10].pid;
                                 ++this.fy;
                             }
 
                             this.jy[this.fy] = "Talk-to";
                             this.iy[this.fy] = "@yel@" + GameData.pib[this.tv[var10].cr][0];
                             this.ky[this.fy] = 720;
-                            this.ly[this.fy] = this.tv[var10].ar;
-                            this.my[this.fy] = this.tv[var10].br;
-                            this.ny[this.fy] = this.tv[var10].yq;
+                            this.ly[this.fy] = this.tv[var10].currentX;
+                            this.my[this.fy] = this.tv[var10].currentY;
+                            this.ny[this.fy] = this.tv[var10].pid;
                             ++this.fy;
                             this.jy[this.fy] = "Examine";
                             this.iy[this.fy] = "@yel@" + GameData.pib[this.tv[var10].cr][0];
@@ -6924,7 +6923,7 @@ public class mudclient extends GameConnection {
         int var6 = this.py[var1];
         int var7 = this.ky[var1];
         if (var7 == 200) {
-            this.om(this.lv, this.mv, var2, var3, true);
+            this.om(this.localRegionX, this.localRegionY, var2, var3, true);
             super.clientStream.createOutgoingPacket(224);
             super.clientStream.putShort(var2 + this.ku);
             super.clientStream.putShort(var3 + this.lu);
@@ -6935,7 +6934,7 @@ public class mudclient extends GameConnection {
         }
 
         if (var7 == 210) {
-            this.om(this.lv, this.mv, var2, var3, true);
+            this.om(this.localRegionX, this.localRegionY, var2, var3, true);
             super.clientStream.createOutgoingPacket(250);
             super.clientStream.putShort(var2 + this.ku);
             super.clientStream.putShort(var3 + this.lu);
@@ -6946,7 +6945,7 @@ public class mudclient extends GameConnection {
         }
 
         if (var7 == 220) {
-            this.om(this.lv, this.mv, var2, var3, true);
+            this.om(this.localRegionX, this.localRegionY, var2, var3, true);
             super.clientStream.createOutgoingPacket(252);
             super.clientStream.putShort(var2 + this.ku);
             super.clientStream.putShort(var3 + this.lu);
@@ -7100,7 +7099,7 @@ public class mudclient extends GameConnection {
         if (var7 == 700) {
             var8 = (var2 - 64) / this.ot;
             var9 = (var3 - 64) / this.ot;
-            this.jl(this.lv, this.mv, var8, var9, true);
+            this.jl(this.localRegionX, this.localRegionY, var8, var9, true);
             super.clientStream.createOutgoingPacket(225);
             super.clientStream.putShort(var4);
             super.clientStream.putShort(var5);
@@ -7111,7 +7110,7 @@ public class mudclient extends GameConnection {
         if (var7 == 710) {
             var8 = (var2 - 64) / this.ot;
             var9 = (var3 - 64) / this.ot;
-            this.jl(this.lv, this.mv, var8, var9, true);
+            this.jl(this.localRegionX, this.localRegionY, var8, var9, true);
             super.clientStream.createOutgoingPacket(243);
             super.clientStream.putShort(var4);
             super.clientStream.putShort(var5);
@@ -7122,7 +7121,7 @@ public class mudclient extends GameConnection {
         if (var7 == 720) {
             var8 = (var2 - 64) / this.ot;
             var9 = (var3 - 64) / this.ot;
-            this.jl(this.lv, this.mv, var8, var9, true);
+            this.jl(this.localRegionX, this.localRegionY, var8, var9, true);
             super.clientStream.createOutgoingPacket(245);
             super.clientStream.putShort(var4);
             this.sk();
@@ -7131,7 +7130,7 @@ public class mudclient extends GameConnection {
         if (var7 == 715 || var7 == 2715) {
             var8 = (var2 - 64) / this.ot;
             var9 = (var3 - 64) / this.ot;
-            this.jl(this.lv, this.mv, var8, var9, true);
+            this.jl(this.localRegionX, this.localRegionY, var8, var9, true);
             super.clientStream.createOutgoingPacket(244);
             super.clientStream.putShort(var4);
             this.sk();
@@ -7144,7 +7143,7 @@ public class mudclient extends GameConnection {
         if (var7 == 800) {
             var8 = (var2 - 64) / this.ot;
             var9 = (var3 - 64) / this.ot;
-            this.jl(this.lv, this.mv, var8, var9, true);
+            this.jl(this.localRegionX, this.localRegionY, var8, var9, true);
             super.clientStream.createOutgoingPacket(226);
             super.clientStream.putShort(var4);
             super.clientStream.putShort(var5);
@@ -7155,7 +7154,7 @@ public class mudclient extends GameConnection {
         if (var7 == 810) {
             var8 = (var2 - 64) / this.ot;
             var9 = (var3 - 64) / this.ot;
-            this.jl(this.lv, this.mv, var8, var9, true);
+            this.jl(this.localRegionX, this.localRegionY, var8, var9, true);
             super.clientStream.createOutgoingPacket(219);
             super.clientStream.putShort(var4);
             super.clientStream.putShort(var5);
@@ -7166,7 +7165,7 @@ public class mudclient extends GameConnection {
         if (var7 == 805 || var7 == 2805) {
             var8 = (var2 - 64) / this.ot;
             var9 = (var3 - 64) / this.ot;
-            this.jl(this.lv, this.mv, var8, var9, true);
+            this.jl(this.localRegionX, this.localRegionY, var8, var9, true);
             super.clientStream.createOutgoingPacket(228);
             super.clientStream.putShort(var4);
             this.sk();
@@ -7185,7 +7184,7 @@ public class mudclient extends GameConnection {
         }
 
         if (var7 == 900) {
-            this.jl(this.lv, this.mv, var2, var3, true);
+            this.jl(this.localRegionX, this.localRegionY, var2, var3, true);
             super.clientStream.createOutgoingPacket(221);
             super.clientStream.putShort(var2 + this.ku);
             super.clientStream.putShort(var3 + this.lu);
@@ -7195,7 +7194,7 @@ public class mudclient extends GameConnection {
         }
 
         if (var7 == 920) {
-            this.jl(this.lv, this.mv, var2, var3, false);
+            this.jl(this.localRegionX, this.localRegionY, var2, var3, false);
             if (this.cu == -24) {
                 this.cu = 24;
             }
@@ -7234,9 +7233,9 @@ public class mudclient extends GameConnection {
         this.cv = 4000;
         this.dv = 500;
         this.hv = new Character[this.cv];
-        this.iv = new Character[this.dv];
+        this.players = new Character[this.dv];
         this.jv = new Character[this.dv];
-        this.kv = new Character();
+        this.localPlayer = new Character();
         this.serverIndex = -1;
         this.ov = 1000;
         this.pv = 500;

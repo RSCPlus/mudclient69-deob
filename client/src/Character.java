@@ -1,18 +1,18 @@
 public class Character {
     public long wq;
     public String xq;
-    public int yq;
-    public int zq;
-    public int ar;
-    public int br;
+    public int pid;
+    public int appearanceId;
+    public int currentX;
+    public int currentY;
     public int cr;
     public int dr;
     public int er;
     public int fr;
-    public int gr;
-    public int hr;
-    public int[] ir = new int[10];
-    public int[] jr = new int[10];
+    public int movingStep;
+    public int waypointCurrent;
+    public int[] waypointsX = new int[10];
+    public int[] waypointsY = new int[10];
     public int[] kr = new int[12];
     public String lr;
     public int mr;
