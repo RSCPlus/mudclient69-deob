@@ -34,16 +34,17 @@ public class ClientStream extends Buffer implements Runnable {
         super(var1);
     }
 
-    public static ClientStream n(String var0, Applet var1, int var2) throws IOException {
-        Socket var3;
-        if (var1 != null) {
-            var3 = new Socket(InetAddress.getByName(var1.getCodeBase().getHost()), var2);
+    public static ClientStream create(String serverAddress, Applet applet, int port) throws IOException {
+        System.out.println("C-c-connecting to: " + serverAddress + ":" + port);
+        Socket sock;
+        if (applet != null) {
+            sock = new Socket(InetAddress.getByName(applet.getCodeBase().getHost()), port);
         } else {
-            var3 = new Socket(InetAddress.getByName(var0), var2);
+            sock = new Socket(InetAddress.getByName(serverAddress), port);
         }
 
-        var3.setSoTimeout(30000);
-        return new ClientStream(var3);
+        sock.setSoTimeout(30000);
+        return new ClientStream(sock);
     }
 
     public void zb() {
@@ -55,10 +56,10 @@ public class ClientStream extends Buffer implements Runnable {
 
                 if (this.f != null) {
                     this.g = true;
-                    synchronized(this){}
-
                     try {
-                        this.notify();
+                        synchronized(this) {
+                            this.notify();
+                        }
                     } catch (Throwable var4) {
                         throw var4;
                     }
@@ -98,34 +99,35 @@ public class ClientStream extends Buffer implements Runnable {
                 this.c = new byte[5000];
             }
 
-            synchronized(this){}
 
             try {
-                for(int var7 = 0; var7 < var3; ++var7) {
-                    this.c[this.e] = var1[var7 + var2];
-                    this.e = (this.e + 1) % 5000;
-                    if (this.e == (this.d + 4900) % 5000) {
-                        this.a = true;
-                        this.b = "Write buffer full! " + var3;
-                        var7 = var3 + 1;
-                        this.g = true;
-                        super.ud.close();
-                        super.vd.close();
-                        super.xd = true;
-                        break;
-                    }
-                }
-
-                if (var4) {
-                    if (this.f == null) {
-                        this.g = false;
-                        this.f = new Thread(this);
-                        this.f.setDaemon(true);
-                        this.f.setPriority(4);
-                        this.f.start();
+                synchronized(this) {
+                    for (int var7 = 0; var7 < var3; ++var7) {
+                        this.c[this.e] = var1[var7 + var2];
+                        this.e = (this.e + 1) % 5000;
+                        if (this.e == (this.d + 4900) % 5000) {
+                            this.a = true;
+                            this.b = "Write buffer full! " + var3;
+                            var7 = var3 + 1;
+                            this.g = true;
+                            super.ud.close();
+                            super.vd.close();
+                            super.xd = true;
+                            break;
+                        }
                     }
 
-                    this.notify();
+                    if (var4) {
+                        if (this.f == null) {
+                            this.g = false;
+                            this.f = new Thread(this);
+                            this.f.setDaemon(true);
+                            this.f.setPriority(4);
+                            this.f.start();
+                        }
+
+                        this.notify();
+                    }
                 }
             } catch (Throwable var9) {
                 throw var9;
@@ -138,20 +140,21 @@ public class ClientStream extends Buffer implements Runnable {
     }
 
     public void e() {
-        synchronized(this){}
 
         try {
-            if (this.e != this.d && this.c != null) {
-                if (this.f == null) {
-                    this.g = false;
-                    this.f = new Thread(this);
-                    this.f.setDaemon(true);
-                    this.f.setPriority(4);
-                    this.f.start();
-                }
+            synchronized(this) {
+                if (this.e != this.d && this.c != null) {
+                    if (this.f == null) {
+                        this.g = false;
+                        this.f = new Thread(this);
+                        this.f.setDaemon(true);
+                        this.f.setPriority(4);
+                        this.f.start();
+                    }
 
-                this.notify();
-                return;
+                    this.notify();
+                    return;
+                }
             }
         } catch (Throwable var4) {
             throw var4;
@@ -161,28 +164,28 @@ public class ClientStream extends Buffer implements Runnable {
 
     public void run() {
         while(this.f != null && !this.g) {
-            synchronized(this){}
-
             int var1;
             int var2;
             try {
-                if (this.e == this.d) {
-                    try {
-                        this.wait();
-                    } catch (InterruptedException var11) {
-                        ;
+                synchronized (this) {
+                    if (this.e == this.d) {
+                        try {
+                            this.wait();
+                        } catch (InterruptedException var11) {
+                            ;
+                        }
                     }
-                }
 
-                if (this.f == null || this.g) {
-                    return;
-                }
+                    if (this.f == null || this.g) {
+                        return;
+                    }
 
-                var2 = this.d;
-                if (this.e >= this.d) {
-                    var1 = this.e - this.d;
-                } else {
-                    var1 = 5000 - this.d;
+                    var2 = this.d;
+                    if (this.e >= this.d) {
+                        var1 = this.e - this.d;
+                    } else {
+                        var1 = 5000 - this.d;
+                    }
                 }
             } catch (Throwable var12) {
                 throw var12;
@@ -208,7 +211,6 @@ public class ClientStream extends Buffer implements Runnable {
                 }
             }
         }
-
     }
 
     public void createOutgoingPacket(int var1) {

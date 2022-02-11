@@ -12,7 +12,7 @@ public class GameData {
     public static String[] yhb;
     public static int[] zhb;
     public static int[] aib;
-    public static int[] bib;
+    public static int[] itemStackable;
     public static int[] cib;
     public static int[] dib;
     public static int[] eib;
@@ -20,7 +20,7 @@ public class GameData {
     public static int[] gib;
     public static int[] hib;
     public static int[] iib;
-    public static int[] jib;
+    public static int[] itemWieldable;
     public static int[] kib;
     public static int[] lib;
     public static int[] mib;
@@ -426,7 +426,7 @@ public class GameData {
         yhb = new String[var1];
         zhb = new int[var1];
         aib = new int[var1];
-        bib = new int[var1];
+        itemStackable = new int[var1];
         cib = new int[var1];
         dib = new int[var1];
         eib = new int[var1];
@@ -434,7 +434,7 @@ public class GameData {
         gib = new int[var1];
         hib = new int[var1];
         iib = new int[var1];
-        jib = new int[var1];
+        itemWieldable = new int[var1];
         kib = new int[var1];
         lib = new int[var1];
         mib = new int[var1];
@@ -457,7 +457,7 @@ public class GameData {
             }
 
             aib[var2] = var0.xb();
-            bib[var2] = var0.xb();
+            itemStackable[var2] = var0.xb();
             yhb[var2] = var0.yb();
             var0.sb();
             cib[var2] = var0.xb();
@@ -468,7 +468,7 @@ public class GameData {
             hib[var2] = var0.xb();
             iib[var2] = ip(var0.yb()) + 1;
             var0.sb();
-            jib[var2] = var0.xb();
+            itemWieldable[var2] = var0.xb();
             kib[var2] = np(var0.yb());
             lib[var2] = var0.tb();
             mib[var2] = var0.xb();

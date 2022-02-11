@@ -139,7 +139,7 @@ public class Panel {
         }
     }
 
-    public void show(int var1) {
+    public void handleKey(int var1) {
         if (var1 != 0) {
             if (this.mf != -1 && this.gf[this.mf] != null && this.qe[this.mf]) {
                 int var2 = this.gf[this.mf].length();

@@ -45,24 +45,24 @@ public class Utility {
         var4.close();
     }
 
-    public static int qn(byte var0) {
+    public static int readByte(byte var0) {
         return var0 & 255;
     }
 
-    public static int tn(byte[] var0, int var1) {
-        return ((var0[var1] & 255) << 8) + (var0[var1 + 1] & 255);
+    public static int readShort(byte[] pdata, int offset) {
+        return ((pdata[offset] & 255) << 8) + (pdata[offset + 1] & 255);
     }
 
-    public static int sn(byte[] var0, int var1) {
-        return ((var0[var1] & 255) << 24) + ((var0[var1 + 1] & 255) << 16) + ((var0[var1 + 2] & 255) << 8) + (var0[var1 + 3] & 255);
+    public static int readInt(byte[] pdata, int offset) {
+        return ((pdata[offset] & 255) << 24) + ((pdata[offset + 1] & 255) << 16) + ((pdata[offset + 2] & 255) << 8) + (pdata[offset + 3] & 255);
     }
 
-    public static long nn(byte[] var0, int var1) {
-        return (((long)sn(var0, var1) & 4294967295L) << 32) + ((long)sn(var0, var1 + 4) & 4294967295L);
+    public static long readLong(byte[] pdata, int offset) {
+        return (((long) readInt(pdata, offset) & 4294967295L) << 32) + ((long) readInt(pdata, offset + 4) & 4294967295L);
     }
 
-    public static int un(byte[] var0, int var1) {
-        int var2 = qn(var0[var1]) * 256 + qn(var0[var1 + 1]);
+    public static int readUnsignedShort(byte[] pdata, int offset) {
+        int var2 = readByte(pdata[offset]) * 256 + readByte(pdata[offset + 1]);
         if (var2 > 32767) {
             var2 -= 65536;
         }
@@ -70,7 +70,7 @@ public class Utility {
         return var2;
     }
 
-    public static int pn(byte[] var0, int var1, int var2) {
+    public static int readBits(byte[] var0, int var1, int var2) {
         int var3 = var1 >> 3;
         int var4 = 8 - (var1 & 7);
 
@@ -89,7 +89,7 @@ public class Utility {
         return var5;
     }
 
-    public static String vn(String var0, int var1) {
+    public static String sanitize(String var0, int var1) {
         String var2 = "";
 
         for(int var3 = 0; var3 < var1; ++var3) {
@@ -138,7 +138,7 @@ public class Utility {
         return var1;
     }
 
-    public static long on(String var0) {
+    public static long username2hash(String var0) {
         String var1 = "";
 
         for(int var2 = 0; var2 < var0.length(); ++var2) {

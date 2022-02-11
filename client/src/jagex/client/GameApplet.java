@@ -89,7 +89,7 @@ public class GameApplet extends Applet implements Runnable {
         this.hp.setPriority(1);
     }
 
-    public final boolean ak() {
+    public final boolean inAppletMode() {
         return this.mp;
     }
 
