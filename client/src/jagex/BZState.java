@@ -1,6 +1,6 @@
 package jagex;
 
-class b {
+class BZState {
     final int j = 4096;
     final int k = 16;
     final int l = 258;
@@ -51,6 +51,6 @@ class b {
     int[] ec = new int[6];
     int fc;
 
-    b() {
+    BZState() {
     }
 }

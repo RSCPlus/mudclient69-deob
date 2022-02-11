@@ -1,13 +1,13 @@
 package jagex.client;
 
-import jagex.f;
+import jagex.Buffer;
 import java.applet.Applet;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-public class a extends f implements Runnable {
+public class ClientStream extends Buffer implements Runnable {
     private boolean a = false;
     private String b = "error in twriter";
     private byte[] c;
@@ -18,23 +18,23 @@ public class a extends f implements Runnable {
     public int h = 3;
     public byte[] i;
 
-    public a(InputStream var1) {
+    public ClientStream(InputStream var1) {
         super(var1);
     }
 
-    public a(Socket var1) throws IOException {
+    public ClientStream(Socket var1) throws IOException {
         super(var1);
     }
 
-    public a(String var1) throws IOException {
+    public ClientStream(String var1) throws IOException {
         super(var1);
     }
 
-    public a(byte[] var1) {
+    public ClientStream(byte[] var1) {
         super(var1);
     }
 
-    public static a n(String var0, Applet var1, int var2) throws IOException {
+    public static ClientStream n(String var0, Applet var1, int var2) throws IOException {
         Socket var3;
         if (var1 != null) {
             var3 = new Socket(InetAddress.getByName(var1.getCodeBase().getHost()), var2);
@@ -43,7 +43,7 @@ public class a extends f implements Runnable {
         }
 
         var3.setSoTimeout(30000);
-        return new a(var3);
+        return new ClientStream(var3);
     }
 
     public void zb() {

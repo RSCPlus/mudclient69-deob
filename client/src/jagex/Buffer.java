@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class f {
+public class Buffer {
     protected InputStream ud;
     protected OutputStream vd;
     protected Socket wd;
@@ -26,27 +26,27 @@ public class f {
     final int le = 34;
     static char[] me = new char[256];
 
-    public f(InputStream var1) {
+    public Buffer(InputStream var1) {
         this.ud = var1;
     }
 
-    public f(Socket var1) throws IOException {
+    public Buffer(Socket var1) throws IOException {
         this.wd = var1;
         this.ud = var1.getInputStream();
         this.vd = var1.getOutputStream();
     }
 
-    public f(String var1) throws IOException {
-        this.ud = o.fn(var1);
+    public Buffer(String var1) throws IOException {
+        this.ud = Utility.fn(var1);
     }
 
-    public f(byte[] var1) {
+    public Buffer(byte[] var1) {
         this.yd = var1;
         this.zd = 0;
         this.xd = true;
     }
 
-    public f(byte[] var1, int var2) {
+    public Buffer(byte[] var1, int var2) {
         this.yd = var1;
         this.zd = var2;
         this.xd = true;

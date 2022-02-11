@@ -1,7 +1,7 @@
 package jagex.client;
 
-public class g {
-    protected i ne;
+public class Panel {
+    protected Surface ne;
     int oe;
     int pe;
     boolean[] qe;
@@ -48,7 +48,7 @@ public class g {
     public static int fg = 176;
     public static int gg;
 
-    public g(i var1, int var2) {
+    public Panel(Surface var1, int var2) {
         this.ne = var1;
         this.pe = var2;
         this.qe = new boolean[var2];
@@ -84,7 +84,7 @@ public class g {
     }
 
     public int ad(int var1, int var2, int var3) {
-        return i.ng(dg * var1 / 114, eg * var2 / 114, fg * var3 / 176);
+        return Surface.ng(dg * var1 / 114, eg * var2 / 114, fg * var3 / 176);
     }
 
     public void sd() {

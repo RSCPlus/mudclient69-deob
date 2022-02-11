@@ -1,7 +1,7 @@
 package jagex.client;
 
-import jagex.n;
-import jagex.o;
+import jagex.BZLib;
+import jagex.Utility;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Component;
@@ -17,14 +17,14 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class k extends Applet implements Runnable {
+public class GameApplet extends Applet implements Runnable {
     private int fp = 512;
     private int gp = 384;
     private Thread hp;
     private int ip = 20;
     private int jp = 1000;
     private long[] kp = new long[10];
-    static d lp = null;
+    static GameFrame lp = null;
     private boolean mp;
     private int np;
     private int op;
@@ -82,7 +82,7 @@ public class k extends Applet implements Runnable {
         System.out.println("Started application");
         this.fp = var1;
         this.gp = var2;
-        lp = new d(this, var1, var2, var3, var4, false);
+        lp = new GameFrame(this, var1, var2, var3, var4, false);
         this.rp = 1;
         this.hp = new Thread(this);
         this.hp.start();
@@ -97,7 +97,7 @@ public class k extends Applet implements Runnable {
         if (lp == null) {
             this.fp = var1;
             this.gp = var2;
-            lp = new d(this, var1, var2, var3, var4, this.mp);
+            lp = new GameFrame(this, var1, var2, var3, var4, this.mp);
         }
     }
 
@@ -314,7 +314,7 @@ public class k extends Applet implements Runnable {
         this.fp = this.size().width;
         this.gp = this.size().height;
         this.rp = 1;
-        o.jfb = this.getCodeBase();
+        Utility.jfb = this.getCodeBase();
         this.hp = new Thread(this);
         this.hp.start();
     }
@@ -505,17 +505,17 @@ public class k extends Applet implements Runnable {
 
     public void mj() {
         try {
-            byte[] var1 = o.kn("jagex.jag");
-            byte[] var2 = o.gn("logo.tga", 0, var1);
+            byte[] var1 = Utility.kn("jagex.jag");
+            byte[] var2 = Utility.gn("logo.tga", 0, var1);
             this.zp = this.lj(var2);
-            i.if_(o.gn("h11p.jf", 0, var1));
-            i.if_(o.gn("h12b.jf", 0, var1));
-            i.if_(o.gn("h12p.jf", 0, var1));
-            i.if_(o.gn("h13b.jf", 0, var1));
-            i.if_(o.gn("h14b.jf", 0, var1));
-            i.if_(o.gn("h16b.jf", 0, var1));
-            i.if_(o.gn("h20b.jf", 0, var1));
-            i.if_(o.gn("h24b.jf", 0, var1));
+            Surface.if_(Utility.gn("h11p.jf", 0, var1));
+            Surface.if_(Utility.gn("h12b.jf", 0, var1));
+            Surface.if_(Utility.gn("h12p.jf", 0, var1));
+            Surface.if_(Utility.gn("h13b.jf", 0, var1));
+            Surface.if_(Utility.gn("h14b.jf", 0, var1));
+            Surface.if_(Utility.gn("h16b.jf", 0, var1));
+            Surface.if_(Utility.gn("h20b.jf", 0, var1));
+            Surface.if_(Utility.gn("h24b.jf", 0, var1));
         } catch (IOException var3) {
             System.out.println("Error loading jagex.dat");
         }
@@ -641,7 +641,7 @@ public class k extends Applet implements Runnable {
                     var1 = var1.toUpperCase();
                 }
 
-                InputStream var8 = o.fn(var1);
+                InputStream var8 = Utility.fn(var1);
                 DataInputStream var9 = new DataInputStream(var8);
                 byte[] var10 = new byte[6];
                 var9.readFully(var10, 0, 6);
@@ -672,13 +672,13 @@ public class k extends Applet implements Runnable {
         this.qj(var3, "Unpacking " + var2);
         if (var6 != var5) {
             byte[] var14 = new byte[var5];
-            n.ek(var14, var5, var7, var6, 0);
+            BZLib.ek(var14, var5, var7, var6, 0);
             return var14;
         } else {
             return var7;
         }
     }
 
-    public k() {
+    public GameApplet() {
     }
 }

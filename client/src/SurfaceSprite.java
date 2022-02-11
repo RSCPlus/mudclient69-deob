@@ -1,14 +1,14 @@
-import jagex.client.i;
+import jagex.client.Surface;
 import java.awt.Component;
 
-public class m extends i {
+public class SurfaceSprite extends Surface {
     public mudclient gs;
 
-    public m(int var1, int var2, int var3, Component var4) {
+    public SurfaceSprite(int var1, int var2, int var3, Component var4) {
         super(var1, var2, var3, var4);
         boolean var5 = false;
         if (var5) {
-            new i(var1, var2, var3, var4);
+            new Surface(var1, var2, var3, var4);
         }
 
     }

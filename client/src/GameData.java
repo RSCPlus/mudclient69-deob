@@ -1,8 +1,8 @@
-import jagex.f;
-import jagex.o;
+import jagex.Buffer;
+import jagex.Utility;
 import java.io.IOException;
 
-public class r {
+public class GameData {
     public final int shb = 12345678;
     public static int thb;
     public static int uhb;
@@ -135,17 +135,17 @@ public class r {
 
     public static void vp() {
         try {
-            tp(new f("../gamedata/config/projectile.txt"));
-            sp(new f("../gamedata/config/entity.txt"));
-            lp(new f("../gamedata/config/objects.txt"));
-            up(new f("../gamedata/config/npc.txt"));
-            hp(new f("../gamedata/config/location.txt"));
-            pp(new f("../gamedata/config/boundary.txt"));
-            gp(new f("../gamedata/config/roof.txt"));
-            jp(new f("../gamedata/config/floor.txt"));
-            kp(new f("../gamedata/config/spells.txt"));
-            qp(new f("../gamedata/config/shop.txt"));
-            rp(new f("../gamedata/config/prayers.txt"));
+            tp(new Buffer("../gamedata/config/projectile.txt"));
+            sp(new Buffer("../gamedata/config/entity.txt"));
+            lp(new Buffer("../gamedata/config/objects.txt"));
+            up(new Buffer("../gamedata/config/npc.txt"));
+            hp(new Buffer("../gamedata/config/location.txt"));
+            pp(new Buffer("../gamedata/config/boundary.txt"));
+            gp(new Buffer("../gamedata/config/roof.txt"));
+            jp(new Buffer("../gamedata/config/floor.txt"));
+            kp(new Buffer("../gamedata/config/spells.txt"));
+            qp(new Buffer("../gamedata/config/shop.txt"));
+            rp(new Buffer("../gamedata/config/prayers.txt"));
             wp();
         } catch (IOException var1) {
             System.out.println("Error loading config files");
@@ -155,17 +155,17 @@ public class r {
 
     public static void op(byte[] var0) {
         try {
-            tp(new f(var0, o.hn("projectile.txt", var0)));
-            sp(new f(var0, o.hn("entity.txt", var0)));
-            lp(new f(var0, o.hn("objects.txt", var0)));
-            up(new f(var0, o.hn("npc.txt", var0)));
-            hp(new f(var0, o.hn("location.txt", var0)));
-            pp(new f(var0, o.hn("boundary.txt", var0)));
-            gp(new f(var0, o.hn("roof.txt", var0)));
-            jp(new f(var0, o.hn("floor.txt", var0)));
-            kp(new f(var0, o.hn("spells.txt", var0)));
-            qp(new f(var0, o.hn("shop.txt", var0)));
-            rp(new f(var0, o.hn("prayers.txt", var0)));
+            tp(new Buffer(var0, Utility.hn("projectile.txt", var0)));
+            sp(new Buffer(var0, Utility.hn("entity.txt", var0)));
+            lp(new Buffer(var0, Utility.hn("objects.txt", var0)));
+            up(new Buffer(var0, Utility.hn("npc.txt", var0)));
+            hp(new Buffer(var0, Utility.hn("location.txt", var0)));
+            pp(new Buffer(var0, Utility.hn("boundary.txt", var0)));
+            gp(new Buffer(var0, Utility.hn("roof.txt", var0)));
+            jp(new Buffer(var0, Utility.hn("floor.txt", var0)));
+            kp(new Buffer(var0, Utility.hn("spells.txt", var0)));
+            qp(new Buffer(var0, Utility.hn("shop.txt", var0)));
+            rp(new Buffer(var0, Utility.hn("prayers.txt", var0)));
             wp();
         } catch (IOException var2) {
             System.out.println("Error loading config files");
@@ -173,7 +173,7 @@ public class r {
         }
     }
 
-    public static void qp(f var0) throws IOException {
+    public static void qp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         ylb = var1;
@@ -207,7 +207,7 @@ public class r {
 
     }
 
-    public static void kp(f var0) throws IOException {
+    public static void kp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         qlb = var1;
@@ -240,7 +240,7 @@ public class r {
         var0.zb();
     }
 
-    public static void rp(f var0) throws IOException {
+    public static void rp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         imb = var1;
@@ -261,7 +261,7 @@ public class r {
         var0.zb();
     }
 
-    public static void tp(f var0) throws IOException {
+    public static void tp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         glb = var1;
@@ -299,7 +299,7 @@ public class r {
 
     }
 
-    public static void sp(f var0) throws IOException {
+    public static void sp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         sjb = var1;
@@ -325,7 +325,7 @@ public class r {
         var0.zb();
     }
 
-    public static void up(f var0) throws IOException {
+    public static void up(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         oib = var1;
@@ -416,7 +416,7 @@ public class r {
         var0.zb();
     }
 
-    public static void lp(f var0) throws IOException {
+    public static void lp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         thb = var1;
@@ -478,7 +478,7 @@ public class r {
         var0.zb();
     }
 
-    public static void hp(f var0) throws IOException {
+    public static void hp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         akb = var1;
@@ -526,7 +526,7 @@ public class r {
         var0.zb();
     }
 
-    public static void pp(f var0) throws IOException {
+    public static void pp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         lkb = var1;
@@ -573,7 +573,7 @@ public class r {
         var0.zb();
     }
 
-    public static void gp(f var0) throws IOException {
+    public static void gp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         wkb = var1;
@@ -594,7 +594,7 @@ public class r {
         var0.zb();
     }
 
-    public static void jp(f var0) throws IOException {
+    public static void jp(Buffer var0) throws IOException {
         var0.sb();
         int var1 = var0.xb();
         blb = var1;
@@ -677,6 +677,6 @@ public class r {
         }
     }
 
-    public r() {
+    public GameData() {
     }
 }

@@ -1,11 +1,11 @@
 package jagex.client;
 
-import jagex.o;
+import jagex.Utility;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class h {
+public class GameModel {
     public int hg;
     public int[] ig;
     public int[] jg;
@@ -94,7 +94,7 @@ public class h {
     private int oj;
     private int pj;
 
-    public h(int var1, int var2) {
+    public GameModel(int var1, int var2) {
         this.ch = 1;
         this.dh = true;
         this.kh = true;
@@ -124,7 +124,7 @@ public class h {
 
     }
 
-    public h(int var1, int var2, boolean var3, boolean var4, boolean var5, boolean var6, boolean var7) {
+    public GameModel(int var1, int var2, boolean var3, boolean var4, boolean var5, boolean var6, boolean var7) {
         this.ch = 1;
         this.dh = true;
         this.kh = true;
@@ -241,7 +241,7 @@ public class h {
 
     }
 
-    public h(byte[] var1, int var2) {
+    public GameModel(byte[] var1, int var2) {
         this.ch = 1;
         this.dh = true;
         this.kh = true;
@@ -311,7 +311,7 @@ public class h {
         this.ch = 1;
     }
 
-    public h(String var1) {
+    public GameModel(String var1) {
         this.ch = 1;
         this.dh = true;
         this.kh = true;
@@ -338,7 +338,7 @@ public class h {
 
         byte[] var25;
         try {
-            InputStream var5 = o.fn(var1);
+            InputStream var5 = Utility.fn(var1);
             DataInputStream var6 = new DataInputStream(var5);
             var25 = new byte[3];
             this.oj = 0;
@@ -413,7 +413,7 @@ public class h {
         this.ch = 1;
     }
 
-    public h(h[] var1, int var2, boolean var3, boolean var4, boolean var5, boolean var6) {
+    public GameModel(GameModel[] var1, int var2, boolean var3, boolean var4, boolean var5, boolean var6) {
         this.ch = 1;
         this.dh = true;
         this.kh = true;
@@ -441,7 +441,7 @@ public class h {
         this.je(var1, var2, false);
     }
 
-    public h(h[] var1, int var2) {
+    public GameModel(GameModel[] var1, int var2) {
         this.ch = 1;
         this.dh = true;
         this.kh = true;
@@ -465,7 +465,7 @@ public class h {
         this.je(var1, var2, true);
     }
 
-    public void je(h[] var1, int var2, boolean var3) {
+    public void je(GameModel[] var1, int var2, boolean var3) {
         int var4 = 0;
         int var5 = 0;
 
@@ -480,7 +480,7 @@ public class h {
         }
 
         for(int var7 = 0; var7 < var2; ++var7) {
-            h var8 = var1[var7];
+            GameModel var8 = var1[var7];
             var8.me();
             this.mj = var8.mj;
             this.lj = var8.lj;
@@ -524,7 +524,7 @@ public class h {
         this.ch = 1;
     }
 
-    public h(int var1, int[] var2, int[] var3, int[] var4, int var5, int var6) {
+    public GameModel(int var1, int[] var2, int[] var3, int[] var4, int var5, int var6) {
         this(var1, 1);
         this.hg = var1;
 
@@ -589,7 +589,7 @@ public class h {
         }
     }
 
-    public h[] zd(int var1, int var2, int var3, int var4, int var5, int var6, int var7, boolean var8) {
+    public GameModel[] zd(int var1, int var2, int var3, int var4, int var5, int var6, int var7, boolean var8) {
         this.me();
         int[] var9 = new int[var6];
         int[] var10 = new int[var6];
@@ -619,14 +619,14 @@ public class h {
             ++var10[var18];
         }
 
-        h[] var22 = new h[var6];
+        GameModel[] var22 = new GameModel[var6];
 
         for(var14 = 0; var14 < var6; ++var14) {
             if (var9[var14] > var7) {
                 var9[var14] = var7;
             }
 
-            var22[var14] = new h(var9[var14], var10[var14], true, true, true, var8, true);
+            var22[var14] = new GameModel(var9[var14], var10[var14], true, true, true, var8, true);
             var22[var14].lj = this.lj;
             var22[var14].mj = this.mj;
         }
@@ -654,7 +654,7 @@ public class h {
         return var22;
     }
 
-    public void df(h var1, int[] var2, int var3, int var4) {
+    public void df(GameModel var1, int[] var2, int var3, int var4) {
         int[] var5 = new int[var3];
 
         int var7;
@@ -1075,7 +1075,7 @@ public class h {
 
     public void le(int var1, int var2, int var3, int var4, int var5, int var6, int var7, int var8) {
         this.xd();
-        if (this.ih <= j.cp && this.jh >= j.bp && this.eh <= j.yo && this.fh >= j.xo && this.gh <= j.ap && this.hh >= j.zo) {
+        if (this.ih <= Scene.cp && this.jh >= Scene.bp && this.eh <= Scene.yo && this.fh >= Scene.xo && this.gh <= Scene.ap && this.hh >= Scene.zo) {
             this.dh = true;
             int var10 = 0;
             int var11 = 0;
@@ -1159,21 +1159,21 @@ public class h {
         this.fj = 0;
     }
 
-    public h ue() {
-        h[] var1 = new h[]{this};
-        h var2 = new h(var1, 1);
+    public GameModel ue() {
+        GameModel[] var1 = new GameModel[]{this};
+        GameModel var2 = new GameModel(var1, 1);
         var2.bh = this.bh;
         return var2;
     }
 
-    public h ye(boolean var1, boolean var2, boolean var3, boolean var4) {
-        h[] var5 = new h[]{this};
-        h var6 = new h(var5, 1, var1, var2, var3, var4);
+    public GameModel ye(boolean var1, boolean var2, boolean var3, boolean var4) {
+        GameModel[] var5 = new GameModel[]{this};
+        GameModel var6 = new GameModel(var5, 1, var1, var2, var3, var4);
         var6.bh = this.bh;
         return var6;
     }
 
-    public void de(h var1) {
+    public void de(GameModel var1) {
         this.ti = var1.ti;
         this.ui = var1.ui;
         this.vi = var1.vi;

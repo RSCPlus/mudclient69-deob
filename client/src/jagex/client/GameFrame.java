@@ -4,15 +4,15 @@ import java.awt.Event;
 import java.awt.Frame;
 import java.awt.Graphics;
 
-public class d extends Frame {
+public class GameFrame extends Frame {
     int oc;
     int pc;
     int qc;
     int rc = 28;
-    k sc;
+    GameApplet sc;
     Graphics tc;
 
-    public d(k var1, int var2, int var3, String var4, boolean var5, boolean var6) {
+    public GameFrame(GameApplet var1, int var2, int var3, String var4, boolean var5, boolean var6) {
         this.oc = var2;
         this.pc = var3;
         this.sc = var1;

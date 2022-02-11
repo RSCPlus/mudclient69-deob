@@ -1,14 +1,14 @@
-import jagex.o;
-import jagex.client.h;
-import jagex.client.i;
-import jagex.client.j;
+import jagex.Utility;
+import jagex.client.GameModel;
+import jagex.client.Surface;
+import jagex.client.Scene;
 import java.io.IOException;
 
-public class p {
+public class World {
     boolean ufb = true;
     boolean vfb = false;
-    i wfb;
-    j xfb;
+    Surface wfb;
+    Scene xfb;
     int yfb = 750;
     final int zfb = 12345678;
     final int agb = 128;
@@ -34,38 +34,38 @@ public class p {
     int[][] ugb;
     int[][] vgb;
     boolean wgb;
-    h[] xgb;
-    h[][] ygb;
-    h[][] zgb;
-    h ahb;
+    GameModel[] xgb;
+    GameModel[][] ygb;
+    GameModel[][] zgb;
+    GameModel ahb;
 
-    public p(j var1, i var2) {
+    public World(Scene var1, Surface var2) {
         this.rgb = new int[this.pgb * this.qgb * 2];
         this.sgb = new int[this.pgb * this.qgb * 2];
         this.tgb = new int[this.pgb][this.qgb];
         this.ugb = new int[this.pgb][this.qgb];
         this.vgb = new int[this.pgb][this.qgb];
         this.wgb = false;
-        this.xgb = new h[64];
-        this.ygb = new h[4][64];
-        this.zgb = new h[4][64];
+        this.xgb = new GameModel[64];
+        this.ygb = new GameModel[4][64];
+        this.zgb = new GameModel[4][64];
         this.xfb = var1;
         this.wfb = var2;
 
         for(int var3 = 0; var3 < 64; ++var3) {
-            this.bgb[var3] = j.ji(255 - var3 * 4, 255 - (int)((double)var3 * 1.75D), 255 - var3 * 4);
+            this.bgb[var3] = Scene.ji(255 - var3 * 4, 255 - (int)((double)var3 * 1.75D), 255 - var3 * 4);
         }
 
         for(int var4 = 0; var4 < 64; ++var4) {
-            this.bgb[var4 + 64] = j.ji(var4 * 3, 144, 0);
+            this.bgb[var4 + 64] = Scene.ji(var4 * 3, 144, 0);
         }
 
         for(int var5 = 0; var5 < 64; ++var5) {
-            this.bgb[var5 + 128] = j.ji(192 - (int)((double)var5 * 1.5D), 144 - (int)((double)var5 * 1.5D), 0);
+            this.bgb[var5 + 128] = Scene.ji(192 - (int)((double)var5 * 1.5D), 144 - (int)((double)var5 * 1.5D), 0);
         }
 
         for(int var6 = 0; var6 < 64; ++var6) {
-            this.bgb[var6 + 192] = j.ji(96 - (int)((double)var6 * 1.5D), 48 + (int)((double)var6 * 1.5D), 0);
+            this.bgb[var6 + 192] = Scene.ji(96 - (int)((double)var6 * 1.5D), 48 + (int)((double)var6 * 1.5D), 0);
         }
 
     }
@@ -220,7 +220,7 @@ public class p {
 
     public void ap(int var1, int var2, int var3, int var4) {
         if (var1 >= 0 && var2 >= 0 && var1 < this.pgb - 1 && var2 < this.qgb - 1) {
-            if (r.tkb[var4] == 1) {
+            if (GameData.tkb[var4] == 1) {
                 if (var3 == 0) {
                     this.ugb[var1][var2] |= 1;
                     if (var2 > 0) {
@@ -245,7 +245,7 @@ public class p {
 
     public void yn(int var1, int var2, int var3, int var4) {
         if (var1 >= 0 && var2 >= 0 && var1 < this.pgb - 1 && var2 < this.qgb - 1) {
-            if (r.tkb[var4] == 1) {
+            if (GameData.tkb[var4] == 1) {
                 if (var3 == 0) {
                     this.ugb[var1][var2] &= 65534;
                     if (var2 > 0) {
@@ -270,21 +270,21 @@ public class p {
 
     public void oo(int var1, int var2, int var3) {
         if (var1 >= 0 && var2 >= 0 && var1 < this.pgb - 1 && var2 < this.qgb - 1) {
-            if (r.ikb[var3] == 1 || r.ikb[var3] == 2) {
+            if (GameData.ikb[var3] == 1 || GameData.ikb[var3] == 2) {
                 int var4 = this.bo(var1, var2);
                 int var5;
                 int var6;
                 if (var4 != 0 && var4 != 4) {
-                    var6 = r.gkb[var3];
-                    var5 = r.hkb[var3];
+                    var6 = GameData.gkb[var3];
+                    var5 = GameData.hkb[var3];
                 } else {
-                    var5 = r.gkb[var3];
-                    var6 = r.hkb[var3];
+                    var5 = GameData.gkb[var3];
+                    var6 = GameData.hkb[var3];
                 }
 
                 for(int var7 = var1; var7 < var1 + var5; ++var7) {
                     for(int var8 = var2; var8 < var2 + var6; ++var8) {
-                        if (r.ikb[var3] == 1) {
+                        if (GameData.ikb[var3] == 1) {
                             this.ugb[var7][var8] |= 64;
                         } else if (var4 == 0) {
                             this.ugb[var7][var8] |= 2;
@@ -318,21 +318,21 @@ public class p {
 
     public void yo(int var1, int var2, int var3) {
         if (var1 >= 0 && var2 >= 0 && var1 < this.pgb - 1 && var2 < this.qgb - 1) {
-            if (r.ikb[var3] == 1 || r.ikb[var3] == 2) {
+            if (GameData.ikb[var3] == 1 || GameData.ikb[var3] == 2) {
                 int var4 = this.bo(var1, var2);
                 int var5;
                 int var6;
                 if (var4 != 0 && var4 != 4) {
-                    var6 = r.gkb[var3];
-                    var5 = r.hkb[var3];
+                    var6 = GameData.gkb[var3];
+                    var5 = GameData.hkb[var3];
                 } else {
-                    var5 = r.gkb[var3];
-                    var6 = r.hkb[var3];
+                    var5 = GameData.gkb[var3];
+                    var6 = GameData.hkb[var3];
                 }
 
                 for(int var7 = var1; var7 < var1 + var5; ++var7) {
                     for(int var8 = var2; var8 < var2 + var6; ++var8) {
-                        if (r.ikb[var3] == 1) {
+                        if (GameData.ikb[var3] == 1) {
                             this.ugb[var7][var8] &= 65471;
                         } else if (var4 == 0) {
                             this.ugb[var7][var8] &= 65533;
@@ -400,7 +400,7 @@ public class p {
     }
 
     public void bp(int var1, int var2, int var3, int var4, int var5) {
-        h var6 = this.xgb[var1 + var2 * 8];
+        GameModel var6 = this.xgb[var1 + var2 * 8];
 
         for(int var7 = 0; var7 < var6.hg; ++var7) {
             if (var6.ci[var7] == var3 * 128 && var6.ei[var7] == var4 * 128) {
@@ -530,14 +530,14 @@ public class p {
         if (var4 == 0) {
             return -1;
         } else {
-            int var5 = r.elb[var4 - 1];
+            int var5 = GameData.elb[var4 - 1];
             return var5 == 2 ? 1 : 0;
         }
     }
 
     public int fo(int var1, int var2, int var3, int var4) {
         int var5 = this.po(var1, var2, var3);
-        return var5 == 0 ? var4 : r.dlb[var5 - 1];
+        return var5 == 0 ? var4 : GameData.dlb[var5 - 1];
     }
 
     public int eo(int var1, int var2) {
@@ -659,13 +659,13 @@ public class p {
         try {
             byte[] var18;
             if (this.ufb) {
-                var18 = o.gn(var5 + ".jm", 0, this.ggb);
+                var18 = Utility.gn(var5 + ".jm", 0, this.ggb);
                 if (var18 == null || var18.length == 0) {
                     throw new IOException("Map not defined");
                 }
             } else {
                 var18 = new byte[20736];
-                o.en("../gamedata/maps/" + var5 + ".jm", var18, 20736);
+                Utility.en("../gamedata/maps/" + var5 + ".jm", var18, 20736);
             }
 
             int var7 = 0;
@@ -817,7 +817,7 @@ public class p {
         this.xn(var5, var6, var3, 3);
         this.ko();
         if (this.ahb == null) {
-            this.ahb = new h(this.pgb * this.qgb * 2 + 256, this.pgb * this.qgb * 2 + 256, true, true, false, false, true);
+            this.ahb = new GameModel(this.pgb * this.qgb * 2 + 256, this.pgb * this.qgb * 2 + 256, true, true, false, false, true);
         }
 
         int var7;
@@ -843,25 +843,25 @@ public class p {
                 }
             }
 
-            h var40 = this.ahb;
+            GameModel var40 = this.ahb;
             var40.bf();
 
             for(var9 = 0; var9 < 96; ++var9) {
                 for(var10 = 0; var10 < 96; ++var10) {
                     var11 = -this.no(var9, var10);
-                    if (this.po(var9, var10, var3) > 0 && r.elb[this.po(var9, var10, var3) - 1] == 4) {
+                    if (this.po(var9, var10, var3) > 0 && GameData.elb[this.po(var9, var10, var3) - 1] == 4) {
                         var11 = 0;
                     }
 
-                    if (this.po(var9 - 1, var10, var3) > 0 && r.elb[this.po(var9 - 1, var10, var3) - 1] == 4) {
+                    if (this.po(var9 - 1, var10, var3) > 0 && GameData.elb[this.po(var9 - 1, var10, var3) - 1] == 4) {
                         var11 = 0;
                     }
 
-                    if (this.po(var9, var10 - 1, var3) > 0 && r.elb[this.po(var9, var10 - 1, var3) - 1] == 4) {
+                    if (this.po(var9, var10 - 1, var3) > 0 && GameData.elb[this.po(var9, var10 - 1, var3) - 1] == 4) {
                         var11 = 0;
                     }
 
-                    if (this.po(var9 - 1, var10 - 1, var3) > 0 && r.elb[this.po(var9 - 1, var10 - 1, var3) - 1] == 4) {
+                    if (this.po(var9 - 1, var10 - 1, var3) > 0 && GameData.elb[this.po(var9 - 1, var10 - 1, var3) - 1] == 4) {
                         var11 = 0;
                     }
 
@@ -887,9 +887,9 @@ public class p {
 
                     if (this.po(var10, var11, var3) > 0) {
                         var17 = this.po(var10, var11, var3);
-                        var12 = r.elb[var17 - 1];
+                        var12 = GameData.elb[var17 - 1];
                         var18 = this.vo(var10, var11, var3);
-                        var13 = var14 = r.dlb[var17 - 1];
+                        var13 = var14 = GameData.dlb[var17 - 1];
                         if (var12 == 4) {
                             var13 = 1;
                             var14 = 1;
@@ -927,11 +927,11 @@ public class p {
                             }
                         }
 
-                        if (r.flb[var17 - 1] != 0) {
+                        if (GameData.flb[var17 - 1] != 0) {
                             this.ugb[var10][var11] |= 64;
                         }
 
-                        if (r.elb[var17 - 1] == 2) {
+                        if (GameData.elb[var17 - 1] == 2) {
                             this.ugb[var10][var11] |= 128;
                         }
                     }
@@ -996,8 +996,8 @@ public class p {
 
             for(var11 = 1; var11 < 95; ++var11) {
                 for(var12 = 1; var12 < 95; ++var12) {
-                    if (this.po(var11, var12, var3) > 0 && r.elb[this.po(var11, var12, var3) - 1] == 4) {
-                        var13 = r.dlb[this.po(var11, var12, var3) - 1];
+                    if (this.po(var11, var12, var3) > 0 && GameData.elb[this.po(var11, var12, var3) - 1] == 4) {
+                        var13 = GameData.dlb[this.po(var11, var12, var3) - 1];
                         var14 = var40.se(var11 * 128, -this.no(var11, var12), var12 * 128);
                         var15 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12), var12 * 128);
                         var43 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12 + 1), (var12 + 1) * 128);
@@ -1008,9 +1008,9 @@ public class p {
                         this.sgb[var42] = var12;
                         var40.oh[var42] = 200000 + var42;
                         this.co(var11, var12, 0, var13, var13);
-                    } else if (this.po(var11, var12, var3) == 0 || r.elb[this.po(var11, var12, var3) - 1] != 3) {
-                        if (this.po(var11, var12 + 1, var3) > 0 && r.elb[this.po(var11, var12 + 1, var3) - 1] == 4) {
-                            var13 = r.dlb[this.po(var11, var12 + 1, var3) - 1];
+                    } else if (this.po(var11, var12, var3) == 0 || GameData.elb[this.po(var11, var12, var3) - 1] != 3) {
+                        if (this.po(var11, var12 + 1, var3) > 0 && GameData.elb[this.po(var11, var12 + 1, var3) - 1] == 4) {
+                            var13 = GameData.dlb[this.po(var11, var12 + 1, var3) - 1];
                             var14 = var40.se(var11 * 128, -this.no(var11, var12), var12 * 128);
                             var15 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12), var12 * 128);
                             var43 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12 + 1), (var12 + 1) * 128);
@@ -1023,8 +1023,8 @@ public class p {
                             this.co(var11, var12, 0, var13, var13);
                         }
 
-                        if (this.po(var11, var12 - 1, var3) > 0 && r.elb[this.po(var11, var12 - 1, var3) - 1] == 4) {
-                            var13 = r.dlb[this.po(var11, var12 - 1, var3) - 1];
+                        if (this.po(var11, var12 - 1, var3) > 0 && GameData.elb[this.po(var11, var12 - 1, var3) - 1] == 4) {
+                            var13 = GameData.dlb[this.po(var11, var12 - 1, var3) - 1];
                             var14 = var40.se(var11 * 128, -this.no(var11, var12), var12 * 128);
                             var15 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12), var12 * 128);
                             var43 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12 + 1), (var12 + 1) * 128);
@@ -1037,8 +1037,8 @@ public class p {
                             this.co(var11, var12, 0, var13, var13);
                         }
 
-                        if (this.po(var11 + 1, var12, var3) > 0 && r.elb[this.po(var11 + 1, var12, var3) - 1] == 4) {
-                            var13 = r.dlb[this.po(var11 + 1, var12, var3) - 1];
+                        if (this.po(var11 + 1, var12, var3) > 0 && GameData.elb[this.po(var11 + 1, var12, var3) - 1] == 4) {
+                            var13 = GameData.dlb[this.po(var11 + 1, var12, var3) - 1];
                             var14 = var40.se(var11 * 128, -this.no(var11, var12), var12 * 128);
                             var15 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12), var12 * 128);
                             var43 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12 + 1), (var12 + 1) * 128);
@@ -1051,8 +1051,8 @@ public class p {
                             this.co(var11, var12, 0, var13, var13);
                         }
 
-                        if (this.po(var11 - 1, var12, var3) > 0 && r.elb[this.po(var11 - 1, var12, var3) - 1] == 4) {
-                            var13 = r.dlb[this.po(var11 - 1, var12, var3) - 1];
+                        if (this.po(var11 - 1, var12, var3) > 0 && GameData.elb[this.po(var11 - 1, var12, var3) - 1] == 4) {
+                            var13 = GameData.dlb[this.po(var11 - 1, var12, var3) - 1];
                             var14 = var40.se(var11 * 128, -this.no(var11, var12), var12 * 128);
                             var15 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12), var12 * 128);
                             var43 = var40.se((var11 + 1) * 128, -this.no(var11 + 1, var12 + 1), (var12 + 1) * 128);
@@ -1088,9 +1088,9 @@ public class p {
         for(var8 = 0; var8 < 95; ++var8) {
             for(var9 = 0; var9 < 95; ++var9) {
                 var10 = this.io(var8, var9);
-                if (var10 > 0 && (r.vkb[var10 - 1] == 0 || this.vfb)) {
+                if (var10 > 0 && (GameData.vkb[var10 - 1] == 0 || this.vfb)) {
                     this.cp(this.ahb, var10 - 1, var8, var9, var8 + 1, var9);
-                    if (var4 && r.tkb[var10 - 1] != 0) {
+                    if (var4 && GameData.tkb[var10 - 1] != 0) {
                         this.ugb[var8][var9] |= 1;
                         if (var9 > 0) {
                             this.zo(var8, var9 - 1, 4);
@@ -1103,9 +1103,9 @@ public class p {
                 }
 
                 var10 = this.ro(var8, var9);
-                if (var10 > 0 && (r.vkb[var10 - 1] == 0 || this.vfb)) {
+                if (var10 > 0 && (GameData.vkb[var10 - 1] == 0 || this.vfb)) {
                     this.cp(this.ahb, var10 - 1, var8, var9, var8, var9 + 1);
-                    if (var4 && r.tkb[var10 - 1] != 0) {
+                    if (var4 && GameData.tkb[var10 - 1] != 0) {
                         this.ugb[var8][var9] |= 2;
                         if (var8 > 0) {
                             this.zo(var8 - 1, var9, 8);
@@ -1118,9 +1118,9 @@ public class p {
                 }
 
                 var10 = this.eo(var8, var9);
-                if (var10 > 0 && var10 < 12000 && (r.vkb[var10 - 1] == 0 || this.vfb)) {
+                if (var10 > 0 && var10 < 12000 && (GameData.vkb[var10 - 1] == 0 || this.vfb)) {
                     this.cp(this.ahb, var10 - 1, var8, var9, var8 + 1, var9 + 1);
-                    if (var4 && r.tkb[var10 - 1] != 0) {
+                    if (var4 && GameData.tkb[var10 - 1] != 0) {
                         this.ugb[var8][var9] |= 32;
                     }
 
@@ -1131,9 +1131,9 @@ public class p {
                     }
                 }
 
-                if (var10 > 12000 && var10 < 24000 && (r.vkb[var10 - 12001] == 0 || this.vfb)) {
+                if (var10 > 12000 && var10 < 24000 && (GameData.vkb[var10 - 12001] == 0 || this.vfb)) {
                     this.cp(this.ahb, var10 - 12001, var8 + 1, var9, var8, var9 + 1);
-                    if (var4 && r.tkb[var10 - 12001] != 0) {
+                    if (var4 && GameData.tkb[var10 - 12001] != 0) {
                         this.ugb[var8][var9] |= 16;
                     }
 
@@ -1283,7 +1283,7 @@ public class p {
                     int var32 = this.vgb[var17][var13];
                     int var33 = this.vgb[var42][var20];
                     int var34 = this.vgb[var12][var22];
-                    int var35 = r.ykb[var14 - 1];
+                    int var35 = GameData.ykb[var14 - 1];
                     if (this.wo(var12, var13) && var31 < 80000) {
                         var31 += var35 + 80000;
                         this.vgb[var12][var13] = var31;
@@ -1385,7 +1385,7 @@ public class p {
                         var30 += var36;
                     }
 
-                    var14 = r.alb[var14 - 1];
+                    var14 = GameData.alb[var14 - 1];
                     var31 = -var31;
                     var32 = -var32;
                     var33 = -var33;
@@ -1454,7 +1454,7 @@ public class p {
 
     }
 
-    public void jo(h[] var1) {
+    public void jo(GameModel[] var1) {
         for(int var2 = 0; var2 < this.pgb - 2; ++var2) {
             for(int var3 = 0; var3 < this.qgb - 2; ++var3) {
                 if (this.eo(var2, var3) > 48000 && this.eo(var2, var3) < 60000) {
@@ -1463,15 +1463,15 @@ public class p {
                     int var6;
                     int var7;
                     if (var5 != 0 && var5 != 4) {
-                        var7 = r.gkb[var4];
-                        var6 = r.hkb[var4];
+                        var7 = GameData.gkb[var4];
+                        var6 = GameData.hkb[var4];
                     } else {
-                        var6 = r.gkb[var4];
-                        var7 = r.hkb[var4];
+                        var6 = GameData.gkb[var4];
+                        var7 = GameData.hkb[var4];
                     }
 
                     this.oo(var2, var3, var4);
-                    h var8 = var1[r.fkb[var4]].ye(false, true, false, false);
+                    GameModel var8 = var1[GameData.fkb[var4]].ye(false, true, false, false);
                     int var9 = (var2 + var2 + var6) * 128 / 2;
                     int var10 = (var3 + var3 + var7) * 128 / 2;
                     var8.ee(var9, -this.ho(var9, var10), var10);
@@ -1508,12 +1508,12 @@ public class p {
 
     }
 
-    public void cp(h var1, int var2, int var3, int var4, int var5, int var6) {
+    public void cp(GameModel var1, int var2, int var3, int var4, int var5, int var6) {
         this.mo(var3, var4, 40);
         this.mo(var5, var6, 40);
-        int var7 = r.qkb[var2];
-        int var8 = r.rkb[var2];
-        int var9 = r.skb[var2];
+        int var7 = GameData.qkb[var2];
+        int var8 = GameData.rkb[var2];
+        int var9 = GameData.skb[var2];
         int var10 = var3 * 128;
         int var11 = var4 * 128;
         int var12 = var5 * 128;
@@ -1524,7 +1524,7 @@ public class p {
         int var17 = var1.se(var12, -this.vgb[var5][var6], var13);
         int[] var18 = new int[]{var14, var15, var16, var17};
         int var19 = var1.re(4, var18, var8, var9);
-        if (r.vkb[var2] == 5) {
+        if (GameData.vkb[var2] == 5) {
             var1.oh[var19] = 30000 + var2;
         } else {
             var1.oh[var19] = 0;
@@ -1532,7 +1532,7 @@ public class p {
     }
 
     public void to(int var1, int var2, int var3, int var4, int var5) {
-        int var6 = r.qkb[var1];
+        int var6 = GameData.qkb[var1];
         if (this.vgb[var2][var3] < 80000) {
             this.vgb[var2][var3] += 80000 + var6;
         }

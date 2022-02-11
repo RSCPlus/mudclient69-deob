@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-public class o {
+public class Utility {
     public static URL jfb = null;
     static int[] kfb = new int[]{0, 1, 3, 7, 15, 31, 63, 127, 255, 511, 1023, 2047, 4095, 8191, 16383, 32767, 65535};
     static String[] lfb = new String[]{"fuck", "bastard", "lesbian", "prostitut", "spastic", "vagina", "retard", "arsehole", "asshole", "tosser", "homosex", "hetrosex", "hitler", "urinate"};
@@ -235,7 +235,7 @@ public class o {
 
         if (var3 != var2) {
             byte[] var11 = new byte[var2];
-            n.ek(var11, var2, var4, var3, 0);
+            BZLib.ek(var11, var2, var4, var3, 0);
             return var11;
         } else {
             return var4;
@@ -283,7 +283,7 @@ public class o {
             int var11 = (var2[var8 * 10 + 9] & 255) * 65536 + (var2[var8 * 10 + 10] & 255) * 256 + (var2[var8 * 10 + 11] & 255);
             if (var9 == var5) {
                 if (var10 != var11) {
-                    n.ek(var3, var10, var2, var11, var7);
+                    BZLib.ek(var3, var10, var2, var11, var7);
                 } else {
                     for(int var12 = 0; var12 < var10; ++var12) {
                         var3[var12] = var2[var7 + var12];
@@ -317,7 +317,7 @@ public class o {
             if (var8 == var4) {
                 byte[] var11 = new byte[var9 + var1];
                 if (var9 != var10) {
-                    n.ek(var11, var9, var2, var10, var6);
+                    BZLib.ek(var11, var9, var2, var10, var6);
                 } else {
                     for(int var12 = 0; var12 < var9; ++var12) {
                         var11[var12] = var2[var6 + var12];
@@ -494,6 +494,6 @@ public class o {
         }
     }
 
-    public o() {
+    public Utility() {
     }
 }

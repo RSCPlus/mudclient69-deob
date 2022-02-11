@@ -1,9 +1,9 @@
 package jagex.client;
 
-import jagex.o;
+import jagex.Utility;
 import java.io.IOException;
 
-public class j {
+public class Scene {
     int vl = 50;
     int[] wl;
     int[][] xl;
@@ -24,7 +24,7 @@ public class j {
     private int mm;
     private int nm;
     private int om;
-    private h[] pm;
+    private GameModel[] pm;
     private int[] qm;
     private int rm;
     private int sm;
@@ -41,10 +41,10 @@ public class j {
     private int dn;
     private int en;
     private int fn;
-    private h[] gn;
+    private GameModel[] gn;
     private int[] hn;
     private int in;
-    private q[] jn;
+    private Polygon[] jn;
     private int kn;
     private int ln;
     private int[] mn;
@@ -54,7 +54,7 @@ public class j {
     private int[] qn;
     private int[] rn;
     private int[] sn;
-    public h tn;
+    public GameModel tn;
     private static final int un = 16;
     private static final int vn = 4;
     private static final int wn = 5;
@@ -72,9 +72,9 @@ public class j {
     int[][] io;
     private static byte[] jo;
     private static int[] ko = new int[256];
-    i lo;
+    Surface lo;
     public int[] mo;
-    s[] no;
+    Scanline[] no;
     int oo;
     int po;
     int[] qo;
@@ -93,7 +93,7 @@ public class j {
     int dp;
     int ep;
 
-    public j(i var1, int var2, int var3, int var4) {
+    public Scene(Surface var1, int var2, int var3, int var4) {
         this.wl = new int[this.vl];
         this.xl = new int[this.vl][256];
         this.am = 5;
@@ -106,7 +106,7 @@ public class j {
         this.jm = 1;
         this.km = false;
         this.om = 100;
-        this.pm = new h[this.om];
+        this.pm = new GameModel[this.om];
         this.qm = new int[this.om];
         this.rm = 512;
         this.sm = 256;
@@ -128,17 +128,17 @@ public class j {
         this.mo = var1.wj;
         this.en = 0;
         this.fn = var2;
-        this.gn = new h[this.fn];
+        this.gn = new GameModel[this.fn];
         this.hn = new int[this.fn];
         this.in = 0;
-        this.jn = new q[var3];
+        this.jn = new Polygon[var3];
 
         for(int var5 = 0; var5 < var3; ++var5) {
-            this.jn[var5] = new q();
+            this.jn[var5] = new Polygon();
         }
 
         this.ln = 0;
-        this.tn = new h(var4 * 2, var4);
+        this.tn = new GameModel(var4 * 2, var4);
         this.mn = new int[var4];
         this.qn = new int[var4];
         this.rn = new int[var4];
@@ -169,7 +169,7 @@ public class j {
 
     }
 
-    public void yh(h var1) {
+    public void yh(GameModel var1) {
         if (this.en < this.fn) {
             this.hn[this.en] = 0;
             this.gn[this.en++] = var1;
@@ -177,7 +177,7 @@ public class j {
 
     }
 
-    public void ci(h var1) {
+    public void ci(GameModel var1) {
         for(int var2 = 0; var2 < this.en; ++var2) {
             if (this.gn[var2] == var1) {
                 --this.en;
@@ -271,7 +271,7 @@ public class j {
         return this.qm;
     }
 
-    public h[] sh() {
+    public GameModel[] sh() {
         return this.pm;
     }
 
@@ -282,20 +282,20 @@ public class j {
         this.vm = var2;
         this.rm = var5;
         this.wm = var6;
-        this.no = new s[var4 + var2];
+        this.no = new Scanline[var4 + var2];
 
         for(int var7 = 0; var7 < var4 + var2; ++var7) {
-            this.no[var7] = new s();
+            this.no[var7] = new Scanline();
         }
 
     }
 
-    private void uh(q[] var1, int var2, int var3) {
+    private void uh(Polygon[] var1, int var2, int var3) {
         if (var2 < var3) {
             int var4 = var2 - 1;
             int var5 = var3 + 1;
             int var6 = (var2 + var3) / 2;
-            q var7 = var1[var6];
+            Polygon var7 = var1[var6];
             var1[var6] = var1[var2];
             var1[var2] = var7;
             int var8 = var7.jhb;
@@ -310,7 +310,7 @@ public class j {
                 } while(var1[var4].jhb > var8);
 
                 if (var4 < var5) {
-                    q var9 = var1[var4];
+                    Polygon var9 = var1[var4];
                     var1[var4] = var1[var5];
                     var1[var5] = var9;
                 }
@@ -322,7 +322,7 @@ public class j {
 
     }
 
-    public void lh(int var1, q[] var2, int var3) {
+    public void lh(int var1, Polygon[] var2, int var3) {
         for(int var4 = 0; var4 <= var3; ++var4) {
             var2[var4].phb = false;
             var2[var4].qhb = var4;
@@ -340,7 +340,7 @@ public class j {
                 return;
             }
 
-            q var6 = var2[var5];
+            Polygon var6 = var2[var5];
             var6.phb = true;
             int var7 = var5;
             int var8 = var5 + var1;
@@ -349,7 +349,7 @@ public class j {
             }
 
             for(int var9 = var8; var9 >= var7 + 1; --var9) {
-                q var10 = var2[var9];
+                Polygon var10 = var2[var9];
                 if (var6.bhb < var10.dhb && var10.bhb < var6.dhb && var6.chb < var10.ehb && var10.chb < var6.ehb && var6.qhb != var10.rhb && !this.mh(var6, var10) && this.kh(var10, var6)) {
                     this.zi(var2, var7, var9);
                     if (var2[var9] != var10) {
@@ -363,11 +363,11 @@ public class j {
         }
     }
 
-    public boolean zi(q[] var1, int var2, int var3) {
+    public boolean zi(Polygon[] var1, int var2, int var3) {
         while(true) {
-            q var4 = var1[var2];
+            Polygon var4 = var1[var2];
 
-            q var6;
+            Polygon var6;
             for(int var5 = var2 + 1; var5 <= var3; ++var5) {
                 var6 = var1[var5];
                 if (!this.mh(var6, var4)) {
@@ -387,7 +387,7 @@ public class j {
             var6 = var1[var3];
 
             for(int var7 = var3 - 1; var7 >= var2; --var7) {
-                q var8 = var1[var7];
+                Polygon var8 = var1[var7];
                 if (!this.mh(var6, var8)) {
                     break;
                 }
@@ -509,7 +509,7 @@ public class j {
         this.gn[this.en].le(this.ym, this.zm, this.an, this.bn, this.cn, this.dn, this.wm, this.am);
         this.in = 0;
 
-        h var1;
+        GameModel var1;
         int var5;
         int var10;
         int var12;
@@ -571,7 +571,7 @@ public class j {
                             }
 
                             if (var23 == 3) {
-                                q var15 = this.jn[this.in];
+                                Polygon var15 = this.jn[this.in];
                                 var15.hhb = var1;
                                 var15.ihb = var2;
                                 this.bj(this.in);
@@ -612,7 +612,7 @@ public class j {
                     var28 = (this.qn[var2] << this.wm) / var14;
                     var16 = (this.rn[var2] << this.wm) / var14;
                     if (var12 - var28 / 2 <= this.sm && var12 + var28 / 2 >= -this.sm && var13 - var16 <= this.tm && var13 >= -this.tm) {
-                        q var29 = this.jn[this.in];
+                        Polygon var29 = this.jn[this.in];
                         var29.hhb = var1;
                         var29.ihb = var2;
                         this.dj(this.in);
@@ -629,7 +629,7 @@ public class j {
             this.lh(100, this.jn, this.in);
 
             for(var10 = 0; var10 < this.in; ++var10) {
-                q var26 = this.jn[var10];
+                Polygon var26 = this.jn[var10];
                 var1 = var26.hhb;
                 var2 = var26.ihb;
                 int var18;
@@ -754,7 +754,7 @@ public class j {
         }
     }
 
-    private void jh(int var1, int var2, int var3, int var4, int var5, int[] var6, int[] var7, int[] var8, h var9, int var10) {
+    private void jh(int var1, int var2, int var3, int var4, int var5, int[] var6, int[] var7, int[] var8, GameModel var9, int var10) {
         int var11;
         int var12;
         int var13;
@@ -784,7 +784,7 @@ public class j {
         int var37;
         int var38;
         int var39;
-        s var50;
+        Scanline var50;
         if (var5 == 3) {
             var11 = var7[0] + this.vm;
             var12 = var7[1] + this.vm;
@@ -955,7 +955,7 @@ public class j {
                     var35 += var36;
                 }
 
-                s var40 = this.no[var3];
+                Scanline var40 = this.no[var3];
                 var40.rmb = var1;
                 var40.smb = var2;
                 var40.tmb = var4;
@@ -1193,7 +1193,7 @@ public class j {
                     var44 += var45;
                 }
 
-                s var49 = this.no[var3];
+                Scanline var49 = this.no[var3];
                 var49.rmb = var1;
                 var49.smb = var2;
                 var49.tmb = var4;
@@ -1235,7 +1235,7 @@ public class j {
             var11 = var5 - 1;
             var12 = var7[0];
             var13 = var7[var11];
-            s var51;
+            Scanline var51;
             if (var12 < var13) {
                 var14 = var6[0] << 8;
                 var15 = (var6[var11] - var6[0] << 8) / (var13 - var12);
@@ -1286,7 +1286,7 @@ public class j {
                 var14 = var3 + 1;
                 var12 = var7[var3];
                 var13 = var7[var14];
-                s var52;
+                Scanline var52;
                 if (var12 < var13) {
                     var15 = var6[var3] << 8;
                     var16 = (var6[var14] - var6[var3] << 8) / (var13 - var12);
@@ -1366,7 +1366,7 @@ public class j {
 
     }
 
-    private void th(int var1, int var2, int var3, int[] var4, int[] var5, int[] var6, int var7, h var8) {
+    private void th(int var1, int var2, int var3, int[] var4, int[] var5, int[] var6, int var7, GameModel var8) {
         int var9;
         int var10;
         int var11;
@@ -1408,7 +1408,7 @@ public class j {
             int var31;
             int var32;
             byte var33;
-            s var34;
+            Scanline var34;
             int var35;
             int var36;
             int var37;
@@ -1726,7 +1726,7 @@ public class j {
                 var39 = 2;
             }
 
-            s var40;
+            Scanline var40;
             if (var8.mh) {
                 for(var1 = this.oo; var1 < this.po; var1 += var39) {
                     var40 = this.no[var1];
@@ -2820,8 +2820,8 @@ public class j {
     }
 
     private void bj(int var1) {
-        q var2 = this.jn[var1];
-        h var3 = var2.hhb;
+        Polygon var2 = this.jn[var1];
+        GameModel var3 = var2.hhb;
         int var4 = var2.ihb;
         int[] var5 = var3.rg[var4];
         int var6 = var3.qg[var4];
@@ -2896,8 +2896,8 @@ public class j {
     }
 
     private void dj(int var1) {
-        q var2 = this.jn[var1];
-        h var3 = var2.hhb;
+        Polygon var2 = this.jn[var1];
+        GameModel var3 = var2.hhb;
         int var4 = var2.ihb;
         int[] var5 = var3.rg[var4];
         byte var7 = 0;
@@ -2953,7 +2953,7 @@ public class j {
         var2.ehb = var18;
     }
 
-    private boolean mh(q var1, q var2) {
+    private boolean mh(Polygon var1, Polygon var2) {
         if (var1.bhb >= var2.dhb) {
             return true;
         } else if (var2.bhb >= var1.dhb) {
@@ -2967,8 +2967,8 @@ public class j {
         } else if (var2.fhb > var1.ghb) {
             return false;
         } else {
-            h var3 = var1.hhb;
-            h var4 = var2.hhb;
+            GameModel var3 = var1.hhb;
+            GameModel var4 = var2.hhb;
             int var5 = var1.ihb;
             int var6 = var2.ihb;
             int[] var7 = var3.rg[var5];
@@ -3077,9 +3077,9 @@ public class j {
         }
     }
 
-    private boolean kh(q var1, q var2) {
-        h var3 = var1.hhb;
-        h var4 = var2.hhb;
+    private boolean kh(Polygon var1, Polygon var2) {
+        GameModel var3 = var1.hhb;
+        GameModel var4 = var2.hhb;
         int var5 = var1.ihb;
         int var6 = var2.ihb;
         int[] var7 = var3.rg[var5];
@@ -3133,11 +3133,11 @@ public class j {
         }
     }
 
-    public void ih(String var1, int var2, int var3, int var4, k var5) {
+    public void ih(String var1, int var2, int var3, int var4, GameApplet var5) {
         try {
             this.go = var5.gj(var1, "textures", var4);
-            byte[] var6 = o.gn("textures.txt", 0, this.go);
-            a var7 = new a(var6);
+            byte[] var6 = Utility.gn("textures.txt", 0, this.go);
+            ClientStream var7 = new ClientStream(var6);
             var7.sb();
             this.yn = var7.xb();
             this.zn = new String[this.yn];
@@ -3213,7 +3213,7 @@ public class j {
                         if (this.ho[var2] == null) {
                             this.ho[var2] = new int[16384];
                             this.eo[var1] = this.ho[var2];
-                            o.wn(this.zn[var1] + ".tga", 0, this.go, jo);
+                            Utility.wn(this.zn[var1] + ".tga", 0, this.go, jo);
                             this.ni(var1);
                             return;
                         }
@@ -3231,14 +3231,14 @@ public class j {
 
                     this.eo[var1] = this.eo[var5];
                     this.eo[var5] = null;
-                    o.wn(this.zn[var1] + ".tga", 0, this.go, jo);
+                    Utility.wn(this.zn[var1] + ".tga", 0, this.go, jo);
                     this.ni(var1);
                 } else {
                     for(var2 = 0; var2 < this.io.length; ++var2) {
                         if (this.io[var2] == null) {
                             this.io[var2] = new int[65536];
                             this.eo[var1] = this.io[var2];
-                            o.wn(this.zn[var1] + ".tga", 0, this.go, jo);
+                            Utility.wn(this.zn[var1] + ".tga", 0, this.go, jo);
                             this.ni(var1);
                             return;
                         }
@@ -3256,7 +3256,7 @@ public class j {
 
                     this.eo[var1] = this.eo[var5];
                     this.eo[var5] = null;
-                    o.wn(this.zn[var1] + ".tga", 0, this.go, jo);
+                    Utility.wn(this.zn[var1] + ".tga", 0, this.go, jo);
                     this.ni(var1);
                 }
             }
@@ -3265,7 +3265,7 @@ public class j {
 
     public void qi(String var1) {
         try {
-            a var2 = new a(var1 + "/textures.txt");
+            ClientStream var2 = new ClientStream(var1 + "/textures.txt");
             var2.sb();
             this.yn = var2.xb();
             this.zn = new String[this.yn];
@@ -3301,7 +3301,7 @@ public class j {
                 }
 
                 this.eo[var4] = new int[var6 * var6 * 4];
-                o.en(var1 + "/" + this.zn[var4] + ".tga", jo, var5);
+                Utility.en(var1 + "/" + this.zn[var4] + ".tga", jo, var5);
                 this.ni(var4);
             }
 

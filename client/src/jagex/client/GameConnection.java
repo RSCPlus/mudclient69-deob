@@ -1,6 +1,6 @@
 package jagex.client;
 
-import jagex.o;
+import jagex.Utility;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Font;
@@ -8,7 +8,7 @@ import java.awt.Graphics;
 import java.io.IOException;
 import java.net.InetAddress;
 
-public class e extends k {
+public class GameConnection extends GameApplet {
     public static String[] uc = new String[50];
     public static boolean vc = true;
     public static int wc = 99999999;
@@ -19,7 +19,7 @@ public class e extends k {
     public int bd = 43594;
     String cd = "";
     String dd = "";
-    public a ed;
+    public ClientStream ed;
     int fd;
     int gd;
     byte[] hd = new byte[5000];
@@ -39,15 +39,15 @@ public class e extends k {
     public void hb(String var1, String var2) {
         try {
             this.cd = var1;
-            var1 = o.vn(var1, 20);
+            var1 = Utility.vn(var1, 20);
             this.dd = var2;
-            var2 = o.vn(var2, 20);
+            var2 = Utility.vn(var2, 20);
             if (var1.trim().length() != 0 && var2.trim().length() != 0) {
                 this.qb(uc[6], uc[7]);
                 if (this.ak()) {
-                    this.ed = a.n(this.zc, this, this.bd);
+                    this.ed = ClientStream.n(this.zc, this, this.bd);
                 } else {
-                    this.ed = a.n(this.zc, (Applet)null, this.bd);
+                    this.ed = ClientStream.n(this.zc, (Applet)null, this.bd);
                 }
 
                 byte[] var3 = new byte[]{127, 0, 0, 1};
@@ -84,7 +84,7 @@ public class e extends k {
                 }
 
                 this.ed.a(0);
-                this.ed.c(o.on(var1));
+                this.ed.c(Utility.on(var1));
                 this.ed.i(var2);
                 this.ed.l(yc);
                 this.ed.m(var3[0]);
@@ -126,15 +126,15 @@ public class e extends k {
     public void fb(String var1, String var2, String var3, int var4, int var5, int var6) {
         try {
             if (this.ak()) {
-                this.ed = a.n(this.zc, this, this.bd);
+                this.ed = ClientStream.n(this.zc, this, this.bd);
             } else {
-                this.ed = a.n(this.zc, (Applet)null, this.bd);
+                this.ed = ClientStream.n(this.zc, (Applet)null, this.bd);
             }
 
             this.ed.a(2);
-            var1 = o.vn(var1, 20);
-            var2 = o.vn(var2, 20);
-            this.ed.c(o.on(var1));
+            var1 = Utility.vn(var1, 20);
+            var2 = Utility.vn(var2, 20);
+            this.ed.c(Utility.on(var1));
             this.ed.i(var2);
 
             while(var3.length() < 40) {
@@ -187,9 +187,9 @@ public class e extends k {
 
     public void s(String var1, String var2) {
         this.cd = var1;
-        var1 = o.vn(var1, 20);
+        var1 = Utility.vn(var1, 20);
         this.dd = var2;
-        var2 = o.vn(var2, 20);
+        var2 = Utility.vn(var2, 20);
         if (var1.length() != 0 && var2.length() != 0) {
             long var3 = System.currentTimeMillis();
 
@@ -198,9 +198,9 @@ public class e extends k {
 
                 try {
                     if (this.ak()) {
-                        this.ed = a.n(this.zc, this, this.bd);
+                        this.ed = ClientStream.n(this.zc, this, this.bd);
                     } else {
-                        this.ed = a.n(this.zc, (Applet)null, this.bd);
+                        this.ed = ClientStream.n(this.zc, (Applet)null, this.bd);
                     }
 
                     byte[] var5 = new byte[]{127, 0, 0, 1};
@@ -223,7 +223,7 @@ public class e extends k {
                     }
 
                     this.ed.a(19);
-                    this.ed.c(o.on(var1));
+                    this.ed.c(Utility.on(var1));
                     this.ed.i(var2);
                     this.ed.l(yc);
                     this.ed.m(var5[0]);
@@ -322,11 +322,11 @@ public class e extends k {
 
             if (this.fd > 0 && this.ed.rb() >= this.fd) {
                 this.ed.ub(this.fd, this.hd);
-                this.gd = o.qn(this.hd[0]);
+                this.gd = Utility.qn(this.hd[0]);
                 xc = 0;
                 if (this.gd == 8) {
                     String var3 = new String(this.hd, 1, this.fd - 1);
-                    this.x(o.in(var3, true));
+                    this.x(Utility.in(var3, true));
                 }
 
                 if (this.gd == 9) {
@@ -338,20 +338,20 @@ public class e extends k {
                 } else {
                     int var9;
                     if (this.gd == 23) {
-                        this.kd = o.qn(this.hd[1]);
+                        this.kd = Utility.qn(this.hd[1]);
 
                         for(var9 = 0; var9 < this.kd; ++var9) {
-                            this.ld[var9] = o.nn(this.hd, 2 + var9 * 9);
-                            this.md[var9] = o.qn(this.hd[10 + var9 * 9]);
+                            this.ld[var9] = Utility.nn(this.hd, 2 + var9 * 9);
+                            this.md[var9] = Utility.qn(this.hd[10 + var9 * 9]);
                         }
                     } else {
                         long var8;
                         if (this.gd != 24) {
                             if (this.gd == 26) {
-                                this.nd = o.qn(this.hd[1]);
+                                this.nd = Utility.qn(this.hd[1]);
 
                                 for(var9 = 0; var9 < this.nd; ++var9) {
-                                    this.od[var9] = o.nn(this.hd, 2 + var9 * 8);
+                                    this.od[var9] = Utility.nn(this.hd, 2 + var9 * 8);
                                 }
                             } else if (this.gd == 27) {
                                 this.pd = this.hd[1];
@@ -360,28 +360,28 @@ public class e extends k {
                                 this.sd = this.hd[4];
                                 this.td = this.hd[5];
                             } else if (this.gd == 28) {
-                                var8 = o.nn(this.hd, 1);
+                                var8 = Utility.nn(this.hd, 1);
                                 String var10 = new String(this.hd, 9, this.fd - 9);
-                                if (var8 != o.on(this.cd)) {
-                                    var10 = o.in(var10, true);
+                                if (var8 != Utility.on(this.cd)) {
+                                    var10 = Utility.in(var10, true);
                                 }
 
-                                this.x("@pri@" + o.rn(var8) + ": tells you " + var10);
+                                this.x("@pri@" + Utility.rn(var8) + ": tells you " + var10);
                             } else {
                                 this.db(this.gd, this.fd, this.hd);
                             }
                         } else {
-                            var8 = o.nn(this.hd, 1);
+                            var8 = Utility.nn(this.hd, 1);
                             int var5 = this.hd[9] & 255;
 
                             for(int var6 = 0; var6 < this.kd; ++var6) {
                                 if (this.ld[var6] == var8) {
                                     if (this.md[var6] == 0 && var5 != 0) {
-                                        this.x("@pri@" + o.rn(var8) + " has logged in");
+                                        this.x("@pri@" + Utility.rn(var8) + " has logged in");
                                     }
 
                                     if (this.md[var6] != 0 && var5 == 0) {
-                                        this.x("@pri@" + o.rn(var8) + " has logged out");
+                                        this.x("@pri@" + Utility.rn(var8) + " has logged out");
                                     }
 
                                     this.md[var6] = var5;
@@ -393,7 +393,7 @@ public class e extends k {
                             this.ld[this.kd] = var8;
                             this.md[this.kd] = var5;
                             ++this.kd;
-                            this.x("@pri@" + o.rn(var8) + " has been added to your friends list");
+                            this.x("@pri@" + Utility.rn(var8) + " has been added to your friends list");
                         }
                     }
                 }
@@ -408,7 +408,7 @@ public class e extends k {
     }
 
     public void cb(String var1) {
-        var1 = o.vn(var1, 20);
+        var1 = Utility.vn(var1, 20);
         this.ed.a(25);
         this.ed.i(var1);
         this.ed.d();
@@ -425,7 +425,7 @@ public class e extends k {
     }
 
     public void nb(String var1) {
-        long var2 = o.on(var1);
+        long var2 = Utility.on(var1);
         this.ed.a(29);
         this.ed.c(var2);
         this.ed.d();
@@ -462,7 +462,7 @@ public class e extends k {
 
     public void ib(String var1) {
         this.ed.a(26);
-        this.ed.c(o.on(var1));
+        this.ed.c(Utility.on(var1));
         this.ed.d();
     }
 
@@ -489,7 +489,7 @@ public class e extends k {
             }
         }
 
-        this.x("@pri@" + o.rn(var1) + " has been removed from your friends list");
+        this.x("@pri@" + Utility.rn(var1) + " has been removed from your friends list");
     }
 
     public void u(long var1, String var3) {
@@ -502,7 +502,7 @@ public class e extends k {
         this.ed.m(var3.length());
         this.ed.i(var3);
         this.ed.d();
-        this.x("@pri@You tell " + o.rn(var1) + ": " + var3);
+        this.x("@pri@You tell " + Utility.rn(var1) + ": " + var3);
     }
 
     public boolean y(String var1) {
@@ -512,7 +512,7 @@ public class e extends k {
             if (var2 != -1 && var2 < var1.length() - 1) {
                 String var3 = var1.substring(0, var2);
                 var1 = var1.substring(var2 + 1);
-                this.u(o.on(var3), var1);
+                this.u(Utility.on(var3), var1);
                 return true;
             } else {
                 this.x("You must type a message too!");
@@ -559,7 +559,7 @@ public class e extends k {
         return true;
     }
 
-    public e() {
+    public GameConnection() {
     }
 
     static {

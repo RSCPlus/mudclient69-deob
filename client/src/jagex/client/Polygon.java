@@ -1,13 +1,13 @@
 package jagex.client;
 
-public class q {
+public class Polygon {
     protected int bhb;
     protected int chb;
     protected int dhb;
     protected int ehb;
     protected int fhb;
     protected int ghb;
-    protected h hhb;
+    protected GameModel hhb;
     protected int ihb;
     protected int jhb;
     protected int khb;
@@ -19,6 +19,6 @@ public class q {
     protected int qhb;
     protected int rhb = -1;
 
-    public q() {
+    public Polygon() {
     }
 }

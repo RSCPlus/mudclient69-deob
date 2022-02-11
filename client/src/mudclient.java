@@ -1,16 +1,16 @@
-import jagex.o;
-import jagex.client.e;
-import jagex.client.g;
-import jagex.client.h;
-import jagex.client.i;
-import jagex.client.j;
+import jagex.Utility;
+import jagex.client.GameConnection;
+import jagex.client.Panel;
+import jagex.client.GameModel;
+import jagex.client.Surface;
+import jagex.client.Scene;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
 
-public class mudclient extends e {
+public class mudclient extends GameConnection {
     final boolean wantToLoadFromJag = true; // inauthentic boolean placed so that it's not necessary to extract jag files
     boolean xs = false;
     int ys;
@@ -25,8 +25,8 @@ public class mudclient extends e {
     int[] ht;
     int[] it;
     Graphics jt;
-    j kt;
-    m lt;
+    Scene kt;
+    SurfaceSprite lt;
     Image mt;
     int nt;
     int ot;
@@ -46,7 +46,7 @@ public class mudclient extends e {
     int cu;
     int du;
     int eu;
-    p fu;
+    World fu;
     int gu;
     int hu;
     int iu;
@@ -74,10 +74,10 @@ public class mudclient extends e {
     int ev;
     int fv;
     int gv;
-    l[] hv;
-    l[] iv;
-    l[] jv;
-    l kv;
+    Character[] hv;
+    Character[] iv;
+    Character[] jv;
+    Character kv;
     int lv;
     int mv;
     int nv;
@@ -85,9 +85,9 @@ public class mudclient extends e {
     int pv;
     int qv;
     int rv;
-    l[] sv;
-    l[] tv;
-    l[] uv;
+    Character[] sv;
+    Character[] tv;
+    Character[] uv;
     int[] vv;
     int wv;
     int xv;
@@ -98,16 +98,16 @@ public class mudclient extends e {
     int[] cw;
     int dw;
     int ew;
-    h[] fw;
+    GameModel[] fw;
     int[] gw;
     int[] hw;
     int[] iw;
     int[] jw;
-    h[] kw;
+    GameModel[] kw;
     boolean[] lw;
     int mw;
     int nw;
-    h[] ow;
+    GameModel[] ow;
     int[] pw;
     int[] qw;
     int[] rw;
@@ -127,15 +127,15 @@ public class mudclient extends e {
     int fx;
     String[] gx;
     String[] hx;
-    g ix;
+    Panel ix;
     int jx;
     int kx;
     int lx;
-    g mx;
+    Panel mx;
     int nx;
     int ox;
     long px;
-    g qx;
+    Panel qx;
     int rx;
     int sx;
     int tx;
@@ -166,7 +166,7 @@ public class mudclient extends e {
     int sy;
     int ty;
     int uy;
-    g vy;
+    Panel vy;
     int wy;
     int xy;
     int yy;
@@ -210,10 +210,10 @@ public class mudclient extends e {
     boolean kab;
     int lab;
     int mab;
-    g nab;
+    Panel nab;
     int oab;
     int pab;
-    g qab;
+    Panel qab;
     int rab;
     int sab;
     int tab;
@@ -222,7 +222,7 @@ public class mudclient extends e {
     int wab;
     int xab;
     int yab;
-    g zab;
+    Panel zab;
     int abb;
     int bbb;
     int cbb;
@@ -235,7 +235,7 @@ public class mudclient extends e {
     String jbb;
     String kbb;
     String lbb;
-    g mbb;
+    Panel mbb;
     int nbb;
     int obb;
     int pbb;
@@ -252,11 +252,11 @@ public class mudclient extends e {
     int acb;
     int bcb;
     int ccb;
-    g dcb;
-    g ecb;
-    g fcb;
-    g gcb;
-    g hcb;
+    Panel dcb;
+    Panel ecb;
+    Panel fcb;
+    Panel gcb;
+    Panel hcb;
     int icb;
     int jcb;
     int kcb;
@@ -292,7 +292,7 @@ public class mudclient extends e {
     int odb;
     int pdb;
     boolean qdb;
-    g rdb;
+    Panel rdb;
     int sdb;
     int tdb;
     int udb;
@@ -355,9 +355,9 @@ public class mudclient extends e {
 
         super.bd = 43594;
         super.pp = -11;
-        e.wc = 1000;
-        e.vc = false;
-        e.yc = c.hc;
+        GameConnection.wc = 1000;
+        GameConnection.vc = false;
+        GameConnection.yc = Version.hc;
         this.cl();
         this.ut = 2000;
         this.tt = this.ut + 100;
@@ -365,29 +365,29 @@ public class mudclient extends e {
         this.wt = this.yv + 300;
         this.jt = this.getGraphics();
         this.vj(50);
-        this.lt = new m(this.qt, this.rt + 12, 2600, this);
+        this.lt = new SurfaceSprite(this.qt, this.rt + 12, 2600, this);
         this.lt.gs = this;
         this.lt.vf(0, 0, this.qt, this.rt + 12);
-        g.bg = false;
-        g.cg = this.tt;
-        this.ix = new g(this.lt, 5);
+        Panel.bg = false;
+        Panel.cg = this.tt;
+        this.ix = new Panel(this.lt, 5);
         int var3 = this.lt.qj - 199;
         byte var2 = 36;
         this.jx = this.ix.tc(var3, var2 + 24, 196, 90, 1, 500, true);
-        this.mx = new g(this.lt, 5);
+        this.mx = new Panel(this.lt, 5);
         this.nx = this.mx.tc(var3, var2 + 40, 196, 126, 1, 500, true);
-        this.qx = new g(this.lt, 5);
+        this.qx = new Panel(this.lt, 5);
         this.rx = this.qx.tc(var3, var2 + 24, 196, 182, 1, 500, true);
         this.nm();
         this.fm(true);
-        this.kt = new j(this.lt, 15000, 15000, 1000);
+        this.kt = new Scene(this.lt, 15000, 15000, 1000);
         this.kt.ii(this.qt / 2, this.rt / 2, this.qt / 2, this.rt / 2, this.qt, this.st);
         this.kt.bm = 2400;
         this.kt.cm = 2400;
         this.kt.dm = 1;
         this.kt.em = 2300;
         this.kt.hi(-50, -10, -50);
-        this.fu = new p(this.kt, this.lt);
+        this.fu = new World(this.kt, this.lt);
         this.fu.yfb = this.ut;
         this.hm();
         this.pl();
@@ -408,15 +408,15 @@ public class mudclient extends e {
             byte[] var1 = null;
 
             try {
-                var1 = this.gj("config" + c.ic + ".jag", "Configuration", 10);
+                var1 = this.gj("config" + Version.ic + ".jag", "Configuration", 10);
             } catch (IOException var3) {
                 System.out.println("Load error:" + var3);
             }
 
-            r.op(var1);
+            GameData.op(var1);
         } else {
             this.rj(10, "Loading configuration");
-            r.vp();
+            GameData.vp();
         }
     }
 
@@ -429,25 +429,25 @@ public class mudclient extends e {
             var1 = null;
 
             try {
-                var1 = this.gj("media" + c.kc + ".jag", "2d graphics", 20);
+                var1 = this.gj("media" + Version.kc + ".jag", "2d graphics", 20);
             } catch (IOException var5) {
                 System.out.println("Load error:" + var5);
             }
 
-            this.lt.mg(var1, o.hn("inv1.tga", var1), this.ut, true, false);
-            this.lt.kg(var1, o.hn("inv2.tga", var1), this.ut + 1, true, 1, 6, false);
-            this.lt.mg(var1, o.hn("bubble.tga", var1), this.ut + 9, true, false);
-            this.lt.mg(var1, o.hn("runescape.tga", var1), this.ut + 10, true, false);
-            this.lt.rg(var1, o.hn("splat.tga", var1), this.ut + 11, true, 3, false);
-            this.lt.kg(var1, o.hn("icon.tga", var1), this.ut + 14, true, 4, 2, false);
-            this.lt.mg(var1, o.hn("hbar.tga", var1), this.ut + 22, false, false);
-            this.lt.mg(var1, o.hn("hbar2.tga", var1), this.ut + 23, true, false);
-            this.lt.mg(var1, o.hn("compass.tga", var1), this.ut + 24, true, false);
-            this.lt.rg(var1, o.hn("scrollbar.tga", var1), this.tt, true, 2, false);
-            this.lt.rg(var1, o.hn("corners.tga", var1), this.tt + 2, true, 4, false);
-            this.lt.rg(var1, o.hn("arrows.tga", var1), this.tt + 6, true, 2, false);
-            this.mt = this.lj(o.gn("hbar.tga", 0, var1));
-            var2 = r.uhb;
+            this.lt.mg(var1, Utility.hn("inv1.tga", var1), this.ut, true, false);
+            this.lt.kg(var1, Utility.hn("inv2.tga", var1), this.ut + 1, true, 1, 6, false);
+            this.lt.mg(var1, Utility.hn("bubble.tga", var1), this.ut + 9, true, false);
+            this.lt.mg(var1, Utility.hn("runescape.tga", var1), this.ut + 10, true, false);
+            this.lt.rg(var1, Utility.hn("splat.tga", var1), this.ut + 11, true, 3, false);
+            this.lt.kg(var1, Utility.hn("icon.tga", var1), this.ut + 14, true, 4, 2, false);
+            this.lt.mg(var1, Utility.hn("hbar.tga", var1), this.ut + 22, false, false);
+            this.lt.mg(var1, Utility.hn("hbar2.tga", var1), this.ut + 23, true, false);
+            this.lt.mg(var1, Utility.hn("compass.tga", var1), this.ut + 24, true, false);
+            this.lt.rg(var1, Utility.hn("scrollbar.tga", var1), this.tt, true, 2, false);
+            this.lt.rg(var1, Utility.hn("corners.tga", var1), this.tt + 2, true, 4, false);
+            this.lt.rg(var1, Utility.hn("arrows.tga", var1), this.tt + 6, true, 2, false);
+            this.mt = this.lj(Utility.gn("hbar.tga", 0, var1));
+            var2 = GameData.uhb;
 
             for(var3 = 1; var2 > 0; ++var3) {
                 var4 = var2;
@@ -456,41 +456,41 @@ public class mudclient extends e {
                     var4 = 30;
                 }
 
-                this.lt.kg(var1, o.hn("objects" + var3 + ".tga", var1), this.yv + (var3 - 1) * 30, true, 10, (var4 + 9) / 10, false);
+                this.lt.kg(var1, Utility.hn("objects" + var3 + ".tga", var1), this.yv + (var3 - 1) * 30, true, 10, (var4 + 9) / 10, false);
             }
 
-            this.lt.rg(var1, o.hn("projectile.tga", var1), this.wt, true, r.hlb, false);
+            this.lt.rg(var1, Utility.hn("projectile.tga", var1), this.wt, true, GameData.hlb, false);
         } else {
             var1 = new byte[100000];
             this.qj(20, "Loading 2d graphics");
 
             try {
-                o.en("../gamedata/media/inv1.tga", var1, 100000);
+                Utility.en("../gamedata/media/inv1.tga", var1, 100000);
                 this.lt.mg(var1, 0, this.ut, true, false);
-                o.en("../gamedata/media/inv2.tga", var1, 100000);
+                Utility.en("../gamedata/media/inv2.tga", var1, 100000);
                 this.lt.kg(var1, 0, this.ut + 1, true, 1, 6, false);
-                o.en("../gamedata/media/bubble.tga", var1, 100000);
+                Utility.en("../gamedata/media/bubble.tga", var1, 100000);
                 this.lt.mg(var1, 0, this.ut + 9, true, false);
-                o.en("../gamedata/media/runescape.tga", var1, 100000);
+                Utility.en("../gamedata/media/runescape.tga", var1, 100000);
                 this.lt.mg(var1, 0, this.ut + 10, true, false);
-                o.en("../gamedata/media/splat.tga", var1, 100000);
+                Utility.en("../gamedata/media/splat.tga", var1, 100000);
                 this.lt.rg(var1, 0, this.ut + 11, true, 3, false);
-                o.en("../gamedata/media/icon.tga", var1, 100000);
+                Utility.en("../gamedata/media/icon.tga", var1, 100000);
                 this.lt.kg(var1, 0, this.ut + 14, true, 4, 2, false);
-                o.en("../gamedata/media/hbar.tga", var1, 100000);
+                Utility.en("../gamedata/media/hbar.tga", var1, 100000);
                 this.lt.mg(var1, 0, this.ut + 22, false, false);
                 this.mt = this.lj(var1);
-                o.en("../gamedata/media/hbar2.tga", var1, 100000);
+                Utility.en("../gamedata/media/hbar2.tga", var1, 100000);
                 this.lt.mg(var1, 0, this.ut + 23, true, false);
-                o.en("../gamedata/media/compass.tga", var1, 100000);
+                Utility.en("../gamedata/media/compass.tga", var1, 100000);
                 this.lt.mg(var1, 0, this.ut + 24, true, false);
-                o.en("../gamedata/media/scrollbar.tga", var1, 100000);
+                Utility.en("../gamedata/media/scrollbar.tga", var1, 100000);
                 this.lt.rg(var1, 0, this.tt, true, 2, false);
-                o.en("../gamedata/media/corners.tga", var1, 100000);
+                Utility.en("../gamedata/media/corners.tga", var1, 100000);
                 this.lt.rg(var1, 0, this.tt + 2, true, 4, false);
-                o.en("../gamedata/media/arrows.tga", var1, 100000);
+                Utility.en("../gamedata/media/arrows.tga", var1, 100000);
                 this.lt.rg(var1, 0, this.tt + 6, true, 2, false);
-                var2 = r.uhb;
+                var2 = GameData.uhb;
 
                 for(var3 = 1; var2 > 0; ++var3) {
                     var4 = var2;
@@ -499,12 +499,12 @@ public class mudclient extends e {
                         var4 = 30;
                     }
 
-                    o.en("../gamedata/media/objects" + var3 + ".tga", var1, 100000);
+                    Utility.en("../gamedata/media/objects" + var3 + ".tga", var1, 100000);
                     this.lt.kg(var1, 0, this.yv + (var3 - 1) * 30, true, 10, (var4 + 9) / 10, false);
                 }
 
-                o.en("../gamedata/media/projectile.tga", var1, 100000);
-                this.lt.rg(var1, 0, this.wt, true, r.hlb, false);
+                Utility.en("../gamedata/media/projectile.tga", var1, 100000);
+                this.lt.rg(var1, 0, this.wt, true, GameData.hlb, false);
             } catch (IOException var6) {
                 var6.printStackTrace(); // AAAAA
                 System.out.println("ERROR: in raw media loader");
@@ -517,7 +517,7 @@ public class mudclient extends e {
         this.reb = this.qeb;
         byte[] var2 = null;
         if ((this.ak() || wantToLoadFromJag) && var1) {
-            String var3 = "entity" + c.nc + ".jag";
+            String var3 = "entity" + Version.nc + ".jag";
 
             try {
                 var2 = this.gj(var3, "people and monsters", 30);
@@ -531,12 +531,12 @@ public class mudclient extends e {
         int var11 = 0;
 
         label68:
-        for(int var4 = 0; var4 < r.sjb; ++var4) {
-            String var5 = r.ujb[var4];
+        for(int var4 = 0; var4 < GameData.sjb; ++var4) {
+            String var5 = GameData.ujb[var4];
 
             for(int var6 = 0; var6 < var4; ++var6) {
-                if (r.ujb[var6].equalsIgnoreCase(var5)) {
-                    r.zjb[var4] = r.zjb[var6];
+                if (GameData.ujb[var6].equalsIgnoreCase(var5)) {
+                    GameData.zjb[var4] = GameData.zjb[var6];
                     continue label68;
                 }
             }
@@ -544,40 +544,40 @@ public class mudclient extends e {
             if (var1) {
                 if (this.ak() || wantToLoadFromJag) {
                     boolean var7 = true;
-                    if (r.wjb[var4] != 0) {
+                    if (GameData.wjb[var4] != 0) {
                         var7 = false;
                     }
 
-                    this.lt.rg(o.gn(var5 + ".tga", 0, var2), 0, this.reb, true, 15, var7);
+                    this.lt.rg(Utility.gn(var5 + ".tga", 0, var2), 0, this.reb, true, 15, var7);
                     var11 += 15;
-                    if (r.xjb[var4] == 1) {
-                        this.lt.rg(o.gn(var5 + "a.tga", 0, var2), 0, this.reb + 15, true, 3, true);
+                    if (GameData.xjb[var4] == 1) {
+                        this.lt.rg(Utility.gn(var5 + "a.tga", 0, var2), 0, this.reb + 15, true, 3, true);
                         var11 += 3;
                     }
 
-                    if (r.yjb[var4] == 1) {
-                        this.lt.rg(o.gn(var5 + "f.tga", 0, var2), 0, this.reb + 18, true, 9, true);
+                    if (GameData.yjb[var4] == 1) {
+                        this.lt.rg(Utility.gn(var5 + "f.tga", 0, var2), 0, this.reb + 18, true, 9, true);
                         var11 += 9;
                     }
                 } else {
                     try {
                         byte[] var12 = new byte[300000];
-                        o.en("../gamedata/entity/" + var5 + ".tga", var12, 300000);
+                        Utility.en("../gamedata/entity/" + var5 + ".tga", var12, 300000);
                         var11 += 15;
                         boolean var8 = true;
-                        if (r.wjb[var4] != 0) {
+                        if (GameData.wjb[var4] != 0) {
                             var8 = false;
                         }
 
                         this.lt.rg(var12, 0, this.reb, true, 15, var8);
-                        if (r.xjb[var4] == 1) {
-                            o.en("../gamedata/entity/" + var5 + "a.tga", var12, 300000);
+                        if (GameData.xjb[var4] == 1) {
+                            Utility.en("../gamedata/entity/" + var5 + "a.tga", var12, 300000);
                             var11 += 3;
                             this.lt.rg(var12, 0, this.reb + 15, true, 3, true);
                         }
 
-                        if (r.yjb[var4] == 1) {
-                            o.en("../gamedata/entity/" + var5 + "f.tga", var12, 300000);
+                        if (GameData.yjb[var4] == 1) {
+                            Utility.en("../gamedata/entity/" + var5 + "f.tga", var12, 300000);
                             var11 += 9;
                             this.lt.rg(var12, 0, this.reb + 18, true, 9, true);
                         }
@@ -587,7 +587,7 @@ public class mudclient extends e {
                 }
             }
 
-            r.zjb[var4] = this.reb;
+            GameData.zjb[var4] = this.reb;
             this.reb += 27;
         }
 
@@ -596,7 +596,7 @@ public class mudclient extends e {
 
     public void hm() {
         if (this.ak() || wantToLoadFromJag) {
-            this.kt.ih("textures" + c.mc + ".jag", 7, 11, 50, this);
+            this.kt.ih("textures" + Version.mc + ".jag", 7, 11, 50, this);
         } else {
             this.qj(50, "Loading textures");
             this.kt.qi("../gamedata/textures");
@@ -604,37 +604,37 @@ public class mudclient extends e {
     }
 
     public void pl() {
-        r.mp("torcha2");
-        r.mp("torcha3");
-        r.mp("torcha4");
-        r.mp("skulltorcha2");
-        r.mp("skulltorcha3");
-        r.mp("skulltorcha4");
-        r.mp("firea2");
-        r.mp("firea3");
+        GameData.mp("torcha2");
+        GameData.mp("torcha3");
+        GameData.mp("torcha4");
+        GameData.mp("skulltorcha2");
+        GameData.mp("skulltorcha3");
+        GameData.mp("skulltorcha4");
+        GameData.mp("firea2");
+        GameData.mp("firea3");
         if (this.ak() || wantToLoadFromJag) {
             byte[] var5 = null;
 
             try {
-                var5 = this.gj("models" + c.lc + ".jag", "3d models", 70);
+                var5 = this.gj("models" + Version.lc + ".jag", "3d models", 70);
             } catch (IOException var4) {
                 System.out.println("Load error:" + var4);
             }
 
-            for(int var2 = 0; var2 < r.pmb; ++var2) {
-                int var3 = o.hn(r.qmb[var2] + ".ob2", var5);
+            for(int var2 = 0; var2 < GameData.pmb; ++var2) {
+                int var3 = Utility.hn(GameData.qmb[var2] + ".ob2", var5);
                 if (var3 != 0) {
-                    this.kw[var2] = new h(var5, var3);
+                    this.kw[var2] = new GameModel(var5, var3);
                 } else {
-                    this.kw[var2] = new h(1, 1);
+                    this.kw[var2] = new GameModel(1, 1);
                 }
             }
 
         } else {
             this.qj(70, "Loading 3d models");
 
-            for(int var1 = 0; var1 < r.pmb; ++var1) {
-                this.kw[var1] = new h("../gamedata/models/" + r.qmb[var1] + ".ob2");
+            for(int var1 = 0; var1 < GameData.pmb; ++var1) {
+                this.kw[var1] = new GameModel("../gamedata/models/" + GameData.qmb[var1] + ".ob2");
             }
 
         }
@@ -645,7 +645,7 @@ public class mudclient extends e {
             this.fu.ggb = null;
 
             try {
-                this.fu.ggb = this.gj("maps" + c.jc + ".jag", "map", 90);
+                this.fu.ggb = this.gj("maps" + Version.jc + ".jag", "map", 90);
             } catch (IOException var2) {
                 System.out.println("Load error:" + var2);
             }
@@ -655,7 +655,7 @@ public class mudclient extends e {
     }
 
     public void rl() {
-        this.vy = new g(this.lt, 10);
+        this.vy = new Panel(this.lt, 10);
         this.wy = this.vy.dc(5, 269, 502, 56, 1, 20, true);
         this.xy = this.vy.ec(7, 324, 498, 14, 1, 80, false, true);
         this.yy = this.vy.dc(5, 269, 502, 56, 1, 20, true);
@@ -900,7 +900,7 @@ public class mudclient extends e {
     }
 
     public void zl() {
-        this.rdb = new g(this.lt, 100);
+        this.rdb = new Panel(this.lt, 100);
         byte var1 = 8;
         this.sdb = this.rdb.nd(256, var1, "@yel@Please provide 5 security questions in case you lose your password", 1, true);
         int var3 = var1 + 22;
@@ -1012,7 +1012,7 @@ public class mudclient extends e {
 
                             super.ed.m(var11.length());
                             super.ed.i(var11);
-                            super.ed.c(o.ln(this.rdb.sc(this.wdb[var10])));
+                            super.ed.c(Utility.ln(this.rdb.sc(this.wdb[var10])));
                         }
 
                         super.ed.d();
@@ -1061,7 +1061,7 @@ public class mudclient extends e {
     }
 
     public void ll() {
-        this.dcb = new g(this.lt, 100);
+        this.dcb = new Panel(this.lt, 100);
         this.dcb.nd(256, 10, "Carry 5 extra objects at once in RuneScape!", 4, true);
         byte var1 = 45;
         byte var2 = 15;
@@ -1103,7 +1103,7 @@ public class mudclient extends e {
         var21 += 30;
         this.dcb.nd(256, var21, "View Yoptin Privacy Statement", 1, true);
         this.ycb = this.dcb.qd(256, var21, 250, 20);
-        this.ecb = new g(this.lt, 100);
+        this.ecb = new Panel(this.lt, 100);
         this.icb = this.ecb.nd(256, 5, "Please fill in the details below", 4, true);
         byte var3 = 85;
         short var4 = 155;
@@ -1142,22 +1142,22 @@ public class mudclient extends e {
         var21 += 39;
         this.ecb.kc(var22, var21, var4, 35);
         this.edb = 15;
-        this.ecb.mc(var22 - 95 - 25, var21 + 6, g.cg + 7);
+        this.ecb.mc(var22 - 95 - 25, var21 + 6, Panel.cg + 7);
         this.hdb = this.ecb.oc(var22 - 95 - 25, var21 + 6, 20, 20);
         this.ndb = this.ecb.nd(var22 - 95, var21 + 6, "15th", 1, true);
-        this.ecb.mc(var22 - 95 + 25, var21 + 6, g.cg + 6);
+        this.ecb.mc(var22 - 95 + 25, var21 + 6, Panel.cg + 6);
         this.kdb = this.ecb.oc(var22 - 95 + 25, var21 + 6, 20, 20);
         this.fdb = 6;
-        this.ecb.mc(var22 - 40, var21 + 6, g.cg + 7);
+        this.ecb.mc(var22 - 40, var21 + 6, Panel.cg + 7);
         this.idb = this.ecb.oc(var22 - 40, var21 + 6, 20, 20);
         this.odb = this.ecb.nd(var22, var21 + 6, "June", 1, true);
-        this.ecb.mc(var22 + 40, var21 + 6, g.cg + 6);
+        this.ecb.mc(var22 + 40, var21 + 6, Panel.cg + 6);
         this.ldb = this.ecb.oc(var22 + 40, var21 + 6, 20, 20);
         this.gdb = 1980;
-        this.ecb.mc(var22 + 95 - 30, var21 + 6, g.cg + 7);
+        this.ecb.mc(var22 + 95 - 30, var21 + 6, Panel.cg + 7);
         this.jdb = this.ecb.oc(var22 + 95 - 30, var21 + 6, 20, 20);
         this.pdb = this.ecb.nd(var22 + 95, var21 + 6, "1980", 1, true);
-        this.ecb.mc(var22 + 95 + 30, var21 + 6, g.cg + 6);
+        this.ecb.mc(var22 + 95 + 30, var21 + 6, Panel.cg + 6);
         this.mdb = this.ecb.oc(var22 + 95 + 30, var21 + 6, 20, 20);
         this.ecb.nd(var22, var21 - 9, "Date of birth", 1, true);
         var21 += 39;
@@ -1222,7 +1222,7 @@ public class mudclient extends e {
         this.ecb.zc(this.vcb, 0);
         var21 += 70;
         String[] var16 = new String[]{"Home computing", "Internet", "Telecommunication, IT", "CD-Rom, Games", "Music, CD, Video, DVD", "Books, Newspapers", "Sport", "Beauty, Health, Fitness", "Food and Wine", "Gifts, Flowers", "Pets", "Fashion, Clothing", "DIY, Interior Design, Gardening", "Cars, Motorbikes", "Leisure activities", "Travel, Holidays, Short Breaks", "Charity, Voluntary work", "Finances, Insurance", "Career, Jobs", "Lottery, Gambling, Betting"};
-        this.fcb = new g(this.lt, 100);
+        this.fcb = new Panel(this.lt, 100);
         this.zcb = this.fcb.nd(256, 10, "@yel@Please indicate your interests", 4, true);
         this.fcb.nd(256, 25, "Your bonus code will then be emailed to you", 4, true);
         var22 = 32;
@@ -1241,7 +1241,7 @@ public class mudclient extends e {
         this.fcb.ed(256, 310, 100, 32);
         this.fcb.nd(256, 310, "Ok", 4, true);
         this.adb = this.fcb.qd(256, 310, 100, 32);
-        this.gcb = new g(this.lt, 50);
+        this.gcb = new Panel(this.lt, 50);
         byte var18 = 20;
         this.gcb.nd(250, var18, "Yoptin Privacy Statement", 5, true);
         int var23 = var18 + 30;
@@ -1251,7 +1251,7 @@ public class mudclient extends e {
         this.gcb.ed(256, var23, 170, 40);
         this.gcb.nd(256, var23, "Ok", 1, false);
         this.ddb = this.gcb.qd(256, var23, 170, 40);
-        g var19 = this.gcb;
+        Panel var19 = this.gcb;
         int var20 = this.cdb;
         var19.gc(var20, "@yel@Privacy statement", false);
         var19.gc(var20, "Yoptin is a service offered by Consodata UK Ltd., a company that", false);
@@ -1410,10 +1410,10 @@ public class mudclient extends e {
                 }
 
                 super.ed.a(210);
-                super.ed.i(o.mn(this.ecb.sc(this.kcb), 30));
-                super.ed.i(o.mn(this.ecb.sc(this.lcb), 30));
-                super.ed.i(o.mn(this.ecb.sc(this.mcb), 20));
-                super.ed.i(o.mn(this.ecb.sc(this.qcb), 80));
+                super.ed.i(Utility.mn(this.ecb.sc(this.kcb), 30));
+                super.ed.i(Utility.mn(this.ecb.sc(this.lcb), 30));
+                super.ed.i(Utility.mn(this.ecb.sc(this.mcb), 20));
+                super.ed.i(Utility.mn(this.ecb.sc(this.qcb), 80));
                 super.ed.m(this.ecb.xc(this.jcb));
                 super.ed.m(this.ecb.xc(this.ncb));
                 super.ed.m(this.ecb.xc(this.ocb));
@@ -1444,7 +1444,7 @@ public class mudclient extends e {
     }
 
     public void ql() {
-        this.mbb = new g(this.lt, 100);
+        this.mbb = new Panel(this.lt, 100);
         this.mbb.nd(256, 10, "Design Your Character", 4, true);
         short var1 = 140;
         byte var2 = 34;
@@ -1459,45 +1459,45 @@ public class mudclient extends e {
         this.mbb.kc(var1 - var3, var6, 53, 41);
         this.mbb.nd(var1 - var3, var6 - 8, "Head", 1, true);
         this.mbb.nd(var1 - var3, var6 + 8, "Type", 1, true);
-        this.mbb.mc(var1 - var3 - 40, var6, g.cg + 7);
+        this.mbb.mc(var1 - var3 - 40, var6, Panel.cg + 7);
         this.nbb = this.mbb.qd(var1 - var3 - 40, var6, 20, 20);
-        this.mbb.mc(var1 - var3 + 40, var6, g.cg + 6);
+        this.mbb.mc(var1 - var3 + 40, var6, Panel.cg + 6);
         this.obb = this.mbb.qd(var1 - var3 + 40, var6, 20, 20);
         this.mbb.kc(var1 + var3, var6, 53, 41);
         this.mbb.nd(var1 + var3, var6 - 8, "Hair", 1, true);
         this.mbb.nd(var1 + var3, var6 + 8, "Color", 1, true);
-        this.mbb.mc(var1 + var3 - 40, var6, g.cg + 7);
+        this.mbb.mc(var1 + var3 - 40, var6, Panel.cg + 7);
         this.pbb = this.mbb.qd(var1 + var3 - 40, var6, 20, 20);
-        this.mbb.mc(var1 + var3 + 40, var6, g.cg + 6);
+        this.mbb.mc(var1 + var3 + 40, var6, Panel.cg + 6);
         this.qbb = this.mbb.qd(var1 + var3 + 40, var6, 20, 20);
         var6 += 50;
         this.mbb.kc(var1 - var3, var6, 53, 41);
         this.mbb.nd(var1 - var3, var6, "Gender", 1, true);
-        this.mbb.mc(var1 - var3 - 40, var6, g.cg + 7);
+        this.mbb.mc(var1 - var3 - 40, var6, Panel.cg + 7);
         this.rbb = this.mbb.qd(var1 - var3 - 40, var6, 20, 20);
-        this.mbb.mc(var1 - var3 + 40, var6, g.cg + 6);
+        this.mbb.mc(var1 - var3 + 40, var6, Panel.cg + 6);
         this.sbb = this.mbb.qd(var1 - var3 + 40, var6, 20, 20);
         this.mbb.kc(var1 + var3, var6, 53, 41);
         this.mbb.nd(var1 + var3, var6 - 8, "Top", 1, true);
         this.mbb.nd(var1 + var3, var6 + 8, "Color", 1, true);
-        this.mbb.mc(var1 + var3 - 40, var6, g.cg + 7);
+        this.mbb.mc(var1 + var3 - 40, var6, Panel.cg + 7);
         this.tbb = this.mbb.qd(var1 + var3 - 40, var6, 20, 20);
-        this.mbb.mc(var1 + var3 + 40, var6, g.cg + 6);
+        this.mbb.mc(var1 + var3 + 40, var6, Panel.cg + 6);
         this.ubb = this.mbb.qd(var1 + var3 + 40, var6, 20, 20);
         var6 += 50;
         this.mbb.kc(var1 - var3, var6, 53, 41);
         this.mbb.nd(var1 - var3, var6 - 8, "Skin", 1, true);
         this.mbb.nd(var1 - var3, var6 + 8, "Color", 1, true);
-        this.mbb.mc(var1 - var3 - 40, var6, g.cg + 7);
+        this.mbb.mc(var1 - var3 - 40, var6, Panel.cg + 7);
         this.vbb = this.mbb.qd(var1 - var3 - 40, var6, 20, 20);
-        this.mbb.mc(var1 - var3 + 40, var6, g.cg + 6);
+        this.mbb.mc(var1 - var3 + 40, var6, Panel.cg + 6);
         this.wbb = this.mbb.qd(var1 - var3 + 40, var6, 20, 20);
         this.mbb.kc(var1 + var3, var6, 53, 41);
         this.mbb.nd(var1 + var3, var6 - 8, "Bottom", 1, true);
         this.mbb.nd(var1 + var3, var6 + 8, "Color", 1, true);
-        this.mbb.mc(var1 + var3 - 40, var6, g.cg + 7);
+        this.mbb.mc(var1 + var3 - 40, var6, Panel.cg + 7);
         this.xbb = this.mbb.qd(var1 + var3 - 40, var6, 20, 20);
-        this.mbb.mc(var1 + var3 + 40, var6, g.cg + 6);
+        this.mbb.mc(var1 + var3 + 40, var6, Panel.cg + 6);
         this.ybb = this.mbb.qd(var1 + var3 + 40, var6, 20, 20);
         var1 = 372;
         var2 = 35;
@@ -1537,15 +1537,15 @@ public class mudclient extends e {
         this.mbb.hc();
         short var1 = 140;
         byte var2 = 50;
-        this.lt.pg(var1 - 32 - 55, var2, 64, 102, r.zjb[this.web], this.cfb[this.zeb]);
-        this.lt.zf(var1 - 32 - 55, var2, 64, 102, r.zjb[this.veb], this.cfb[this.yeb], this.efb[this.afb], 0, false);
-        this.lt.zf(var1 - 32 - 55, var2, 64, 102, r.zjb[this.ueb], this.dfb[this.xeb], this.efb[this.afb], 0, false);
-        this.lt.pg(var1 - 32, var2, 64, 102, r.zjb[this.web] + 6, this.cfb[this.zeb]);
-        this.lt.zf(var1 - 32, var2, 64, 102, r.zjb[this.veb] + 6, this.cfb[this.yeb], this.efb[this.afb], 0, false);
-        this.lt.zf(var1 - 32, var2, 64, 102, r.zjb[this.ueb] + 6, this.dfb[this.xeb], this.efb[this.afb], 0, false);
-        this.lt.pg(var1 - 32 + 55, var2, 64, 102, r.zjb[this.web] + 12, this.cfb[this.zeb]);
-        this.lt.zf(var1 - 32 + 55, var2, 64, 102, r.zjb[this.veb] + 12, this.cfb[this.yeb], this.efb[this.afb], 0, false);
-        this.lt.zf(var1 - 32 + 55, var2, 64, 102, r.zjb[this.ueb] + 12, this.dfb[this.xeb], this.efb[this.afb], 0, false);
+        this.lt.pg(var1 - 32 - 55, var2, 64, 102, GameData.zjb[this.web], this.cfb[this.zeb]);
+        this.lt.zf(var1 - 32 - 55, var2, 64, 102, GameData.zjb[this.veb], this.cfb[this.yeb], this.efb[this.afb], 0, false);
+        this.lt.zf(var1 - 32 - 55, var2, 64, 102, GameData.zjb[this.ueb], this.dfb[this.xeb], this.efb[this.afb], 0, false);
+        this.lt.pg(var1 - 32, var2, 64, 102, GameData.zjb[this.web] + 6, this.cfb[this.zeb]);
+        this.lt.zf(var1 - 32, var2, 64, 102, GameData.zjb[this.veb] + 6, this.cfb[this.yeb], this.efb[this.afb], 0, false);
+        this.lt.zf(var1 - 32, var2, 64, 102, GameData.zjb[this.ueb] + 6, this.dfb[this.xeb], this.efb[this.afb], 0, false);
+        this.lt.pg(var1 - 32 + 55, var2, 64, 102, GameData.zjb[this.web] + 12, this.cfb[this.zeb]);
+        this.lt.zf(var1 - 32 + 55, var2, 64, 102, GameData.zjb[this.veb] + 12, this.cfb[this.yeb], this.efb[this.afb], 0, false);
+        this.lt.zf(var1 - 32 + 55, var2, 64, 102, GameData.zjb[this.ueb] + 12, this.dfb[this.xeb], this.efb[this.afb], 0, false);
         this.lt.bh(0, this.rt, this.ut + 22);
         this.lt.nf(this.jt, 0, 11);
     }
@@ -1555,17 +1555,17 @@ public class mudclient extends e {
         if (this.mbb.wd(this.nbb)) {
             do {
                 do {
-                    this.ueb = (this.ueb - 1 + r.sjb) % r.sjb;
-                } while((r.wjb[this.ueb] & 3) != 1);
-            } while((r.wjb[this.ueb] & 4 * this.bfb) == 0);
+                    this.ueb = (this.ueb - 1 + GameData.sjb) % GameData.sjb;
+                } while((GameData.wjb[this.ueb] & 3) != 1);
+            } while((GameData.wjb[this.ueb] & 4 * this.bfb) == 0);
         }
 
         if (this.mbb.wd(this.obb)) {
             do {
                 do {
-                    this.ueb = (this.ueb + 1) % r.sjb;
-                } while((r.wjb[this.ueb] & 3) != 1);
-            } while((r.wjb[this.ueb] & 4 * this.bfb) == 0);
+                    this.ueb = (this.ueb + 1) % GameData.sjb;
+                } while((GameData.wjb[this.ueb] & 3) != 1);
+            } while((GameData.wjb[this.ueb] & 4 * this.bfb) == 0);
         }
 
         if (this.mbb.wd(this.pbb)) {
@@ -1577,12 +1577,12 @@ public class mudclient extends e {
         }
 
         if (this.mbb.wd(this.rbb) || this.mbb.wd(this.sbb)) {
-            for(this.bfb = 3 - this.bfb; (r.wjb[this.ueb] & 3) != 1 || (r.wjb[this.ueb] & 4 * this.bfb) == 0; this.ueb = (this.ueb + 1) % r.sjb) {
+            for(this.bfb = 3 - this.bfb; (GameData.wjb[this.ueb] & 3) != 1 || (GameData.wjb[this.ueb] & 4 * this.bfb) == 0; this.ueb = (this.ueb + 1) % GameData.sjb) {
                 ;
             }
 
-            while((r.wjb[this.veb] & 3) != 2 || (r.wjb[this.veb] & 4 * this.bfb) == 0) {
-                this.veb = (this.veb + 1) % r.sjb;
+            while((GameData.wjb[this.veb] & 3) != 2 || (GameData.wjb[this.veb] & 4 * this.bfb) == 0) {
+                this.veb = (this.veb + 1) % GameData.sjb;
             }
         }
 
@@ -1630,7 +1630,7 @@ public class mudclient extends e {
     }
 
     public void al() {
-        this.nab = new g(this.lt, 50);
+        this.nab = new Panel(this.lt, 50);
         byte var1 = 40;
         this.nab.nd(256, 200 + var1, "Click on an option", 5, true);
         this.nab.ed(156, 240 + var1, 120, 35);
@@ -1639,7 +1639,7 @@ public class mudclient extends e {
         this.nab.nd(356, 240 + var1, "Existing User", 5, false);
         this.oab = this.nab.qd(156, 240 + var1, 120, 35);
         this.pab = this.nab.qd(356, 240 + var1, 120, 35);
-        this.qab = new g(this.lt, 50);
+        this.qab = new Panel(this.lt, 50);
         var1 = 5;
         this.rab = this.qab.nd(256, var1 + 8, "To create an account please enter all the requested details", 4, true);
         int var2 = var1 + 25;
@@ -1668,7 +1668,7 @@ public class mudclient extends e {
         this.qab.ed(356, var2 + 17, 150, 34);
         this.qab.nd(356, var2 + 17, "Cancel", 5, false);
         this.tab = this.qab.qd(356, var2 + 17, 150, 34);
-        this.zab = new g(this.lt, 50);
+        this.zab = new Panel(this.lt, 50);
         short var3 = 230;
         this.abb = this.zab.nd(256, var3 - 10, "Please enter your username and password", 4, true);
         var2 = var3 + 28;
@@ -2014,7 +2014,7 @@ public class mudclient extends e {
         this.hb(var1, var2);
     }
 
-    public void yk(g var1, int var2) {
+    public void yk(Panel var1, int var2) {
         var1.gc(var2, "Runescape rules of use", false);
         var1.gc(var2, "", false);
         var1.gc(var2, "In order to keep runescape enjoyable for everyone there are a few", false);
@@ -2124,7 +2124,7 @@ public class mudclient extends e {
                 int var6;
                 int var7;
                 for(int var1 = 0; var1 < this.ev; ++var1) {
-                    l var2 = this.iv[var1];
+                    Character var2 = this.iv[var1];
                     var3 = (var2.hr + 1) % 10;
                     if (var2.gr != var3) {
                         byte var4 = -1;
@@ -2226,7 +2226,7 @@ public class mudclient extends e {
 
                 int var13;
                 for(int var9 = 0; var9 < this.qv; ++var9) {
-                    l var10 = this.tv[var9];
+                    Character var10 = this.tv[var9];
                     var13 = (var10.hr + 1) % 10;
                     if (var10.gr != var13) {
                         byte var11 = -1;
@@ -2312,7 +2312,7 @@ public class mudclient extends e {
                 }
 
                 for(var3 = 0; var3 < this.ev; ++var3) {
-                    l var14 = this.iv[var3];
+                    Character var14 = this.iv[var3];
                     if (var14.cs > 0) {
                         --var14.cs;
                     }
@@ -2524,7 +2524,7 @@ public class mudclient extends e {
                     var3 = var1.indexOf(":");
                     if (var3 != -1) {
                         String var4 = var1.substring(0, var3);
-                        long var5 = o.on(var4);
+                        long var5 = Utility.on(var4);
 
                         for(int var7 = 0; var7 < super.nd; ++var7) {
                             if (super.od[var7] == var5) {
@@ -2625,14 +2625,14 @@ public class mudclient extends e {
         }
     }
 
-    public l vk(int var1, int var2, int var3, int var4) {
+    public Character vk(int var1, int var2, int var3, int var4) {
         if (this.hv[var1] == null) {
-            this.hv[var1] = new l();
+            this.hv[var1] = new Character();
             this.hv[var1].yq = var1;
             this.hv[var1].zq = 0;
         }
 
-        l var5 = this.hv[var1];
+        Character var5 = this.hv[var1];
         boolean var6 = false;
 
         for(int var7 = 0; var7 < this.fv; ++var7) {
@@ -2664,13 +2664,13 @@ public class mudclient extends e {
         return var5;
     }
 
-    public l sm(int var1, int var2, int var3, int var4, int var5) {
+    public Character sm(int var1, int var2, int var3, int var4, int var5) {
         if (this.sv[var1] == null) {
-            this.sv[var1] = new l();
+            this.sv[var1] = new Character();
             this.sv[var1].yq = var1;
         }
 
-        l var6 = this.sv[var1];
+        Character var6 = this.sv[var1];
         boolean var7 = false;
 
         for(int var8 = 0; var8 < this.rv; ++var8) {
@@ -2727,11 +2727,11 @@ public class mudclient extends e {
                 }
 
                 var26 = 8;
-                this.lv = o.pn(var3, var26, 10);
+                this.lv = Utility.pn(var3, var26, 10);
                 var21 = var26 + 10;
-                this.mv = o.pn(var3, var21, 12);
+                this.mv = Utility.pn(var3, var21, 12);
                 var21 += 12;
-                var6 = o.pn(var3, var21, 4);
+                var6 = Utility.pn(var3, var21, 4);
                 var21 += 4;
                 boolean var28 = this.wm(this.lv, this.mv);
                 this.lv -= this.ku;
@@ -2747,7 +2747,7 @@ public class mudclient extends e {
 
                 this.ev = 0;
                 this.kv = this.vk(this.nv, var8, var9, var6);
-                var10 = o.pn(var3, var21, 8);
+                var10 = Utility.pn(var3, var21, 8);
                 var21 += 8;
                 var27 = 0;
 
@@ -2757,23 +2757,23 @@ public class mudclient extends e {
                         var12 = 0;
 
                         while(var21 + 24 < var2 * 8) {
-                            var13 = o.pn(var3, var21, 11);
+                            var13 = Utility.pn(var3, var21, 11);
                             var21 += 11;
-                            var14 = o.pn(var3, var21, 5);
+                            var14 = Utility.pn(var3, var21, 5);
                             var21 += 5;
                             if (var14 > 15) {
                                 var14 -= 32;
                             }
 
-                            var15 = o.pn(var3, var21, 5);
+                            var15 = Utility.pn(var3, var21, 5);
                             var21 += 5;
                             if (var15 > 15) {
                                 var15 -= 32;
                             }
 
-                            var6 = o.pn(var3, var21, 4);
+                            var6 = Utility.pn(var3, var21, 4);
                             var21 += 4;
-                            var34 = o.pn(var3, var21, 1);
+                            var34 = Utility.pn(var3, var21, 1);
                             ++var21;
                             var8 = (this.lv + var14) * this.ot + 64;
                             var9 = (this.mv + var15) * this.ot + 64;
@@ -2788,7 +2788,7 @@ public class mudclient extends e {
                             super.ed.l(var12);
 
                             for(var13 = 0; var13 < var12; ++var13) {
-                                l var38 = this.hv[this.vv[var13]];
+                                Character var38 = this.hv[this.vv[var13]];
                                 super.ed.l(var38.yq);
                                 super.ed.l(var38.zq);
                             }
@@ -2801,14 +2801,14 @@ public class mudclient extends e {
                     }
 
                     label878: {
-                        l var37 = this.jv[var27 + 1];
-                        var13 = o.pn(var3, var21, 1);
+                        Character var37 = this.jv[var27 + 1];
+                        var13 = Utility.pn(var3, var21, 1);
                         ++var21;
                         if (var13 != 0) {
-                            var14 = o.pn(var3, var21, 1);
+                            var14 = Utility.pn(var3, var21, 1);
                             ++var21;
                             if (var14 == 0) {
-                                var15 = o.pn(var3, var21, 3);
+                                var15 = Utility.pn(var3, var21, 3);
                                 var21 += 3;
                                 var34 = var37.hr;
                                 int var17 = var37.ir[var34];
@@ -2834,13 +2834,13 @@ public class mudclient extends e {
                                 var37.ir[var34] = var17;
                                 var37.jr[var34] = var18;
                             } else {
-                                var15 = o.pn(var3, var21, 4);
+                                var15 = Utility.pn(var3, var21, 4);
                                 if ((var15 & 12) == 12) {
                                     var21 += 2;
                                     break label878;
                                 }
 
-                                var37.fr = o.pn(var3, var21, 4);
+                                var37.fr = Utility.pn(var3, var21, 4);
                                 var21 += 4;
                             }
                         }
@@ -2857,7 +2857,7 @@ public class mudclient extends e {
 
                     while(true) {
                         while(var20 < var2) {
-                            if (o.qn(var3[var20]) == 255) {
+                            if (Utility.qn(var3[var20]) == 255) {
                                 var21 = 0;
                                 var6 = this.lv + var3[var20 + 1] >> 3;
                                 var7 = this.mv + var3[var20 + 2] >> 3;
@@ -2880,7 +2880,7 @@ public class mudclient extends e {
 
                                 this.xv = var21;
                             } else {
-                                var21 = o.tn(var3, var20);
+                                var21 = Utility.tn(var3, var20);
                                 var20 += 2;
                                 var6 = this.lv + var3[var20++];
                                 var7 = this.mv + var3[var20++];
@@ -2892,7 +2892,7 @@ public class mudclient extends e {
 
                                     for(var8 = 0; var8 < this.ew; ++var8) {
                                         if (this.gw[var8] == var6 && this.hw[var8] == var7) {
-                                            this.cw[this.xv] = r.kkb[this.iw[var8]];
+                                            this.cw[this.xv] = GameData.kkb[this.iw[var8]];
                                             break;
                                         }
                                     }
@@ -2931,7 +2931,7 @@ public class mudclient extends e {
 
                     while(true) {
                         while(var20 < var2) {
-                            if (o.qn(var3[var20]) == 255) {
+                            if (Utility.qn(var3[var20]) == 255) {
                                 var21 = 0;
                                 var6 = this.lv + var3[var20 + 1] >> 3;
                                 var7 = this.mv + var3[var20 + 2] >> 3;
@@ -2959,7 +2959,7 @@ public class mudclient extends e {
 
                                 this.ew = var21;
                             } else {
-                                var21 = o.tn(var3, var20);
+                                var21 = Utility.tn(var3, var20);
                                 var20 += 2;
                                 var6 = this.lv + var3[var20++];
                                 var7 = this.mv + var3[var20++];
@@ -2987,17 +2987,17 @@ public class mudclient extends e {
                                 if (var21 != 60000) {
                                     var10 = this.fu.bo(var6, var7);
                                     if (var10 != 0 && var10 != 4) {
-                                        var12 = r.gkb[var21];
-                                        var27 = r.hkb[var21];
+                                        var12 = GameData.gkb[var21];
+                                        var27 = GameData.hkb[var21];
                                     } else {
-                                        var27 = r.gkb[var21];
-                                        var12 = r.hkb[var21];
+                                        var27 = GameData.gkb[var21];
+                                        var12 = GameData.hkb[var21];
                                     }
 
                                     var13 = (var6 + var6 + var27) * this.ot / 2;
                                     var14 = (var7 + var7 + var12) * this.ot / 2;
-                                    var15 = r.fkb[var21];
-                                    h var16 = this.kw[var15].ue();
+                                    var15 = GameData.fkb[var21];
+                                    GameModel var16 = this.kw[var15].ue();
                                     this.kt.yh(var16);
                                     var16.nh = this.ew;
                                     var16.ze(0, var10 * 32, 0);
@@ -3025,17 +3025,17 @@ public class mudclient extends e {
                     this.ww = 0;
 
                     for(var20 = 8; var20 + 9 < var2 * 8; ++this.ww) {
-                        var21 = o.pn(var3, var20, 10);
+                        var21 = Utility.pn(var3, var20, 10);
                         var20 += 10;
                         var6 = 0;
-                        if (r.jib[var21] != 0) {
-                            var6 = o.pn(var3, var20, 1);
+                        if (GameData.jib[var21] != 0) {
+                            var6 = Utility.pn(var3, var20, 1);
                             ++var20;
                         }
 
                         var7 = 1;
-                        if (r.bib[var21] == 0) {
-                            var7 = o.pn(var3, var20, 16);
+                        if (GameData.bib[var21] == 0) {
+                            var7 = Utility.pn(var3, var20, 16);
                             var20 += 16;
                         }
 
@@ -3047,19 +3047,19 @@ public class mudclient extends e {
                     return;
                 }
 
-                l var24;
+                Character var24;
                 if (var1 == 250) {
-                    var20 = o.tn(var3, 1);
+                    var20 = Utility.tn(var3, 1);
                     var21 = 3;
 
                     for(var6 = 0; var6 < var20; ++var6) {
-                        var7 = o.tn(var3, var21);
+                        var7 = Utility.tn(var3, var21);
                         var21 += 2;
                         var24 = this.hv[var7];
                         byte var29 = var3[var21];
                         ++var21;
                         if (var29 == 0) {
-                            var10 = o.tn(var3, var21);
+                            var10 = Utility.tn(var3, var21);
                             var21 += 2;
                             if (var24 != null) {
                                 var24.or = 150;
@@ -3086,7 +3086,7 @@ public class mudclient extends e {
                                     }
 
                                     if (!var33) {
-                                        var36 = o.in(var36, true);
+                                        var36 = Utility.in(var36, true);
                                         var24.mr = 150;
                                         var24.lr = var36;
                                         this.pk(var24.xq + ": " + var24.lr, 2);
@@ -3096,11 +3096,11 @@ public class mudclient extends e {
 
                             var21 += var35;
                         } else if (var29 == 2) {
-                            var10 = o.qn(var3[var21]);
+                            var10 = Utility.qn(var3[var21]);
                             ++var21;
-                            var27 = o.qn(var3[var21]);
+                            var27 = Utility.qn(var3[var21]);
                             ++var21;
-                            var12 = o.qn(var3[var21]);
+                            var12 = Utility.qn(var3[var21]);
                             ++var21;
                             if (var24 != null) {
                                 var24.pr = var10;
@@ -3113,9 +3113,9 @@ public class mudclient extends e {
                                 }
                             }
                         } else if (var29 == 3) {
-                            var10 = o.tn(var3, var21);
+                            var10 = Utility.tn(var3, var21);
                             var21 += 2;
-                            var27 = o.tn(var3, var21);
+                            var27 = Utility.tn(var3, var21);
                             var21 += 2;
                             if (var24 != null) {
                                 var24.zr = var10;
@@ -3124,9 +3124,9 @@ public class mudclient extends e {
                                 var24.cs = this.vt;
                             }
                         } else if (var29 == 4) {
-                            var10 = o.tn(var3, var21);
+                            var10 = Utility.tn(var3, var21);
                             var21 += 2;
-                            var27 = o.tn(var3, var21);
+                            var27 = Utility.tn(var3, var21);
                             var21 += 2;
                             if (var24 != null) {
                                 var24.zr = var10;
@@ -3137,19 +3137,19 @@ public class mudclient extends e {
                         } else if (var29 == 5) {
                             if (var24 == null) {
                                 var21 += 14;
-                                var10 = o.qn(var3[var21]);
+                                var10 = Utility.qn(var3[var21]);
                                 var21 += var10 + 1;
                             } else {
-                                var24.zq = o.tn(var3, var21);
+                                var24.zq = Utility.tn(var3, var21);
                                 var21 += 2;
-                                var24.wq = o.nn(var3, var21);
+                                var24.wq = Utility.nn(var3, var21);
                                 var21 += 8;
-                                var24.xq = o.rn(var24.wq);
-                                var10 = o.qn(var3[var21]);
+                                var24.xq = Utility.rn(var24.wq);
+                                var10 = Utility.qn(var3[var21]);
                                 ++var21;
 
                                 for(var27 = 0; var27 < var10; ++var27) {
-                                    var24.kr[var27] = o.qn(var3[var21]);
+                                    var24.kr[var27] = Utility.qn(var3[var21]);
                                     ++var21;
                                 }
 
@@ -3176,7 +3176,7 @@ public class mudclient extends e {
 
                     while(true) {
                         while(var20 < var2) {
-                            if (o.qn(var3[var20]) == 255) {
+                            if (Utility.qn(var3[var20]) == 255) {
                                 var21 = 0;
                                 var6 = this.lv + var3[var20 + 1] >> 3;
                                 var7 = this.mv + var3[var20 + 2] >> 3;
@@ -3204,7 +3204,7 @@ public class mudclient extends e {
 
                                 this.nw = var21;
                             } else {
-                                var21 = o.tn(var3, var20);
+                                var21 = Utility.tn(var3, var20);
                                 var20 += 2;
                                 var6 = this.lv + var3[var20++];
                                 var7 = this.mv + var3[var20++];
@@ -3232,7 +3232,7 @@ public class mudclient extends e {
                                 this.nw = var9;
                                 if (var21 != 65535) {
                                     this.fu.ap(var6, var7, var25, var21);
-                                    h var32 = this.km(var6, var7, var25, var21, this.nw);
+                                    GameModel var32 = this.km(var6, var7, var25, var21, this.nw);
                                     this.ow[this.nw] = var32;
                                     this.pw[this.nw] = var6;
                                     this.qw[this.nw] = var7;
@@ -3255,18 +3255,18 @@ public class mudclient extends e {
                     }
 
                     var26 = 8;
-                    var6 = o.pn(var3, var26, 8);
+                    var6 = Utility.pn(var3, var26, 8);
                     var21 = var26 + 8;
 
                     for(var7 = 0; var7 < var6; ++var7) {
                         var24 = this.uv[var7];
-                        var9 = o.pn(var3, var21, 1);
+                        var9 = Utility.pn(var3, var21, 1);
                         ++var21;
                         if (var9 != 0) {
-                            var10 = o.pn(var3, var21, 1);
+                            var10 = Utility.pn(var3, var21, 1);
                             ++var21;
                             if (var10 == 0) {
-                                var27 = o.pn(var3, var21, 3);
+                                var27 = Utility.pn(var3, var21, 3);
                                 var21 += 3;
                                 var12 = var24.hr;
                                 var13 = var24.ir[var12];
@@ -3292,13 +3292,13 @@ public class mudclient extends e {
                                 var24.ir[var12] = var13;
                                 var24.jr[var12] = var14;
                             } else {
-                                var27 = o.pn(var3, var21, 4);
+                                var27 = Utility.pn(var3, var21, 4);
                                 if ((var27 & 12) == 12) {
                                     var21 += 2;
                                     continue;
                                 }
 
-                                var24.fr = o.pn(var3, var21, 4);
+                                var24.fr = Utility.pn(var3, var21, 4);
                                 var21 += 4;
                             }
                         }
@@ -3307,27 +3307,27 @@ public class mudclient extends e {
                     }
 
                     for(; var21 + 31 < var2 * 8; this.sm(var8, var12, var13, var27, var14)) {
-                        var8 = o.pn(var3, var21, 10);
+                        var8 = Utility.pn(var3, var21, 10);
                         var21 += 10;
-                        var9 = o.pn(var3, var21, 5);
+                        var9 = Utility.pn(var3, var21, 5);
                         var21 += 5;
                         if (var9 > 15) {
                             var9 -= 32;
                         }
 
-                        var10 = o.pn(var3, var21, 5);
+                        var10 = Utility.pn(var3, var21, 5);
                         var21 += 5;
                         if (var10 > 15) {
                             var10 -= 32;
                         }
 
-                        var27 = o.pn(var3, var21, 4);
+                        var27 = Utility.pn(var3, var21, 4);
                         var21 += 4;
                         var12 = (this.lv + var9) * this.ot + 64;
                         var13 = (this.mv + var10) * this.ot + 64;
-                        var14 = o.pn(var3, var21, 8);
+                        var14 = Utility.pn(var3, var21, 8);
                         var21 += 8;
-                        if (var14 >= r.oib) {
+                        if (var14 >= GameData.oib) {
                             var14 = 24;
                         }
                     }
@@ -3336,17 +3336,17 @@ public class mudclient extends e {
                 }
 
                 if (var1 == 247) {
-                    var20 = o.tn(var3, 1);
+                    var20 = Utility.tn(var3, 1);
                     var21 = 3;
 
                     for(var6 = 0; var6 < var20; ++var6) {
-                        var7 = o.tn(var3, var21);
+                        var7 = Utility.tn(var3, var21);
                         var21 += 2;
                         var24 = this.sv[var7];
-                        var9 = o.qn(var3[var21]);
+                        var9 = Utility.qn(var3[var21]);
                         ++var21;
                         if (var9 == 1) {
-                            var10 = o.tn(var3, var21);
+                            var10 = Utility.tn(var3, var21);
                             var21 += 2;
                             byte var31 = var3[var21];
                             ++var21;
@@ -3355,17 +3355,17 @@ public class mudclient extends e {
                                 var24.mr = 150;
                                 var24.lr = var30;
                                 if (var10 == this.kv.yq) {
-                                    this.pk("@yel@" + r.pib[var24.cr][0] + ": " + var24.lr, 5);
+                                    this.pk("@yel@" + GameData.pib[var24.cr][0] + ": " + var24.lr, 5);
                                 }
                             }
 
                             var21 += var31;
                         } else if (var9 == 2) {
-                            var10 = o.qn(var3[var21]);
+                            var10 = Utility.qn(var3[var21]);
                             ++var21;
-                            var27 = o.qn(var3[var21]);
+                            var27 = Utility.qn(var3[var21]);
                             ++var21;
-                            var12 = o.qn(var3[var21]);
+                            var12 = Utility.qn(var3[var21]);
                             ++var21;
                             if (var24 != null) {
                                 var24.pr = var10;
@@ -3381,12 +3381,12 @@ public class mudclient extends e {
 
                 if (var1 == 246) {
                     this.yz = true;
-                    var20 = o.qn(var3[1]);
+                    var20 = Utility.qn(var3[1]);
                     this.zz = var20;
                     var21 = 2;
 
                     for(var6 = 0; var6 < var20; ++var6) {
-                        var7 = o.qn(var3[var21]);
+                        var7 = Utility.qn(var3[var21]);
                         ++var21;
                         this.aab[var6] = new String(var3, var21, var7);
                         var21 += var7;
@@ -3401,11 +3401,11 @@ public class mudclient extends e {
                 }
 
                 if (var1 == 244) {
-                    this.nv = o.tn(var3, 1);
-                    this.gu = o.tn(var3, 3);
-                    this.hu = o.tn(var3, 5);
-                    this.mu = o.tn(var3, 7);
-                    this.iu = o.tn(var3, 9);
+                    this.nv = Utility.tn(var3, 1);
+                    this.gu = Utility.tn(var3, 3);
+                    this.hu = Utility.tn(var3, 5);
+                    this.mu = Utility.tn(var3, 7);
+                    this.iu = Utility.tn(var3, 9);
                     this.hu -= this.mu * this.iu;
                     return;
                 }
@@ -3414,20 +3414,20 @@ public class mudclient extends e {
                     var20 = 1;
 
                     for(var21 = 0; var21 < 16; ++var21) {
-                        this.cx[var21] = o.qn(var3[var20++]);
+                        this.cx[var21] = Utility.qn(var3[var20++]);
                     }
 
                     for(var6 = 0; var6 < 16; ++var6) {
-                        this.dx[var6] = o.qn(var3[var20++]);
+                        this.dx[var6] = Utility.qn(var3[var20++]);
                     }
 
-                    this.fx = o.qn(var3[var20++]);
+                    this.fx = Utility.qn(var3[var20++]);
                     return;
                 }
 
                 if (var1 == 242) {
                     for(var20 = 0; var20 < 5; ++var20) {
-                        this.ex[var20] = o.qn(var3[1 + var20]);
+                        this.ex[var20] = Utility.qn(var3[1 + var20]);
                     }
 
                     return;
@@ -3442,8 +3442,8 @@ public class mudclient extends e {
                     var20 = (var2 - 1) / 4;
 
                     for(var21 = 0; var21 < var20; ++var21) {
-                        var6 = this.lv + o.un(var3, 1 + var21 * 4) >> 3;
-                        var7 = this.mv + o.un(var3, 3 + var21 * 4) >> 3;
+                        var6 = this.lv + Utility.un(var3, 1 + var21 * 4) >> 3;
+                        var7 = this.mv + Utility.un(var3, 3 + var21 * 4) >> 3;
                         var8 = 0;
 
                         for(var9 = 0; var9 < this.xv; ++var9) {
@@ -3519,7 +3519,7 @@ public class mudclient extends e {
                 }
 
                 if (var1 == 238) {
-                    var20 = o.tn(var3, 1);
+                    var20 = Utility.tn(var3, 1);
                     if (this.hv[var20] != null) {
                         this.fz = this.hv[var20].xq;
                     }
@@ -3542,9 +3542,9 @@ public class mudclient extends e {
                     var20 = 2;
 
                     for(var21 = 0; var21 < this.jz; ++var21) {
-                        this.kz[var21] = o.tn(var3, var20);
+                        this.kz[var21] = Utility.tn(var3, var20);
                         var20 += 2;
-                        this.lz[var21] = o.tn(var3, var20);
+                        this.lz[var21] = Utility.tn(var3, var20);
                         var20 += 2;
                     }
 
@@ -3584,10 +3584,10 @@ public class mudclient extends e {
 
                     if (var1 == 228) {
                         System.out.println("Got config");
-                        this.zx = o.qn(var3[1]) == 1;
-                        this.yx = o.qn(var3[2]) == 1;
-                        this.cab = o.qn(var3[3]);
-                        this.hy = o.qn(var3[4]) == 1;
+                        this.zx = Utility.qn(var3[1]) == 1;
+                        this.yx = Utility.qn(var3[2]) == 1;
+                        this.cab = Utility.qn(var3[3]);
+                        this.hy = Utility.qn(var3[4]) == 1;
                         return;
                     }
 
@@ -3644,9 +3644,9 @@ public class mudclient extends e {
                     }
 
                     for(var8 = 0; var8 < var21; ++var8) {
-                        this.tz[var8] = o.tn(var3, var20);
+                        this.tz[var8] = Utility.tn(var3, var20);
                         var20 += 2;
-                        this.uz[var8] = o.tn(var3, var20);
+                        this.uz[var8] = Utility.tn(var3, var20);
                         var20 += 2;
                         this.vz[var8] = var3[var20++];
                     }
@@ -3832,7 +3832,7 @@ public class mudclient extends e {
             byte var7;
             String var8;
             int var9;
-            h var10;
+            GameModel var10;
             if (this.yt != this.au) {
                 this.au = this.yt;
 
@@ -3846,7 +3846,7 @@ public class mudclient extends e {
                         if (var3 >= 0 && var4 >= 0 && var3 < 96 && var4 < 96 && var5 > -var7 && var5 < var7 && var6 > -var7 && var6 < var7) {
                             this.kt.ci(this.fw[var2]);
                             var8 = "torcha" + (this.yt + 1);
-                            var9 = r.mp(var8);
+                            var9 = GameData.mp(var8);
                             var10 = this.kw[var9].ue();
                             this.kt.yh(var10);
                             var10.we(true, 48, 48, -50, -10, -50);
@@ -3865,7 +3865,7 @@ public class mudclient extends e {
                         if (var3 >= 0 && var4 >= 0 && var3 < 96 && var4 < 96 && var5 > -var7 && var5 < var7 && var6 > -var7 && var6 < var7) {
                             this.kt.ci(this.fw[var2]);
                             var8 = "skulltorcha" + (this.yt + 1);
-                            var9 = r.mp(var8);
+                            var9 = GameData.mp(var8);
                             var10 = this.kw[var9].ue();
                             this.kt.yh(var10);
                             var10.we(true, 48, 48, -50, -10, -50);
@@ -3890,7 +3890,7 @@ public class mudclient extends e {
                         if (var3 >= 0 && var4 >= 0 && var3 < 96 && var4 < 96 && var5 > -var7 && var5 < var7 && var6 > -var7 && var6 < var7) {
                             this.kt.ci(this.fw[var2]);
                             var8 = "firea" + (this.zt + 1);
-                            var9 = r.mp(var8);
+                            var9 = GameData.mp(var8);
                             var10 = this.kw[var9].ue();
                             this.kt.yh(var10);
                             var10.we(true, 48, 48, -50, -10, -50);
@@ -3907,7 +3907,7 @@ public class mudclient extends e {
 
             int var18;
             for(var2 = 0; var2 < this.ev; ++var2) {
-                l var15 = this.iv[var2];
+                Character var15 = this.iv[var2];
                 if (var15.xr != 255) {
                     var4 = var15.ar;
                     var5 = var15.br;
@@ -3928,10 +3928,10 @@ public class mudclient extends e {
                 }
             }
 
-            l var17;
+            Character var17;
             int var19;
             for(var3 = 0; var3 < this.ev; ++var3) {
-                l var16 = this.iv[var3];
+                Character var16 = this.iv[var3];
                 if (var16.cs > 0) {
                     var17 = null;
                     if (var16.bs != -1) {
@@ -3946,7 +3946,7 @@ public class mudclient extends e {
                         var19 = -this.fu.ho(var6, var18) - 110;
                         var9 = var17.ar;
                         int var21 = var17.br;
-                        int var11 = -this.fu.ho(var9, var21) - r.mjb[var17.cr] / 2;
+                        int var11 = -this.fu.ho(var9, var21) - GameData.mjb[var17.cr] / 2;
                         int var12 = (var6 * var16.cs + var9 * (this.vt - var16.cs)) / this.vt;
                         int var13 = (var19 * var16.cs + var11 * (this.vt - var16.cs)) / this.vt;
                         int var14 = (var18 * var16.cs + var21 * (this.vt - var16.cs)) / this.vt;
@@ -3961,7 +3961,7 @@ public class mudclient extends e {
                 var6 = var17.ar;
                 var18 = var17.br;
                 var19 = -this.fu.ho(var6, var18);
-                var9 = this.kt.ph(20000 + var4, var6, var19, var18, r.ljb[var17.cr], r.mjb[var17.cr], var4 + 30000);
+                var9 = this.kt.ph(20000 + var4, var6, var19, var18, GameData.ljb[var17.cr], GameData.mjb[var17.cr], var4 + 30000);
                 ++this.gv;
                 if (var17.er == 8) {
                     this.kt.si(var9, -30);
@@ -4058,9 +4058,9 @@ public class mudclient extends e {
                 this.vy.id(this.zy);
             }
 
-            g.gg = 2;
+            Panel.gg = 2;
             this.vy.hc();
-            g.gg = 0;
+            Panel.gg = 0;
             this.lt.tg(this.lt.qj - 3 - 197, 3, this.ut, 128);
             this.nk();
             this.lt.tk = false;
@@ -4071,56 +4071,56 @@ public class mudclient extends e {
 
     public void gl() {
         this.lt.bh(0, this.rt - 4, this.ut + 23);
-        int var1 = i.ng(200, 200, 255);
+        int var1 = Surface.ng(200, 200, 255);
         if (this.az == 0) {
-            var1 = i.ng(255, 200, 50);
+            var1 = Surface.ng(255, 200, 50);
         }
 
         if (this.ry % 30 > 15) {
-            var1 = i.ng(255, 50, 50);
+            var1 = Surface.ng(255, 50, 50);
         }
 
         this.lt.xg("All messages", 54, this.rt + 6, 0, var1);
-        var1 = i.ng(200, 200, 255);
+        var1 = Surface.ng(200, 200, 255);
         if (this.az == 1) {
-            var1 = i.ng(255, 200, 50);
+            var1 = Surface.ng(255, 200, 50);
         }
 
         if (this.sy % 30 > 15) {
-            var1 = i.ng(255, 50, 50);
+            var1 = Surface.ng(255, 50, 50);
         }
 
         this.lt.xg("Chat history", 155, this.rt + 6, 0, var1);
-        var1 = i.ng(200, 200, 255);
+        var1 = Surface.ng(200, 200, 255);
         if (this.az == 2) {
-            var1 = i.ng(255, 200, 50);
+            var1 = Surface.ng(255, 200, 50);
         }
 
         if (this.ty % 30 > 15) {
-            var1 = i.ng(255, 50, 50);
+            var1 = Surface.ng(255, 50, 50);
         }
 
         this.lt.xg("Quest history", 255, this.rt + 6, 0, var1);
-        var1 = i.ng(200, 200, 255);
+        var1 = Surface.ng(200, 200, 255);
         if (this.az == 3) {
-            var1 = i.ng(255, 200, 50);
+            var1 = Surface.ng(255, 200, 50);
         }
 
         if (this.uy % 30 > 15) {
-            var1 = i.ng(255, 50, 50);
+            var1 = Surface.ng(255, 50, 50);
         }
 
         this.lt.xg("Private history", 355, this.rt + 6, 0, var1);
     }
 
     public void xm(int var1, int var2, int var3, int var4, int var5, int var6, int var7) {
-        int var8 = r.zhb[var5] + this.yv;
-        int var9 = r.lib[var5];
+        int var8 = GameData.zhb[var5] + this.yv;
+        int var9 = GameData.lib[var5];
         this.lt.zf(var1, var2, var3, var4, var8, var9, 0, 0, false);
     }
 
     public void cn(int var1, int var2, int var3, int var4, int var5, int var6, int var7) {
-        l var8 = this.tv[var5];
+        Character var8 = this.tv[var5];
         int var9 = var8.er + (this.av + 16) / 32 & 7;
         boolean var10 = false;
         int var11 = var9;
@@ -4135,52 +4135,52 @@ public class mudclient extends e {
             var10 = true;
         }
 
-        int var12 = var11 * 3 + this.ffb[var8.dr / r.njb[var8.cr] % 4];
+        int var12 = var11 * 3 + this.ffb[var8.dr / GameData.njb[var8.cr] % 4];
         boolean var23;
         if (var8.er == 8) {
             var11 = 5;
             var23 = true;
             var10 = false;
-            var1 -= r.pjb[var8.cr] * var7 / 100;
-            var12 = var11 * 3 + this.gfb[this.dt / (r.ojb[var8.cr] - 1) % 8];
+            var1 -= GameData.pjb[var8.cr] * var7 / 100;
+            var12 = var11 * 3 + this.gfb[this.dt / (GameData.ojb[var8.cr] - 1) % 8];
         } else if (var8.er == 9) {
             var11 = 5;
             var23 = true;
             var10 = true;
-            var1 += r.pjb[var8.cr] * var7 / 100;
-            var12 = var11 * 3 + this.hfb[this.dt / r.ojb[var8.cr] % 8];
+            var1 += GameData.pjb[var8.cr] * var7 / 100;
+            var12 = var11 * 3 + this.hfb[this.dt / GameData.ojb[var8.cr] % 8];
         }
 
         int var14;
         int var15;
         for(int var13 = 0; var13 < 12; ++var13) {
             var14 = this.seb[var11][var13];
-            var15 = r.gjb[var8.cr][var14];
+            var15 = GameData.gjb[var8.cr][var14];
             if (var15 >= 0) {
                 byte var16 = 0;
                 byte var17 = 0;
                 int var18 = var12;
-                if (var10 && var11 >= 1 && var11 <= 3 && r.yjb[var15] == 1) {
+                if (var10 && var11 >= 1 && var11 <= 3 && GameData.yjb[var15] == 1) {
                     var18 = var12 + 15;
                 }
 
-                if (var11 != 5 || r.xjb[var15] == 1) {
-                    int var19 = var18 + r.zjb[var15];
+                if (var11 != 5 || GameData.xjb[var15] == 1) {
+                    int var19 = var18 + GameData.zjb[var15];
                     int var24 = var16 * var3 / this.lt.hk[var19];
                     int var25 = var17 * var4 / this.lt.ik[var19];
-                    int var20 = var3 * this.lt.hk[var19] / this.lt.hk[r.zjb[var15]];
+                    int var20 = var3 * this.lt.hk[var19] / this.lt.hk[GameData.zjb[var15]];
                     var24 -= (var20 - var3) / 2;
-                    int var21 = r.vjb[var15];
+                    int var21 = GameData.vjb[var15];
                     int var22 = 0;
                     if (var21 == 1) {
-                        var21 = r.hjb[var8.cr];
-                        var22 = r.kjb[var8.cr];
+                        var21 = GameData.hjb[var8.cr];
+                        var22 = GameData.kjb[var8.cr];
                     } else if (var21 == 2) {
-                        var21 = r.ijb[var8.cr];
-                        var22 = r.kjb[var8.cr];
+                        var21 = GameData.ijb[var8.cr];
+                        var22 = GameData.kjb[var8.cr];
                     } else if (var21 == 3) {
-                        var21 = r.jjb[var8.cr];
-                        var22 = r.kjb[var8.cr];
+                        var21 = GameData.jjb[var8.cr];
+                        var22 = GameData.kjb[var8.cr];
                     }
 
                     this.lt.zf(var1 + var24, var2 + var25, var20, var4, var19, var21, var22, var6, var10);
@@ -4232,7 +4232,7 @@ public class mudclient extends e {
     }
 
     public void tl(int var1, int var2, int var3, int var4, int var5, int var6, int var7) {
-        l var8 = this.iv[var5];
+        Character var8 = this.iv[var5];
         if (var8.xr != 255) {
             int var9 = var8.er + (this.av + 16) / 32 & 7;
             boolean var10 = false;
@@ -4274,7 +4274,7 @@ public class mudclient extends e {
                     byte var17 = 0;
                     int var18 = var12;
                     if (var10 && var11 >= 1 && var11 <= 3) {
-                        if (r.yjb[var15] == 1) {
+                        if (GameData.yjb[var15] == 1) {
                             var18 = var12 + 15;
                         } else if (var14 == 4 && var11 == 1) {
                             var16 = -22;
@@ -4303,13 +4303,13 @@ public class mudclient extends e {
                         }
                     }
 
-                    if (var11 != 5 || r.xjb[var15] == 1) {
-                        int var19 = var18 + r.zjb[var15];
+                    if (var11 != 5 || GameData.xjb[var15] == 1) {
+                        int var19 = var18 + GameData.zjb[var15];
                         var23 = var16 * var3 / this.lt.hk[var19];
                         int var24 = var17 * var4 / this.lt.ik[var19];
-                        int var20 = var3 * this.lt.hk[var19] / this.lt.hk[r.zjb[var15]];
+                        int var20 = var3 * this.lt.hk[var19] / this.lt.hk[GameData.zjb[var15]];
                         var23 -= (var20 - var3) / 2;
-                        int var21 = r.vjb[var15];
+                        int var21 = GameData.vjb[var15];
                         int var22 = this.efb[var8.yr];
                         if (var21 == 1) {
                             var21 = this.dfb[var8.vr];
@@ -4428,7 +4428,7 @@ public class mudclient extends e {
             this.lt.sg(var3 - var7 / 2, var9, var7, var8, this.ut + 9, 85);
             int var10 = 36 * var5 / 100;
             int var11 = 24 * var5 / 100;
-            this.lt.zf(var3 - var10 / 2, var9 + var8 / 2 - var11 / 2, var10, var11, r.zhb[var12] + this.yv, r.lib[var12], 0, 0, false);
+            this.lt.zf(var3 - var10 / 2, var9 + var8 / 2 - var11 / 2, var10, var11, GameData.zhb[var12] + this.yv, GameData.lib[var12], 0, 0, false);
         }
 
         for(var3 = 0; var3 < this.meb; ++var3) {
@@ -4446,7 +4446,7 @@ public class mudclient extends e {
 
         for(int var3 = 0; var3 < this.ww; ++var3) {
             if (this.xw[var3] == var1) {
-                if (r.bib[var1] == 1) {
+                if (GameData.bib[var1] == 1) {
                     ++var2;
                 } else {
                     var2 += this.yw[var3];
@@ -4503,14 +4503,14 @@ public class mudclient extends e {
         int var5;
         int var6;
         if (var3 != 0 && var3 != 4) {
-            var6 = r.gkb[var4];
-            var5 = r.hkb[var4];
+            var6 = GameData.gkb[var4];
+            var5 = GameData.hkb[var4];
         } else {
-            var5 = r.gkb[var4];
-            var6 = r.hkb[var4];
+            var5 = GameData.gkb[var4];
+            var6 = GameData.hkb[var4];
         }
 
-        if (r.ikb[var4] != 2 && r.ikb[var4] != 3) {
+        if (GameData.ikb[var4] != 2 && GameData.ikb[var4] != 3) {
             this.em(this.lv, this.mv, var1, var2, var1 + var5 - 1, var2 + var6 - 1, true, true);
         } else {
             if (var3 == 0) {
@@ -4618,17 +4618,17 @@ public class mudclient extends e {
                     var10 = this.gw[var9];
                     var11 = this.hw[var9];
                     var12 = this.iw[var9];
-                    h var13 = this.fw[var9];
+                    GameModel var13 = this.fw[var9];
 
                     try {
                         var14 = this.jw[var9];
                         int var16;
                         if (var14 != 0 && var14 != 4) {
-                            var16 = r.gkb[var12];
-                            var15 = r.hkb[var12];
+                            var16 = GameData.gkb[var12];
+                            var15 = GameData.hkb[var12];
                         } else {
-                            var15 = r.gkb[var12];
-                            var16 = r.hkb[var12];
+                            var15 = GameData.gkb[var12];
+                            var16 = GameData.hkb[var12];
                         }
 
                         int var17 = (var10 + var10 + var15) * this.ot / 2;
@@ -4659,7 +4659,7 @@ public class mudclient extends e {
 
                     try {
                         this.fu.ap(var11, var12, var14, var21);
-                        h var24 = this.km(var11, var12, var14, var21, var10);
+                        GameModel var24 = this.km(var11, var12, var14, var21, var10);
                         this.ow[var10] = var24;
                     } catch (RuntimeException var19) {
                         System.out.println("Bound Error: " + var19.getMessage());
@@ -4673,7 +4673,7 @@ public class mudclient extends e {
                 }
 
                 for(var12 = 0; var12 < this.ev; ++var12) {
-                    l var22 = this.iv[var12];
+                    Character var22 = this.iv[var12];
                     var22.ar -= var7 * this.ot;
                     var22.br -= var8 * this.ot;
 
@@ -4684,7 +4684,7 @@ public class mudclient extends e {
                 }
 
                 for(var21 = 0; var21 < this.qv; ++var21) {
-                    l var23 = this.tv[var21];
+                    Character var23 = this.tv[var21];
                     var23.ar -= var7 * this.ot;
                     var23.br -= var8 * this.ot;
 
@@ -4700,14 +4700,14 @@ public class mudclient extends e {
         }
     }
 
-    public h km(int var1, int var2, int var3, int var4, int var5) {
+    public GameModel km(int var1, int var2, int var3, int var4, int var5) {
         int var6 = var1;
         int var8 = var1;
         int var9 = var2;
-        int var10 = r.rkb[var4];
-        int var11 = r.skb[var4];
-        int var12 = r.qkb[var4];
-        h var13 = new h(4, 1);
+        int var10 = GameData.rkb[var4];
+        int var11 = GameData.skb[var4];
+        int var12 = GameData.qkb[var4];
+        GameModel var13 = new GameModel(4, 1);
         if (var3 == 0) {
             var8 = var1 + 1;
         }
@@ -4862,9 +4862,9 @@ public class mudclient extends e {
 
         for(var4 = 0; var4 < 5; ++var4) {
             if (var4 == this.bab + 1) {
-                this.lt.xf(var1, var2 + var4 * 20, var3, 20, i.ng(255, 0, 0), 128);
+                this.lt.xf(var1, var2 + var4 * 20, var3, 20, Surface.ng(255, 0, 0), 128);
             } else {
-                this.lt.xf(var1, var2 + var4 * 20, var3, 20, i.ng(190, 190, 190), 128);
+                this.lt.xf(var1, var2 + var4 * 20, var3, 20, Surface.ng(190, 190, 190), 128);
             }
 
             this.lt.ug(var1, var2 + var4 * 20, var3, 0);
@@ -5118,7 +5118,7 @@ public class mudclient extends e {
                 super.rq = "";
                 super.sq = "";
                 this.eab = 0;
-                if (var2.length() > 0 && o.on(var2) != this.kv.wq) {
+                if (var2.length() > 0 && Utility.on(var2) != this.kv.wq) {
                     this.ib(var2);
                 }
             }
@@ -5128,7 +5128,7 @@ public class mudclient extends e {
             this.lt.bg(6, var1, 500, 70, 0);
             this.lt.uf(6, var1, 500, 70, 16777215);
             var1 += 20;
-            this.lt.xg("Enter message to send to " + o.rn(this.px), 256, var1, 4, 16777215);
+            this.lt.xg("Enter message to send to " + Utility.rn(this.px), 256, var1, 4, 16777215);
             var1 += 20;
             this.lt.xg(super.tq + "*", 256, var1, 4, 16777215);
             if (super.uq.length() > 0) {
@@ -5152,7 +5152,7 @@ public class mudclient extends e {
                 super.rq = "";
                 super.sq = "";
                 this.eab = 0;
-                if (var2.length() > 0 && o.on(var2) != this.kv.wq) {
+                if (var2.length() > 0 && Utility.on(var2) != this.kv.wq) {
                     this.nb(var2);
                 }
             }
@@ -5207,7 +5207,7 @@ public class mudclient extends e {
                             var6 = 10;
                         }
 
-                        var7 = var6 * r.aib[var5] / 100;
+                        var7 = var6 * GameData.aib[var5] / 100;
                         super.ed.a(217);
                         super.ed.l(this.tz[this.wz]);
                         super.ed.l(var7);
@@ -5220,7 +5220,7 @@ public class mudclient extends e {
                             var6 = 10;
                         }
 
-                        var7 = var6 * r.aib[var5] / 100;
+                        var7 = var6 * GameData.aib[var5] / 100;
                         super.ed.a(216);
                         super.ed.l(this.tz[this.wz]);
                         super.ed.l(var7);
@@ -5266,7 +5266,7 @@ public class mudclient extends e {
 
                 this.lt.uf(var9, var10, 50, 35, 0);
                 if (this.tz[var6] != -1) {
-                    this.lt.zf(var9, var10, 48, 32, this.yv + r.zhb[this.tz[var6]], r.lib[this.tz[var6]], 0, 0, false);
+                    this.lt.zf(var9, var10, 48, 32, this.yv + GameData.zhb[this.tz[var6]], GameData.lib[this.tz[var6]], 0, 0, false);
                     this.lt.qf(String.valueOf(this.uz[var6]), var9 + 1, var10 + 10, 1, 65280);
                     this.lt.ch(String.valueOf(this.ml(this.tz[var6])), var9 + 47, var10 + 10, 1, 65535);
                 }
@@ -5287,8 +5287,8 @@ public class mudclient extends e {
                         var9 = 10;
                     }
 
-                    var10 = var9 * r.aib[var8] / 100;
-                    this.lt.qf("Buy a new " + r.vhb[var8][0] + " for " + var10 + "gp", var11 + 2, var12 + 214, 1, 16776960);
+                    var10 = var9 * GameData.aib[var8] / 100;
+                    this.lt.qf("Buy a new " + GameData.vhb[var8][0] + " for " + var10 + "gp", var11 + 2, var12 + 214, 1, 16776960);
                     var4 = 16777215;
                     if (super.kq > var11 + 298 && super.lq >= var12 + 204 && super.kq < var11 + 408 && super.lq <= var12 + 215) {
                         var4 = 16711680;
@@ -5305,8 +5305,8 @@ public class mudclient extends e {
                         var9 = 10;
                     }
 
-                    var10 = var9 * r.aib[var8] / 100;
-                    this.lt.ch("Sell your " + r.vhb[var8][0] + " for " + var10 + "gp", var11 + 405, var12 + 239, 1, 16776960);
+                    var10 = var9 * GameData.aib[var8] / 100;
+                    this.lt.ch("Sell your " + GameData.vhb[var8][0] + " for " + var10 + "gp", var11 + 405, var12 + 239, 1, 16776960);
                     var4 = 16777215;
                     if (super.kq > var11 + 2 && super.lq >= var12 + 229 && super.kq < var11 + 112 && super.lq <= var12 + 240) {
                         var4 = 16711680;
@@ -5346,7 +5346,7 @@ public class mudclient extends e {
 
                         for(var7 = 0; var7 < this.gz; ++var7) {
                             if (this.hz[var7] == var6) {
-                                if (r.bib[var6] == 0) {
+                                if (GameData.bib[var6] == 0) {
                                     for(var8 = 0; var8 < this.pz; ++var8) {
                                         if (this.iz[var7] < this.yw[var3]) {
                                             ++this.iz[var7];
@@ -5393,7 +5393,7 @@ public class mudclient extends e {
                         var16 = this.hz[var3];
 
                         for(var5 = 0; var5 < this.pz; ++var5) {
-                            if (r.bib[var16] != 0 || this.iz[var3] <= 1) {
+                            if (GameData.bib[var16] != 0 || this.iz[var3] <= 1) {
                                 --this.gz;
                                 this.oz = 0;
 
@@ -5508,8 +5508,8 @@ public class mudclient extends e {
             for(int var9 = 0; var9 < this.ww; ++var9) {
                 var10 = 217 + var14 + var9 % 5 * 49;
                 var11 = 31 + var15 + var9 / 5 * 34;
-                this.lt.zf(var10, var11, 48, 32, this.yv + r.zhb[this.xw[var9]], r.lib[this.xw[var9]], 0, 0, false);
-                if (r.bib[this.xw[var9]] == 0) {
+                this.lt.zf(var10, var11, 48, 32, this.yv + GameData.zhb[this.xw[var9]], GameData.lib[this.xw[var9]], 0, 0, false);
+                if (GameData.bib[this.xw[var9]] == 0) {
                     this.lt.qf(String.valueOf(this.yw[var9]), var10 + 1, var11 + 10, 1, 16776960);
                 }
             }
@@ -5518,26 +5518,26 @@ public class mudclient extends e {
             for(var10 = 0; var10 < this.gz; ++var10) {
                 var11 = 9 + var14 + var10 % 4 * 49;
                 var12 = 31 + var15 + var10 / 4 * 34;
-                this.lt.zf(var11, var12, 48, 32, this.yv + r.zhb[this.hz[var10]], r.lib[this.hz[var10]], 0, 0, false);
-                if (r.bib[this.hz[var10]] == 0) {
+                this.lt.zf(var11, var12, 48, 32, this.yv + GameData.zhb[this.hz[var10]], GameData.lib[this.hz[var10]], 0, 0, false);
+                if (GameData.bib[this.hz[var10]] == 0) {
                     this.lt.qf(String.valueOf(this.iz[var10]), var11 + 1, var12 + 10, 1, 16776960);
                 }
 
                 if (super.kq > var11 && super.kq < var11 + 48 && super.lq > var12 && super.lq < var12 + 32) {
-                    this.lt.qf(r.vhb[this.hz[var10]][0] + ": @whi@" + r.whb[this.hz[var10]], var14 + 8, var15 + 273, 1, 16776960);
+                    this.lt.qf(GameData.vhb[this.hz[var10]][0] + ": @whi@" + GameData.whb[this.hz[var10]], var14 + 8, var15 + 273, 1, 16776960);
                 }
             }
 
             for(var11 = 0; var11 < this.jz; ++var11) {
                 var12 = 9 + var14 + var11 % 4 * 49;
                 int var13 = 156 + var15 + var11 / 4 * 34;
-                this.lt.zf(var12, var13, 48, 32, this.yv + r.zhb[this.kz[var11]], r.lib[this.kz[var11]], 0, 0, false);
-                if (r.bib[this.kz[var11]] == 0) {
+                this.lt.zf(var12, var13, 48, 32, this.yv + GameData.zhb[this.kz[var11]], GameData.lib[this.kz[var11]], 0, 0, false);
+                if (GameData.bib[this.kz[var11]] == 0) {
                     this.lt.qf(String.valueOf(this.lz[var11]), var12 + 1, var13 + 10, 1, 16776960);
                 }
 
                 if (super.kq > var12 && super.kq < var12 + 48 && super.lq > var13 && super.lq < var13 + 32) {
-                    this.lt.qf(r.vhb[this.kz[var11]][0] + ": @whi@" + r.whb[this.kz[var11]], var14 + 8, var15 + 273, 1, 16776960);
+                    this.lt.qf(GameData.vhb[this.kz[var11]][0] + ": @whi@" + GameData.whb[this.kz[var11]], var14 + 8, var15 + 273, 1, 16776960);
                 }
             }
 
@@ -5619,12 +5619,12 @@ public class mudclient extends e {
             if (var3 < this.ww && this.zw[var3] == 1) {
                 this.lt.xf(var4, var5, 49, 34, 16711680, 128);
             } else {
-                this.lt.xf(var4, var5, 49, 34, i.ng(181, 181, 181), 128);
+                this.lt.xf(var4, var5, 49, 34, Surface.ng(181, 181, 181), 128);
             }
 
             if (var3 < this.ww) {
-                this.lt.zf(var4, var5, 48, 32, this.yv + r.zhb[this.xw[var3]], r.lib[this.xw[var3]], 0, 0, false);
-                if (r.bib[this.xw[var3]] == 0) {
+                this.lt.zf(var4, var5, 48, 32, this.yv + GameData.zhb[this.xw[var3]], GameData.lib[this.xw[var3]], 0, 0, false);
+                if (GameData.bib[this.xw[var3]] == 0) {
                     this.lt.qf(String.valueOf(this.yw[var3]), var4 + 1, var5 + 10, 1, 16776960);
                 }
             }
@@ -5646,9 +5646,9 @@ public class mudclient extends e {
                 if (var7 < this.ww) {
                     int var8 = this.xw[var7];
                     if (this.lx >= 0) {
-                        if (r.vlb[this.lx] == 3) {
-                            this.jy[this.fy] = "Cast " + r.rlb[this.lx] + " on";
-                            this.iy[this.fy] = "@lre@" + r.vhb[var8][0];
+                        if (GameData.vlb[this.lx] == 3) {
+                            this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on";
+                            this.iy[this.fy] = "@lre@" + GameData.vhb[var8][0];
                             this.ky[this.fy] = 600;
                             this.ny[this.fy] = var7;
                             this.oy[this.fy] = this.lx;
@@ -5658,7 +5658,7 @@ public class mudclient extends e {
                     } else {
                         if (this.ax >= 0) {
                             this.jy[this.fy] = "Use " + this.bx + " with";
-                            this.iy[this.fy] = "@lre@" + r.vhb[var8][0];
+                            this.iy[this.fy] = "@lre@" + GameData.vhb[var8][0];
                             this.ky[this.fy] = 610;
                             this.ny[this.fy] = var7;
                             this.oy[this.fy] = this.ax;
@@ -5668,43 +5668,43 @@ public class mudclient extends e {
 
                         if (this.zw[var7] == 1) {
                             this.jy[this.fy] = "Remove";
-                            this.iy[this.fy] = "@lre@" + r.vhb[var8][0];
+                            this.iy[this.fy] = "@lre@" + GameData.vhb[var8][0];
                             this.ky[this.fy] = 620;
                             this.ny[this.fy] = var7;
                             ++this.fy;
-                        } else if (r.jib[var8] != 0) {
-                            if ((r.jib[var8] & 24) != 0) {
+                        } else if (GameData.jib[var8] != 0) {
+                            if ((GameData.jib[var8] & 24) != 0) {
                                 this.jy[this.fy] = "Wield";
                             } else {
                                 this.jy[this.fy] = "Wear";
                             }
 
-                            this.iy[this.fy] = "@lre@" + r.vhb[var8][0];
+                            this.iy[this.fy] = "@lre@" + GameData.vhb[var8][0];
                             this.ky[this.fy] = 630;
                             this.ny[this.fy] = var7;
                             ++this.fy;
                         }
 
-                        if (!r.yhb[var8].equals("_")) {
-                            this.jy[this.fy] = r.yhb[var8];
-                            this.iy[this.fy] = "@lre@" + r.vhb[var8][0];
+                        if (!GameData.yhb[var8].equals("_")) {
+                            this.jy[this.fy] = GameData.yhb[var8];
+                            this.iy[this.fy] = "@lre@" + GameData.vhb[var8][0];
                             this.ky[this.fy] = 640;
                             this.ny[this.fy] = var7;
                             ++this.fy;
                         }
 
                         this.jy[this.fy] = "Use";
-                        this.iy[this.fy] = "@lre@" + r.vhb[var8][0];
+                        this.iy[this.fy] = "@lre@" + GameData.vhb[var8][0];
                         this.ky[this.fy] = 650;
                         this.ny[this.fy] = var7;
                         ++this.fy;
                         this.jy[this.fy] = "Drop";
-                        this.iy[this.fy] = "@lre@" + r.vhb[var8][0];
+                        this.iy[this.fy] = "@lre@" + GameData.vhb[var8][0];
                         this.ky[this.fy] = 660;
                         this.ny[this.fy] = var7;
                         ++this.fy;
                         this.jy[this.fy] = "Examine";
-                        this.iy[this.fy] = "@lre@" + r.vhb[var8][0];
+                        this.iy[this.fy] = "@lre@" + GameData.vhb[var8][0];
                         this.ky[this.fy] = 3600;
                         this.ny[this.fy] = var8;
                         ++this.fy;
@@ -5726,8 +5726,8 @@ public class mudclient extends e {
         short var5 = 192;
         int var6 = (this.kv.ar - 6040) * 3 * var5 / 2048;
         int var7 = (this.kv.br - 6040) * 3 * var5 / 2048;
-        int var8 = j.fm[1024 - this.av * 4 & 1023];
-        int var9 = j.fm[(1024 - this.av * 4 & 1023) + 1024];
+        int var8 = Scene.fm[1024 - this.av * 4 & 1023];
+        int var9 = Scene.fm[(1024 - this.av * 4 & 1023) + 1024];
         int var10 = var7 * var8 + var6 * var9 >> 18;
         var7 = var7 * var9 - var6 * var8 >> 18;
         this.lt.sf(var2 + var3 / 2 - var10, 36 + var4 / 2 + var7, this.ut - 1, this.av + 64 & 255, var5);
@@ -5749,7 +5749,7 @@ public class mudclient extends e {
         }
 
         for(int var13 = 0; var13 < this.qv; ++var13) {
-            l var14 = this.tv[var13];
+            Character var14 = this.tv[var13];
             var6 = (var14.ar - this.kv.ar) * 3 * var5 / 2048;
             var7 = (var14.br - this.kv.br) * 3 * var5 / 2048;
             var10 = var7 * var8 + var6 * var9 >> 18;
@@ -5758,7 +5758,7 @@ public class mudclient extends e {
         }
 
         for(int var16 = 0; var16 < this.ev; ++var16) {
-            l var15 = this.iv[var16];
+            Character var15 = this.iv[var16];
             var6 = (var15.ar - this.kv.ar) * 3 * var5 / 2048;
             var7 = (var15.br - this.kv.br) * 3 * var5 / 2048;
             var10 = var7 * var8 + var6 * var9 >> 18;
@@ -5780,8 +5780,8 @@ public class mudclient extends e {
                 var2 += 40;
                 var6 = (super.kq - (var2 + var3 / 2)) * 16384 / (3 * var5);
                 var7 = (super.lq - (36 + var4 / 2)) * 16384 / (3 * var5);
-                var8 = j.fm[1024 - this.av * 4 & 1023];
-                var9 = j.fm[(1024 - this.av * 4 & 1023) + 1024];
+                var8 = Scene.fm[1024 - this.av * 4 & 1023];
+                var9 = Scene.fm[(1024 - this.av * 4 & 1023) + 1024];
                 var10 = var7 * var8 + var6 * var9 >> 15;
                 var7 = var7 * var9 - var6 * var8 >> 15;
                 var6 = var10 + this.kv.ar;
@@ -5803,16 +5803,16 @@ public class mudclient extends e {
         short var4 = 196;
         short var5 = 206;
         int var7;
-        int var6 = var7 = i.ng(160, 160, 160);
+        int var6 = var7 = Surface.ng(160, 160, 160);
         if (this.sx == 0) {
-            var6 = i.ng(220, 220, 220);
+            var6 = Surface.ng(220, 220, 220);
         } else {
-            var7 = i.ng(220, 220, 220);
+            var7 = Surface.ng(220, 220, 220);
         }
 
         this.lt.xf(var2, var3, var4 / 2, 24, var6, 128);
         this.lt.xf(var2 + var4 / 2, var3, var4 / 2, 24, var7, 128);
-        this.lt.xf(var2, var3 + 24, var4, var5 - 24, i.ng(220, 220, 220), 128);
+        this.lt.xf(var2, var3 + 24, var4, var5 - 24, Surface.ng(220, 220, 220), 128);
         this.lt.ug(var2, var3 + 24, var4, 0);
         this.lt.zg(var2 + var4 / 2, var3, 24, 0);
         this.lt.xg("Stats", var2 + var4 / 4, var3 + 16, 4, 0);
@@ -5885,17 +5885,17 @@ public class mudclient extends e {
         short var4 = 196;
         short var5 = 182;
         int var7;
-        int var6 = var7 = i.ng(160, 160, 160);
+        int var6 = var7 = Surface.ng(160, 160, 160);
         if (this.kx == 0) {
-            var6 = i.ng(220, 220, 220);
+            var6 = Surface.ng(220, 220, 220);
         } else {
-            var7 = i.ng(220, 220, 220);
+            var7 = Surface.ng(220, 220, 220);
         }
 
         this.lt.xf(var2, var3, var4 / 2, 24, var6, 128);
         this.lt.xf(var2 + var4 / 2, var3, var4 / 2, 24, var7, 128);
-        this.lt.xf(var2, var3 + 24, var4, 90, i.ng(220, 220, 220), 128);
-        this.lt.xf(var2, var3 + 24 + 90, var4, var5 - 90 - 24, i.ng(160, 160, 160), 128);
+        this.lt.xf(var2, var3 + 24, var4, 90, Surface.ng(220, 220, 220), 128);
+        this.lt.xf(var2, var3 + 24 + 90, var4, var5 - 90 - 24, Surface.ng(160, 160, 160), 128);
         this.lt.ug(var2, var3 + 24, var4, 0);
         this.lt.zg(var2 + var4 / 2, var3, 24, 0);
         this.lt.ug(var2, var3 + 113, var4, 0);
@@ -5911,36 +5911,36 @@ public class mudclient extends e {
             var8 = 0;
 
             int var12;
-            for(var9 = 0; var9 < r.qlb; ++var9) {
+            for(var9 = 0; var9 < GameData.qlb; ++var9) {
                 var10 = "@yel@";
 
-                for(var11 = 0; var11 < r.ulb[var9]; ++var11) {
-                    var12 = r.wlb[var9][var11];
-                    if (!this.rm(var12, r.xlb[var9][var11])) {
+                for(var11 = 0; var11 < GameData.ulb[var9]; ++var11) {
+                    var12 = GameData.wlb[var9][var11];
+                    if (!this.rm(var12, GameData.xlb[var9][var11])) {
                         var10 = "@whi@";
                         break;
                     }
                 }
 
                 var12 = this.cx[6];
-                if (r.tlb[var9] > var12) {
+                if (GameData.tlb[var9] > var12) {
                     var10 = "@bla@";
                 }
 
-                this.ix.hd(this.jx, var8++, var10 + "Level " + r.tlb[var9] + ": " + r.rlb[var9]);
+                this.ix.hd(this.jx, var8++, var10 + "Level " + GameData.tlb[var9] + ": " + GameData.rlb[var9]);
             }
 
             this.ix.hc();
             var17 = this.ix.jc(this.jx);
             if (var17 != -1) {
-                this.lt.qf("Level " + r.tlb[var17] + ": " + r.rlb[var17], var2 + 2, var3 + 124, 1, 16776960);
-                this.lt.qf(r.slb[var17], var2 + 2, var3 + 136, 0, 16777215);
+                this.lt.qf("Level " + GameData.tlb[var17] + ": " + GameData.rlb[var17], var2 + 2, var3 + 124, 1, 16776960);
+                this.lt.qf(GameData.slb[var17], var2 + 2, var3 + 136, 0, 16777215);
 
-                for(var11 = 0; var11 < r.ulb[var17]; ++var11) {
-                    var12 = r.wlb[var17][var11];
-                    this.lt.bh(var2 + 2 + var11 * 44, var3 + 150, this.yv + r.zhb[var12]);
+                for(var11 = 0; var11 < GameData.ulb[var17]; ++var11) {
+                    var12 = GameData.wlb[var17][var11];
+                    this.lt.bh(var2 + 2 + var11 * 44, var3 + 150, this.yv + GameData.zhb[var12]);
                     int var13 = this.ml(var12);
-                    int var14 = r.xlb[var17][var11];
+                    int var14 = GameData.xlb[var17][var11];
                     String var15 = "@red@";
                     if (this.rm(var12, var14)) {
                         var15 = "@gre@";
@@ -5957,9 +5957,9 @@ public class mudclient extends e {
             this.ix.nc(this.jx);
             var8 = 0;
 
-            for(var9 = 0; var9 < r.imb; ++var9) {
+            for(var9 = 0; var9 < GameData.imb; ++var9) {
                 var10 = "@whi@";
-                if (r.lmb[var9] > this.dx[5]) {
+                if (GameData.lmb[var9] > this.dx[5]) {
                     var10 = "@bla@";
                 }
 
@@ -5967,15 +5967,15 @@ public class mudclient extends e {
                     var10 = "@gre@";
                 }
 
-                this.ix.hd(this.jx, var8++, var10 + "Level " + r.lmb[var9] + ": " + r.jmb[var9]);
+                this.ix.hd(this.jx, var8++, var10 + "Level " + GameData.lmb[var9] + ": " + GameData.jmb[var9]);
             }
 
             this.ix.hc();
             var17 = this.ix.jc(this.jx);
             if (var17 != -1) {
-                this.lt.xg("Level " + r.lmb[var17] + ": " + r.jmb[var17], var2 + var4 / 2, var3 + 130, 1, 16776960);
-                this.lt.xg(r.kmb[var17], var2 + var4 / 2, var3 + 145, 0, 16777215);
-                this.lt.xg("Drain rate: " + r.mmb[var17], var2 + var4 / 2, var3 + 160, 1, 0);
+                this.lt.xg("Level " + GameData.lmb[var17] + ": " + GameData.jmb[var17], var2 + var4 / 2, var3 + 130, 1, 16776960);
+                this.lt.xg(GameData.kmb[var17], var2 + var4 / 2, var3 + 145, 0, 16777215);
+                this.lt.xg("Drain rate: " + GameData.mmb[var17], var2 + var4 / 2, var3 + 160, 1, 0);
             } else {
                 this.lt.qf("Point at a prayer for a description", var2 + 2, var3 + 124, 1, 0);
             }
@@ -6000,19 +6000,19 @@ public class mudclient extends e {
                     var8 = this.ix.jc(this.jx);
                     if (var8 != -1) {
                         var9 = this.cx[6];
-                        if (r.tlb[var8] > var9) {
+                        if (GameData.tlb[var8] > var9) {
                             this.pk("Your magic ability is not high enough for this spell", 3);
                         } else {
-                            for(var17 = 0; var17 < r.ulb[var8]; ++var17) {
-                                var11 = r.wlb[var8][var17];
-                                if (!this.rm(var11, r.xlb[var8][var17])) {
+                            for(var17 = 0; var17 < GameData.ulb[var8]; ++var17) {
+                                var11 = GameData.wlb[var8][var17];
+                                if (!this.rm(var11, GameData.xlb[var8][var17])) {
                                     this.pk("You don't have all the reagents you need for this spell", 3);
                                     var17 = -1;
                                     break;
                                 }
                             }
 
-                            if (var17 == r.ulb[var8]) {
+                            if (var17 == GameData.ulb[var8]) {
                                 this.lx = var8;
                                 this.ax = -1;
                             }
@@ -6024,7 +6024,7 @@ public class mudclient extends e {
                     var8 = this.ix.jc(this.jx);
                     if (var8 != -1) {
                         var9 = this.dx[5];
-                        if (r.lmb[var8] > var9) {
+                        if (GameData.lmb[var8] > var9) {
                             this.pk("Your prayer ability is not high enough for this prayer", 3);
                         } else if (this.cx[5] == 0) {
                             this.pk("You have run out of prayer points. Return to a church to recharge", 3);
@@ -6055,16 +6055,16 @@ public class mudclient extends e {
         short var4 = 196;
         short var5 = 182;
         int var7;
-        int var6 = var7 = i.ng(160, 160, 160);
+        int var6 = var7 = Surface.ng(160, 160, 160);
         if (this.ox == 0) {
-            var6 = i.ng(220, 220, 220);
+            var6 = Surface.ng(220, 220, 220);
         } else {
-            var7 = i.ng(220, 220, 220);
+            var7 = Surface.ng(220, 220, 220);
         }
 
         this.lt.xf(var2, var3, var4 / 2, 24, var6, 128);
         this.lt.xf(var2 + var4 / 2, var3, var4 / 2, 24, var7, 128);
-        this.lt.xf(var2, var3 + 24, var4, var5 - 24, i.ng(220, 220, 220), 128);
+        this.lt.xf(var2, var3 + 24, var4, var5 - 24, Surface.ng(220, 220, 220), 128);
         this.lt.ug(var2, var3 + 24, var4, 0);
         this.lt.zg(var2 + var4 / 2, var3, 24, 0);
         this.lt.ug(var2, var3 + var5 - 16, var4, 0);
@@ -6083,13 +6083,13 @@ public class mudclient extends e {
                     var9 = "@red@";
                 }
 
-                this.mx.hd(this.nx, var8, var9 + o.rn(super.ld[var8]) + "~439~@whi@Remove         WWWWWWWWWW");
+                this.mx.hd(this.nx, var8, var9 + Utility.rn(super.ld[var8]) + "~439~@whi@Remove         WWWWWWWWWW");
             }
         }
 
         if (this.ox == 1) {
             for(var8 = 0; var8 < super.nd; ++var8) {
-                this.mx.hd(this.nx, var8, "@yel@" + o.rn(super.od[var8]) + "~439~@whi@Remove         WWWWWWWWWW");
+                this.mx.hd(this.nx, var8, "@yel@" + Utility.rn(super.od[var8]) + "~439~@whi@Remove         WWWWWWWWWW");
             }
         }
 
@@ -6099,13 +6099,13 @@ public class mudclient extends e {
             var8 = this.mx.jc(this.nx);
             if (var8 >= 0 && super.kq < 489) {
                 if (super.kq > 429) {
-                    this.lt.xg("Click to remove " + o.rn(super.ld[var8]), var2 + var4 / 2, var3 + 35, 1, 16777215);
+                    this.lt.xg("Click to remove " + Utility.rn(super.ld[var8]), var2 + var4 / 2, var3 + 35, 1, 16777215);
                 } else if (super.md[var8] == 2) {
-                    this.lt.xg("Click to message " + o.rn(super.ld[var8]), var2 + var4 / 2, var3 + 35, 1, 16777215);
+                    this.lt.xg("Click to message " + Utility.rn(super.ld[var8]), var2 + var4 / 2, var3 + 35, 1, 16777215);
                 } else if (super.md[var8] == 1) {
-                    this.lt.xg(o.rn(super.ld[var8]) + " is on a different server", var2 + var4 / 2, var3 + 35, 1, 16777215);
+                    this.lt.xg(Utility.rn(super.ld[var8]) + " is on a different server", var2 + var4 / 2, var3 + 35, 1, 16777215);
                 } else {
-                    this.lt.xg(o.rn(super.ld[var8]) + " is offline", var2 + var4 / 2, var3 + 35, 1, 16777215);
+                    this.lt.xg(Utility.rn(super.ld[var8]) + " is offline", var2 + var4 / 2, var3 + 35, 1, 16777215);
                 }
             } else {
                 this.lt.xg("Click a name to send a message", var2 + var4 / 2, var3 + 35, 1, 16777215);
@@ -6124,7 +6124,7 @@ public class mudclient extends e {
             var8 = this.mx.jc(this.nx);
             if (var8 >= 0 && super.kq < 489 && super.kq > 429) {
                 if (super.kq > 429) {
-                    this.lt.xg("Click to remove " + o.rn(super.od[var8]), var2 + var4 / 2, var3 + 35, 1, 16777215);
+                    this.lt.xg("Click to remove " + Utility.rn(super.od[var8]), var2 + var4 / 2, var3 + 35, 1, 16777215);
                 }
             } else {
                 this.lt.xg("Blocking messages from:", var2 + var4 / 2, var3 + 35, 1, 16777215);
@@ -6198,9 +6198,9 @@ public class mudclient extends e {
         byte var3 = 36;
         this.lt.bh(var2 - 49, 3, this.ut + 6);
         short var4 = 196;
-        this.lt.xf(var2, 36, var4, 90, i.ng(181, 181, 181), 160);
-        this.lt.xf(var2, 126, var4, 105, i.ng(201, 2011, 201), 160);
-        this.lt.xf(var2, 231, var4, 30, i.ng(181, 181, 181), 160);
+        this.lt.xf(var2, 36, var4, 90, Surface.ng(181, 181, 181), 160);
+        this.lt.xf(var2, 126, var4, 105, Surface.ng(201, 2011, 201), 160);
+        this.lt.xf(var2, 231, var4, 30, Surface.ng(181, 181, 181), 160);
         int var5 = var2 + 3;
         int var6 = var3 + 15;
         this.lt.qf("Game options - click to toggle", var5, var6, 1, 0);
@@ -6363,12 +6363,12 @@ public class mudclient extends e {
         }
 
         int var4 = this.kt.wi();
-        h[] var5 = this.kt.sh();
+        GameModel[] var5 = this.kt.sh();
         int[] var6 = this.kt.ri();
 
         for(int var7 = 0; var7 < var4; ++var7) {
             int var8 = var6[var7];
-            h var9 = var5[var7];
+            GameModel var9 = var5[var7];
             if (var9.oh[var8] <= 65535 || var9.oh[var8] >= 200000 && var9.oh[var8] <= 300000) {
                 int var10;
                 int var11;
@@ -6378,9 +6378,9 @@ public class mudclient extends e {
                         var11 = this.sw[var10];
                         if (!this.tw[var10]) {
                             if (this.lx >= 0) {
-                                if (r.vlb[this.lx] == 4) {
-                                    this.jy[this.fy] = "Cast " + r.rlb[this.lx] + " on";
-                                    this.iy[this.fy] = "@cya@" + r.mkb[var11][0];
+                                if (GameData.vlb[this.lx] == 4) {
+                                    this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on";
+                                    this.iy[this.fy] = "@cya@" + GameData.mkb[var11][0];
                                     this.ky[this.fy] = 300;
                                     this.ly[this.fy] = this.pw[var10];
                                     this.my[this.fy] = this.qw[var10];
@@ -6390,7 +6390,7 @@ public class mudclient extends e {
                                 }
                             } else if (this.ax >= 0) {
                                 this.jy[this.fy] = "Use " + this.bx + " with";
-                                this.iy[this.fy] = "@cya@" + r.mkb[var11][0];
+                                this.iy[this.fy] = "@cya@" + GameData.mkb[var11][0];
                                 this.ky[this.fy] = 310;
                                 this.ly[this.fy] = this.pw[var10];
                                 this.my[this.fy] = this.qw[var10];
@@ -6398,9 +6398,9 @@ public class mudclient extends e {
                                 this.oy[this.fy] = this.ax;
                                 ++this.fy;
                             } else {
-                                if (!r.okb[var11].equalsIgnoreCase("WalkTo")) {
-                                    this.jy[this.fy] = r.okb[var11];
-                                    this.iy[this.fy] = "@cya@" + r.mkb[var11][0];
+                                if (!GameData.okb[var11].equalsIgnoreCase("WalkTo")) {
+                                    this.jy[this.fy] = GameData.okb[var11];
+                                    this.iy[this.fy] = "@cya@" + GameData.mkb[var11][0];
                                     this.ky[this.fy] = 320;
                                     this.ly[this.fy] = this.pw[var10];
                                     this.my[this.fy] = this.qw[var10];
@@ -6408,9 +6408,9 @@ public class mudclient extends e {
                                     ++this.fy;
                                 }
 
-                                if (!r.pkb[var11].equalsIgnoreCase("Examine")) {
-                                    this.jy[this.fy] = r.pkb[var11];
-                                    this.iy[this.fy] = "@cya@" + r.mkb[var11][0];
+                                if (!GameData.pkb[var11].equalsIgnoreCase("Examine")) {
+                                    this.jy[this.fy] = GameData.pkb[var11];
+                                    this.iy[this.fy] = "@cya@" + GameData.mkb[var11][0];
                                     this.ky[this.fy] = 2300;
                                     this.ly[this.fy] = this.pw[var10];
                                     this.my[this.fy] = this.qw[var10];
@@ -6419,7 +6419,7 @@ public class mudclient extends e {
                                 }
 
                                 this.jy[this.fy] = "Examine";
-                                this.iy[this.fy] = "@cya@" + r.mkb[var11][0];
+                                this.iy[this.fy] = "@cya@" + GameData.mkb[var11][0];
                                 this.ky[this.fy] = 3300;
                                 this.ny[this.fy] = var11;
                                 ++this.fy;
@@ -6432,9 +6432,9 @@ public class mudclient extends e {
                         var11 = this.iw[var10];
                         if (!this.lw[var10]) {
                             if (this.lx >= 0) {
-                                if (r.vlb[this.lx] == 5) {
-                                    this.jy[this.fy] = "Cast " + r.rlb[this.lx] + " on";
-                                    this.iy[this.fy] = "@cya@" + r.bkb[var11][0];
+                                if (GameData.vlb[this.lx] == 5) {
+                                    this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on";
+                                    this.iy[this.fy] = "@cya@" + GameData.bkb[var11][0];
                                     this.ky[this.fy] = 400;
                                     this.ly[this.fy] = this.gw[var10];
                                     this.my[this.fy] = this.hw[var10];
@@ -6445,7 +6445,7 @@ public class mudclient extends e {
                                 }
                             } else if (this.ax >= 0) {
                                 this.jy[this.fy] = "Use " + this.bx + " with";
-                                this.iy[this.fy] = "@cya@" + r.bkb[var11][0];
+                                this.iy[this.fy] = "@cya@" + GameData.bkb[var11][0];
                                 this.ky[this.fy] = 410;
                                 this.ly[this.fy] = this.gw[var10];
                                 this.my[this.fy] = this.hw[var10];
@@ -6454,9 +6454,9 @@ public class mudclient extends e {
                                 this.py[this.fy] = this.ax;
                                 ++this.fy;
                             } else {
-                                if (!r.dkb[var11].equalsIgnoreCase("WalkTo")) {
-                                    this.jy[this.fy] = r.dkb[var11];
-                                    this.iy[this.fy] = "@cya@" + r.bkb[var11][0];
+                                if (!GameData.dkb[var11].equalsIgnoreCase("WalkTo")) {
+                                    this.jy[this.fy] = GameData.dkb[var11];
+                                    this.iy[this.fy] = "@cya@" + GameData.bkb[var11][0];
                                     this.ky[this.fy] = 420;
                                     this.ly[this.fy] = this.gw[var10];
                                     this.my[this.fy] = this.hw[var10];
@@ -6465,9 +6465,9 @@ public class mudclient extends e {
                                     ++this.fy;
                                 }
 
-                                if (!r.ekb[var11].equalsIgnoreCase("Examine")) {
-                                    this.jy[this.fy] = r.ekb[var11];
-                                    this.iy[this.fy] = "@cya@" + r.bkb[var11][0];
+                                if (!GameData.ekb[var11].equalsIgnoreCase("Examine")) {
+                                    this.jy[this.fy] = GameData.ekb[var11];
+                                    this.iy[this.fy] = "@cya@" + GameData.bkb[var11][0];
                                     this.ky[this.fy] = 2400;
                                     this.ly[this.fy] = this.gw[var10];
                                     this.my[this.fy] = this.hw[var10];
@@ -6477,7 +6477,7 @@ public class mudclient extends e {
                                 }
 
                                 this.jy[this.fy] = "Examine";
-                                this.iy[this.fy] = "@cya@" + r.bkb[var11][0];
+                                this.iy[this.fy] = "@cya@" + GameData.bkb[var11][0];
                                 this.ky[this.fy] = 3400;
                                 this.ny[this.fy] = var11;
                                 ++this.fy;
@@ -6546,8 +6546,8 @@ public class mudclient extends e {
                         }
 
                         if (this.lx >= 0) {
-                            if (r.vlb[this.lx] == 1 || r.vlb[this.lx] == 2 && var14 == 1 && this.kv.tr == 1) {
-                                this.jy[this.fy] = "Cast " + r.rlb[this.lx] + " on";
+                            if (GameData.vlb[this.lx] == 1 || GameData.vlb[this.lx] == 2 && var14 == 1 && this.kv.tr == 1) {
+                                this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on";
                                 this.iy[this.fy] = "@whi@" + this.iv[var10].xq;
                                 this.ky[this.fy] = 800;
                                 this.ly[this.fy] = this.iv[var10].ar;
@@ -6594,9 +6594,9 @@ public class mudclient extends e {
                         }
                     } else if (var11 == 2) {
                         if (this.lx >= 0) {
-                            if (r.vlb[this.lx] == 3) {
-                                this.jy[this.fy] = "Cast " + r.rlb[this.lx] + " on";
-                                this.iy[this.fy] = "@lre@" + r.vhb[this.bw[var10]][0];
+                            if (GameData.vlb[this.lx] == 3) {
+                                this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on";
+                                this.iy[this.fy] = "@lre@" + GameData.vhb[this.bw[var10]][0];
                                 this.ky[this.fy] = 200;
                                 this.ly[this.fy] = this.zv[var10];
                                 this.my[this.fy] = this.aw[var10];
@@ -6606,7 +6606,7 @@ public class mudclient extends e {
                             }
                         } else if (this.ax >= 0) {
                             this.jy[this.fy] = "Use " + this.bx + " with";
-                            this.iy[this.fy] = "@lre@" + r.vhb[this.bw[var10]][0];
+                            this.iy[this.fy] = "@lre@" + GameData.vhb[this.bw[var10]][0];
                             this.ky[this.fy] = 210;
                             this.ly[this.fy] = this.zv[var10];
                             this.my[this.fy] = this.aw[var10];
@@ -6615,14 +6615,14 @@ public class mudclient extends e {
                             ++this.fy;
                         } else {
                             this.jy[this.fy] = "Take";
-                            this.iy[this.fy] = "@lre@" + r.vhb[this.bw[var10]][0];
+                            this.iy[this.fy] = "@lre@" + GameData.vhb[this.bw[var10]][0];
                             this.ky[this.fy] = 220;
                             this.ly[this.fy] = this.zv[var10];
                             this.my[this.fy] = this.aw[var10];
                             this.ny[this.fy] = this.bw[var10];
                             ++this.fy;
                             this.jy[this.fy] = "Examine";
-                            this.iy[this.fy] = "@lre@" + r.vhb[this.bw[var10]][0];
+                            this.iy[this.fy] = "@lre@" + GameData.vhb[this.bw[var10]][0];
                             this.ky[this.fy] = 3200;
                             this.ny[this.fy] = this.bw[var10];
                             ++this.fy;
@@ -6631,8 +6631,8 @@ public class mudclient extends e {
                         var12 = "";
                         var13 = -1;
                         var14 = this.tv[var10].cr;
-                        if (r.vib[var14] > 0) {
-                            int var15 = (r.rib[var14] + r.uib[var14] + r.sib[var14] + r.tib[var14]) / 4;
+                        if (GameData.vib[var14] > 0) {
+                            int var15 = (GameData.rib[var14] + GameData.uib[var14] + GameData.sib[var14] + GameData.tib[var14]) / 4;
                             int var16 = (this.dx[0] + this.dx[1] + this.dx[2] + this.dx[3] + 27) / 4;
                             var13 = var16 - var15;
                             var12 = "@yel@";
@@ -6672,9 +6672,9 @@ public class mudclient extends e {
                         }
 
                         if (this.lx >= 0) {
-                            if (r.vlb[this.lx] == 2) {
-                                this.jy[this.fy] = "Cast " + r.rlb[this.lx] + " on";
-                                this.iy[this.fy] = "@yel@" + r.pib[this.tv[var10].cr][0];
+                            if (GameData.vlb[this.lx] == 2) {
+                                this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on";
+                                this.iy[this.fy] = "@yel@" + GameData.pib[this.tv[var10].cr][0];
                                 this.ky[this.fy] = 700;
                                 this.ly[this.fy] = this.tv[var10].ar;
                                 this.my[this.fy] = this.tv[var10].br;
@@ -6684,7 +6684,7 @@ public class mudclient extends e {
                             }
                         } else if (this.ax >= 0) {
                             this.jy[this.fy] = "Use " + this.bx + " with";
-                            this.iy[this.fy] = "@yel@" + r.pib[this.tv[var10].cr][0];
+                            this.iy[this.fy] = "@yel@" + GameData.pib[this.tv[var10].cr][0];
                             this.ky[this.fy] = 710;
                             this.ly[this.fy] = this.tv[var10].ar;
                             this.my[this.fy] = this.tv[var10].br;
@@ -6692,9 +6692,9 @@ public class mudclient extends e {
                             this.oy[this.fy] = this.ax;
                             ++this.fy;
                         } else {
-                            if (r.vib[var14] > 0) {
+                            if (GameData.vib[var14] > 0) {
                                 this.jy[this.fy] = "Attack";
-                                this.iy[this.fy] = "@yel@" + r.pib[this.tv[var10].cr][0] + var12;
+                                this.iy[this.fy] = "@yel@" + GameData.pib[this.tv[var10].cr][0] + var12;
                                 if (var13 >= 0) {
                                     this.ky[this.fy] = 715;
                                 } else {
@@ -6708,14 +6708,14 @@ public class mudclient extends e {
                             }
 
                             this.jy[this.fy] = "Talk-to";
-                            this.iy[this.fy] = "@yel@" + r.pib[this.tv[var10].cr][0];
+                            this.iy[this.fy] = "@yel@" + GameData.pib[this.tv[var10].cr][0];
                             this.ky[this.fy] = 720;
                             this.ly[this.fy] = this.tv[var10].ar;
                             this.my[this.fy] = this.tv[var10].br;
                             this.ny[this.fy] = this.tv[var10].yq;
                             ++this.fy;
                             this.jy[this.fy] = "Examine";
-                            this.iy[this.fy] = "@yel@" + r.pib[this.tv[var10].cr][0];
+                            this.iy[this.fy] = "@yel@" + GameData.pib[this.tv[var10].cr][0];
                             this.ky[this.fy] = 3700;
                             this.ny[this.fy] = this.tv[var10].cr;
                             ++this.fy;
@@ -6725,8 +6725,8 @@ public class mudclient extends e {
             }
         }
 
-        if (this.lx >= 0 && r.vlb[this.lx] <= 1) {
-            this.jy[this.fy] = "Cast " + r.rlb[this.lx] + " on self";
+        if (this.lx >= 0 && GameData.vlb[this.lx] <= 1) {
+            this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on self";
             this.iy[this.fy] = "";
             this.ky[this.fy] = 1000;
             this.ny[this.fy] = this.lx;
@@ -6735,8 +6735,8 @@ public class mudclient extends e {
 
         if (var1 != -1) {
             if (this.lx >= 0) {
-                if (r.vlb[this.lx] == 6) {
-                    this.jy[this.fy] = "Cast " + r.rlb[this.lx] + " on ground";
+                if (GameData.vlb[this.lx] == 6) {
+                    this.jy[this.fy] = "Cast " + GameData.rlb[this.lx] + " on ground";
                     this.iy[this.fy] = "";
                     this.ky[this.fy] = 900;
                     this.ly[this.fy] = this.fu.rgb[var1];
@@ -6941,7 +6941,7 @@ public class mudclient extends e {
         }
 
         if (var7 == 3200) {
-            this.pk(r.whb[var4], 3);
+            this.pk(GameData.whb[var4], 3);
         }
 
         if (var7 == 300) {
@@ -6985,7 +6985,7 @@ public class mudclient extends e {
         }
 
         if (var7 == 3300) {
-            this.pk(r.nkb[var4], 3);
+            this.pk(GameData.nkb[var4], 3);
         }
 
         if (var7 == 400) {
@@ -7025,7 +7025,7 @@ public class mudclient extends e {
         }
 
         if (var7 == 3400) {
-            this.pk(r.ckb[var4], 3);
+            this.pk(GameData.ckb[var4], 3);
         }
 
         if (var7 == 600) {
@@ -7065,7 +7065,7 @@ public class mudclient extends e {
         if (var7 == 650) {
             this.ax = var4;
             this.uw = 0;
-            this.bx = r.vhb[this.xw[this.ax]][0];
+            this.bx = GameData.vhb[this.xw[this.ax]][0];
         }
 
         if (var7 == 660) {
@@ -7074,11 +7074,11 @@ public class mudclient extends e {
             this.sk();
             this.ax = -1;
             this.uw = 0;
-            this.pk("Dropping " + r.vhb[this.xw[var4]][0], 4);
+            this.pk("Dropping " + GameData.vhb[this.xw[var4]][0], 4);
         }
 
         if (var7 == 3600) {
-            this.pk(r.whb[var4], 3);
+            this.pk(GameData.whb[var4], 3);
         }
 
         int var8;
@@ -7124,7 +7124,7 @@ public class mudclient extends e {
         }
 
         if (var7 == 3700) {
-            this.pk(r.qib[var4], 3);
+            this.pk(GameData.qib[var4], 3);
         }
 
         if (var7 == 800) {
@@ -7219,16 +7219,16 @@ public class mudclient extends e {
         this.av = 128;
         this.cv = 4000;
         this.dv = 500;
-        this.hv = new l[this.cv];
-        this.iv = new l[this.dv];
-        this.jv = new l[this.dv];
-        this.kv = new l();
+        this.hv = new Character[this.cv];
+        this.iv = new Character[this.dv];
+        this.jv = new Character[this.dv];
+        this.kv = new Character();
         this.nv = -1;
         this.ov = 1000;
         this.pv = 500;
-        this.sv = new l[this.ov];
-        this.tv = new l[this.pv];
-        this.uv = new l[this.pv];
+        this.sv = new Character[this.ov];
+        this.tv = new Character[this.pv];
+        this.uv = new Character[this.pv];
         this.vv = new int[500];
         this.wv = 500;
         this.zv = new int[this.wv];
@@ -7236,15 +7236,15 @@ public class mudclient extends e {
         this.bw = new int[this.wv];
         this.cw = new int[this.wv];
         this.dw = 1500;
-        this.fw = new h[this.dw];
+        this.fw = new GameModel[this.dw];
         this.gw = new int[this.dw];
         this.hw = new int[this.dw];
         this.iw = new int[this.dw];
         this.jw = new int[this.dw];
-        this.kw = new h[200];
+        this.kw = new GameModel[200];
         this.lw = new boolean[this.dw];
         this.mw = 500;
-        this.ow = new h[this.mw];
+        this.ow = new GameModel[this.mw];
         this.pw = new int[this.mw];
         this.qw = new int[this.mw];
         this.rw = new int[this.mw];

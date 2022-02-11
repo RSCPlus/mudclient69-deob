@@ -1,11 +1,11 @@
 package jagex.client;
 
-public class s {
+public class Scanline {
     int rmb;
     int smb;
     int tmb;
     int umb;
 
-    public s() {
+    public Scanline() {
     }
 }

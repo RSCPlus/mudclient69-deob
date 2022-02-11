@@ -1,4 +1,4 @@
-public class l {
+public class Character {
     public long wq;
     public String xq;
     public int yq;
@@ -36,6 +36,6 @@ public class l {
     public int es = -1;
     public int fs;
 
-    public l() {
+    public Character() {
     }
 }

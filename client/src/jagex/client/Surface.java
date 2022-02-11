@@ -10,7 +10,7 @@ import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
 import java.util.Hashtable;
 
-public class i implements ImageProducer, ImageObserver {
+public class Surface implements ImageProducer, ImageObserver {
     public int qj;
     public int rj;
     public int sj;
@@ -69,7 +69,7 @@ public class i implements ImageProducer, ImageObserver {
     public static final int tl = 6;
     public static final int ul = 7;
 
-    public i(int var1, int var2, int var3, Component var4) {
+    public Surface(int var1, int var2, int var3, Component var4) {
         this.yj = var4;
         this.mk = var2;
         this.ok = var1;

@@ -1,6 +1,6 @@
 package jagex;
 
-public class n {
+public class BZLib {
     static final int hs = 1;
     static final int is = 2;
     static final int js = 10;
@@ -19,7 +19,7 @@ public class n {
     static final int ws = 18002;
 
     public static int ek(byte[] var0, int var1, byte[] var2, int var3, int var4) {
-        b var5 = new b();
+        BZState var5 = new BZState();
         var5.t = var2;
         var5.u = var4;
         var5.y = var0;
@@ -38,12 +38,12 @@ public class n {
         return var1;
     }
 
-    private static void gk(b var0) {
+    private static void gk(BZState var0) {
         byte var2 = var0.db;
         int var3 = var0.eb;
         int var4 = var0.ob;
         int var5 = var0.mb;
-        int[] var6 = b.rb;
+        int[] var6 = BZState.rb;
         int var7 = var0.lb;
         byte[] var8 = var0.y;
         int var9 = var0.z;
@@ -159,14 +159,14 @@ public class n {
         var0.eb = var3;
         var0.ob = var4;
         var0.mb = var5;
-        b.rb = var6;
+        BZState.rb = var6;
         var0.lb = var7;
         var0.y = var8;
         var0.z = var9;
         var0.ab = var10;
     }
 
-    private static void fk(b var0) {
+    private static void fk(BZState var0) {
         boolean var4 = false;
         boolean var5 = false;
         boolean var6 = false;
@@ -191,8 +191,8 @@ public class n {
         int[] var25 = null;
         int[] var26 = null;
         var0.ib = 1;
-        if (b.rb == null) {
-            b.rb = new int[var0.ib * 100000];
+        if (BZState.rb == null) {
+            BZState.rb = new int[var0.ib * 100000];
         }
 
         boolean var27 = true;
@@ -437,7 +437,7 @@ public class n {
                             }
 
                             ++var0.nb[var0.vb[var1 & 255] & 255];
-                            b.rb[var54] = var0.vb[var1 & 255] & 255;
+                            BZState.rb[var54] = var0.vb[var1 & 255] & 255;
                             ++var54;
                             if (var51 == 0) {
                                 ++var49;
@@ -495,7 +495,7 @@ public class n {
                             var1 = var0.vb[var0.wb[var0.xb[0]] & 255];
 
                             for(var0.nb[var1 & 255] += var55; var55 > 0; --var55) {
-                                b.rb[var54] = var1 & 255;
+                                BZState.rb[var54] = var1 & 255;
                                 ++var54;
                             }
                         }
@@ -514,14 +514,14 @@ public class n {
                     }
 
                     for(var42 = 0; var42 < var54; ++var42) {
-                        var1 = (byte)(b.rb[var42] & 255);
-                        b.rb[var0.pb[var1 & 255]] |= var42 << 8;
+                        var1 = (byte)(BZState.rb[var42] & 255);
+                        BZState.rb[var0.pb[var1 & 255]] |= var42 << 8;
                         ++var0.pb[var1 & 255];
                     }
 
-                    var0.lb = b.rb[var0.kb] >> 8;
+                    var0.lb = BZState.rb[var0.kb] >> 8;
                     var0.ob = 0;
-                    var0.lb = b.rb[var0.lb];
+                    var0.lb = BZState.rb[var0.lb];
                     var0.mb = (byte)(var0.lb & 255);
                     var0.lb >>= 8;
                     ++var0.ob;
@@ -541,15 +541,15 @@ public class n {
         }
     }
 
-    private static byte dk(b var0) {
+    private static byte dk(BZState var0) {
         return (byte)jk(8, var0);
     }
 
-    private static byte ik(b var0) {
+    private static byte ik(BZState var0) {
         return (byte)jk(1, var0);
     }
 
-    private static int jk(int var0, b var1) {
+    private static int jk(int var0, BZState var1) {
         while(var1.hb < var0) {
             var1.gb = var1.gb << 8 | var1.t[var1.u] & 255;
             var1.hb += 8;
@@ -582,7 +582,7 @@ public class n {
         return var2;
     }
 
-    private static void hk(b var0) {
+    private static void hk(BZState var0) {
         var0.sb = 0;
 
         for(int var1 = 0; var1 < 256; ++var1) {
@@ -637,6 +637,6 @@ public class n {
 
     }
 
-    public n() {
+    public BZLib() {
     }
 }
