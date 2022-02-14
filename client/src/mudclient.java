@@ -116,7 +116,7 @@ public class mudclient extends GameConnection {
     int[] sw;
     boolean[] tw;
     int uw;
-    int vw;
+    int maxInventorySpaces;
     int inventoryItemsCount;
     int[] inventoryItemIds;
     int[] inventoryItemStackAmount;
@@ -3642,7 +3642,7 @@ public class mudclient extends GameConnection {
                         return;
                     }
 
-                    this.vw = pdata[1] & 255;
+                    this.maxInventorySpaces = pdata[1] & 255;
                 } else {
                     this.qz = true;
                     byte var4 = 1;
@@ -5606,7 +5606,7 @@ public class mudclient extends GameConnection {
             this.uw = 6;
         }
 
-        if (this.uw == 1 && (super.kq < this.surface.qj - 248 || super.lq > 36 + this.vw / 5 * 34)) {
+        if (this.uw == 1 && (super.kq < this.surface.qj - 248 || super.lq > 36 + this.maxInventorySpaces / 5 * 34)) {
             this.uw = 0;
         }
 
@@ -5626,7 +5626,7 @@ public class mudclient extends GameConnection {
 
         int var4;
         int var5;
-        for(int var3 = 0; var3 < this.vw; ++var3) {
+        for(int var3 = 0; var3 < this.maxInventorySpaces; ++var3) {
             var4 = var2 + var3 % 5 * 49;
             var5 = 36 + var3 / 5 * 34;
             if (var3 < this.inventoryItemsCount && this.inventoryItemWielded[var3] == 1) {
@@ -5644,17 +5644,17 @@ public class mudclient extends GameConnection {
         }
 
         for(var4 = 1; var4 <= 4; ++var4) {
-            this.surface.zg(var2 + var4 * 49, 36, this.vw / 5 * 34, 0);
+            this.surface.zg(var2 + var4 * 49, 36, this.maxInventorySpaces / 5 * 34, 0);
         }
 
-        for(var5 = 1; var5 <= this.vw / 5 - 1; ++var5) {
+        for(var5 = 1; var5 <= this.maxInventorySpaces / 5 - 1; ++var5) {
             this.surface.ug(var2, 36 + var5 * 34, 245, 0);
         }
 
         if (var1) {
             var2 = super.kq - (this.surface.qj - 248);
             int var6 = super.lq - 36;
-            if (var2 >= 0 && var6 >= 0 && var2 < 248 && var6 < this.vw / 5 * 34) {
+            if (var2 >= 0 && var6 >= 0 && var2 < 248 && var6 < this.maxInventorySpaces / 5 * 34) {
                 int var7 = var2 / 49 + var6 / 34 * 5;
                 if (var7 < this.inventoryItemsCount) {
                     int var8 = this.inventoryItemIds[var7];
@@ -7263,7 +7263,7 @@ public class mudclient extends GameConnection {
         this.rw = new int[this.mw];
         this.sw = new int[this.mw];
         this.tw = new boolean[this.mw];
-        this.vw = 30;
+        this.maxInventorySpaces = 30;
         this.inventoryItemIds = new int[35];
         this.inventoryItemStackAmount = new int[35];
         this.inventoryItemWielded = new int[35];
